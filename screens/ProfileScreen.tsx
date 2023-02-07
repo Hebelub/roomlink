@@ -8,7 +8,7 @@ const ProfileScreen = () => {
 
     return (
         <SafeAreaView>
-            <Text style={tw('text-red-500')}>ProfileScreen</Text>
+            <Text style={tw('text-red-500')}>ProfileScreen ---</Text>
         </SafeAreaView>
     )
 }
