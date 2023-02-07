@@ -16,14 +16,8 @@ export type CustomerScreenNavigationProp = CompositeNavigationProp<
 
 const RoomItemScreen = () => {
     const tw = useTailwind();
-    const navigation = useNavigation<CustomerScreenNavigationProp>();
     const [input, setInput] = useState<string>('');
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: false,
-        });
-    }, [])
 
     return (
         <ScrollView style={{ backgroundColor: "#59C1CC" }}>

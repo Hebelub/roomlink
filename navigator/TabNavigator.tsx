@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileScreen from '../screens/ProfileScreen';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
-import RoomUsersScreen from '../screens/RoomItemScreen';
+import RoomUsersScreen from '../screens/RoomUsersScreen';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 
@@ -18,20 +18,13 @@ export type TabStackParamList = {
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigator = () => {
-    const navigation = useNavigation();
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: false,
-        });
-    }, []);
 
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarActiveTintColor: "tomato",
                 tabBarInactiveTintColor: "gray",
-                tabBarIcon: ({ focused, color, size }) => {
+                tabBarIcon: ({ focused }) => {
                     if (route.name === 'Profile') {
                         return (
                             <Icon
@@ -70,7 +63,9 @@ const TabNavigator = () => {
                     }
                 }
             })}>
+            {/* The ProfileScreen should be located another place */}
             <Tab.Screen name="Profile" component={ProfileScreen}></Tab.Screen>
+
             <Tab.Screen name="Chat" component={RoomChatScreen}></Tab.Screen>
             <Tab.Screen name="Items" component={RoomItemScreen}></Tab.Screen>
             <Tab.Screen name="Users" component={RoomUsersScreen}></Tab.Screen>
