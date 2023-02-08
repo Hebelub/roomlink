@@ -1,0 +1,22 @@
+type User {
+  email: String
+  name: String
+}
+
+type UserList {
+  name: ID
+  value: User
+}
+
+type Query {
+  getUserById(id: ID!): User
+    @rest(
+      endpoint: "https://roomlink-d748d-default-rtdb.europe-west1.firebasedatabase.app/users/$id.json"
+    )
+
+  getUsers: [UserList]
+    @rest(
+      endpoint: "https://roomlink-d748d-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+      transforms: [{ pathpattern: [], editor: "objectToArray" }]
+    )
+}

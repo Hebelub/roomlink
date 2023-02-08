@@ -1,0 +1,23 @@
+type Room {
+  name: String,
+  createdById: String,
+  createdAt: Date,
+  createdBy: User
+    @materializer(
+      query: "getUserById"
+      arguments: [{ name: "id", field: "createdById" }]
+    )
+}
+
+type RoomList {
+  name: ID
+  value: Room
+}
+
+type Query {
+  getRooms: [RoomList]
+    @rest(
+      endpoint: "https://roomlink-d748d-default-rtdb.europe-west1.firebasedatabase.app/rooms.json"
+      transforms: [{ pathpattern: [], editor: "objectToArray" }]
+    )
+}
