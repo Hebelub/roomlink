@@ -1,14 +1,16 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { SafeAreaView, Text, View } from 'react-native'
+import React from 'react'
+import { useTailwind } from 'tailwind-rn/dist';
 
-export class RoomChatScreen extends Component {
-    render() {
-        return (
-            <View>
-                <Text>RoomChatScreen</Text>
-            </View>
-        )
-    }
+const RoomChatScreen = () => {
+
+    const tw = useTailwind();
+
+    return (
+        <SafeAreaView>
+            <Text style={tw('text-red-500')}>RoomChatScreen</Text>
+        </SafeAreaView>
+    )
 }
 
 export default RoomChatScreen
