@@ -22,11 +22,11 @@ const RoomUsersScreen = () => {
     const [input, setInput] = useState<string>("");
     const { loading, error, data } = useQuery(GET_USERS);
 
-    console.log("Hei", data);
+    console.log("YEE:", data);
 
     return (
         <ScrollView style={{ backgroundColor: "#06cf85" }}>
-
+            <Text>DEBUG TEXT</Text>
             {data?.getUsers.map(({ name: ID, value: { email, name } }: UserResponse) => (
                 <UserCard
                     key={ID}

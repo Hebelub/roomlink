@@ -9,7 +9,7 @@ const useRooms = () => {
     useEffect(() => {
         if (!data) return;
 
-        const rooms: Room[] = data.getOrders.map(({ value }
+        const rooms: Room[] = data.getRooms.map(({ value }
             : RoomResponse) => ({
                 createdAt: value.createdAt,
                 createdBy: value.createdBy,
