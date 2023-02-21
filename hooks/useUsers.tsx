@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { GET_USERS } from '../graphql/queries';
+import { CustomerScreenNavigationProp } from '../screens/RoomItemScreen';
 
 const useUsers = () => {
     const { data, loading, error } = useQuery(GET_USERS);
