@@ -9,6 +9,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTailwind } from 'tailwind-rn/dist';
 import UserCard from '../components/UserCard';
+import { Input } from '@rneui/themed';
 
 export type UserScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<TabStackParamList, 'Users'>,
@@ -22,19 +23,26 @@ const RoomUsersScreen = () => {
     const [input, setInput] = useState<string>("");
     const { loading, error, data } = useQuery(GET_USERS);
 
-    console.log("YEE:", data);
-
     return (
         <ScrollView style={{ backgroundColor: "#06cf85" }}>
-            <Text>DEBUG TEXT</Text>
-            {data?.getUsers.map(({ name: ID, value: { email, name } }: UserResponse) => (
-                <UserCard
-                    key={ID}
-                    email={email}
-                    name={name}
-                    userId={ID}
-                />
-            ))}
+            <Input
+                placeholder="Search"
+                value={input}
+                onChangeText={setInput}
+                containerStyle={tw('bg-white pt-5 pb-0 px-10')}
+            />
+            {data?.getUsers
+                ?.filter((user: UserList) =>
+                    user.value.name.includes(input)
+                )
+                .map(({ name: ID, value: { email, name } }: UserResponse) => (
+                    <UserCard
+                        key={ID}
+                        email={email}
+                        name={name}
+                        userId={ID}
+                    />
+                ))}
         </ScrollView>
     );
 };
