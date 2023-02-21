@@ -10,6 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTailwind } from 'tailwind-rn/dist';
 import UserCard from '../components/UserCard';
 import { Input } from '@rneui/themed';
+import useUsers from '../hooks/useUsers';
 
 export type UserScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<TabStackParamList, 'Users'>,
