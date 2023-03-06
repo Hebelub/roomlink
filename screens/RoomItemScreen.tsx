@@ -28,7 +28,6 @@ const RoomItemScreen = () => {
                 containerStyle={tw('bg-white pt-5 pb-0 px-10')}
             />
         </ScrollView>
-
     )
 }
 

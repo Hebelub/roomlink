@@ -28,3 +28,20 @@ export const GET_ROOMS = gql`
         }
     }
 `;
+
+export const GET_MESSAGES = gql`
+    query GetMessages {
+        getMessages {
+            name
+            value {
+                createdAt
+                createdBy {
+                    email
+                    name
+                }
+                createdById
+                text
+            }
+        }
+    }
+`;

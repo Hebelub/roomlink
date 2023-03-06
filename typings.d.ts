@@ -23,3 +23,8 @@ type UserResponse = {
 type RoomResponse = {
     value: Room,
 }
+
+type MessageResponse = {
+    name: ID,
+    value: Message,
+}
