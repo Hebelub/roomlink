@@ -6,6 +6,8 @@ import utilities from './tailwind.json';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigator/RootNavigator';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import useAuth, { AuthProvider } from './hooks/useAuth';
+import LoginScreen from './screens/LoginScreen';
 
 const client = new ApolloClient({
 	uri: 'https://ginosa.stepzen.net/api/oldfashioned-tuatara/__graphql',
@@ -21,9 +23,28 @@ export default function App() {
 		<TailwindProvider utilities={utilities}>
 			<ApolloProvider client={client}>
 				<NavigationContainer>
-					<RootNavigator />
+					<AuthProvider>
+						<AppScreens />
+					</AuthProvider>
 				</NavigationContainer>
 			</ApolloProvider>
 		</TailwindProvider>
 	);
+}
+
+function AppScreens() {
+	// For this hook to work, it had to be wrapped in the AuthProvider
+	// component, which is why it's not in the App component
+	const { user } = useAuth();
+
+	return (
+		// Render app if logged in, otherwise render login screen
+		<>
+			{user ? (
+				<RootNavigator />
+			) : (
+				<LoginScreen />
+			)}
+		</>
+	)
 }

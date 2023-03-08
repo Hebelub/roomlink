@@ -5,6 +5,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
 import RoomUsersScreen from '../screens/RoomUsersScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 
@@ -13,6 +14,7 @@ export type TabStackParamList = {
     Chat: undefined;
     Items: undefined;
     Users: undefined;
+    Login: undefined;
 }
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
@@ -61,10 +63,20 @@ const TabNavigator = () => {
                             />
                         );
                     }
+                    else if (route.name === 'Login') {
+                        return (
+                            <Icon
+                                name="login"
+                                type="entypo"
+                                color={focused ? 'tomato' : 'gray'}
+                            />
+                        );
+                    }
                 }
             })}>
             {/* The ProfileScreen should be located another place */}
             <Tab.Screen name="Profile" component={ProfileScreen}></Tab.Screen>
+            <Tab.Screen name="Login" component={LoginScreen}></Tab.Screen>
 
             <Tab.Screen name="Chat" component={RoomChatScreen}></Tab.Screen>
             <Tab.Screen name="Items" component={RoomItemScreen}></Tab.Screen>
