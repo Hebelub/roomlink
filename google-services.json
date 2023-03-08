@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "168645778255",
+    "firebase_url": "https://roomlink-d748d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "roomlink-d748d",
+    "storage_bucket": "roomlink-d748d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168645778255:android:fc3b43d6c46214ad87833a",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt7l2hgo95eRqgPRgCMUHvhgGF6h4opN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
