@@ -1,13 +1,22 @@
 import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import useAuth from '../hooks/useAuth';
+import { Button } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { CustomerScreenNavigationProp } from './RoomItemScreen';
 
 const LoginScreen = () => {
 
-    const { user } = useAuth();
+    const { signInWithGoogle } = useAuth();
+
+    const navigation = useNavigation<CustomerScreenNavigationProp>();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const signIn = () => {
+
+    }
 
     return (
         <KeyboardAvoidingView
@@ -15,6 +24,10 @@ const LoginScreen = () => {
             behavior='padding'
         >
             <View>
+                <Button title="login" onPress={signInWithGoogle}>
+                    Sign in with Google
+                </Button>
+
                 <TextInput
                     placeholder="Email"
                     value={email}
@@ -32,18 +45,21 @@ const LoginScreen = () => {
 
             <View>
                 <TouchableOpacity
-                    onPress={() => { }}
+                    onPress={() => { signIn() }}
                     style={styles.button}
                 >
                     <Text>Login</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
-                    onPress={() => { }}
+                    onPress={() => { navigation.navigate("Register", {}) }}
                     style={[styles.button, styles.buttonOutline]}
                 >
                     <Text>Register</Text>
                 </TouchableOpacity>
             </View>
+
+            <View style={{ height: 100 }}></View>
         </KeyboardAvoidingView>
     )
 }
