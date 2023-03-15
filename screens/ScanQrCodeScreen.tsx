@@ -8,7 +8,9 @@ const ScanQrCodeScreen = () => {
 
     return (
         <View>
-            <Text>ScanQrCodeScreen</Text>
+            <Text>Scan with the camera. It will join the room that you scan</Text>
+
+            <Text>This should be a QR-Code camera scanner</Text>
         </View>
     )
 }

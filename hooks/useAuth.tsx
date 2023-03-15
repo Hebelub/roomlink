@@ -35,7 +35,10 @@ export const AuthProvider = ({ children }: Props) => {
 
     return (
         <AuthContext.Provider value={{
-            user: "Gabriel Løsnesløkken",
+            user: {
+                name: "Gabriel Løsnesløkken",
+                email: "gabriell@uia.no"
+            },
             signInWithGoogle: signInWithGoogle,
         }}>
             {children}
