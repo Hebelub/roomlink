@@ -12,7 +12,8 @@ import LoginScreen from './screens/LoginScreen';
 const client = new ApolloClient({
 	uri: 'https://ginosa.stepzen.net/api/oldfashioned-tuatara/__graphql',
 	headers: {
-		Authorization: `Apikey ${process.env.NEXT_PUBLIC_STEPZEN_KEY}`,
+		Authorization: `Apikey ginosa::stepzen.net+1000::3d1b43544860580ffe49faf6b1d4ed57a6599fea95db5e6280247a6d8193aa73`,
+		// Authorization: `Apikey ${process.env.NEXT_PUBLIC_STEPZEN_KEY?.replace(/\\n/g, '\n')}`,
 	},
 	cache: new InMemoryCache(),
 });
@@ -24,27 +25,10 @@ export default function App() {
 			<ApolloProvider client={client}>
 				<NavigationContainer>
 					<AuthProvider>
-						<AppScreens />
+						<RootNavigator />
 					</AuthProvider>
 				</NavigationContainer>
 			</ApolloProvider>
 		</TailwindProvider>
 	);
-}
-
-function AppScreens() {
-	// For this hook to work, it had to be wrapped in the AuthProvider
-	// component, which is why it's not in the App component
-	const { user } = useAuth();
-
-	return (
-		// Render app if logged in, otherwise render login screen
-		<>
-			{user ? (
-				<RootNavigator />
-			) : (
-				<LoginScreen />
-			)}
-		</>
-	)
 }
