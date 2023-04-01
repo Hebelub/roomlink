@@ -9,6 +9,7 @@ import VisitedRoomsScreen from '../screens/VisitedRoomsScreen';
 import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import useAuth from '../hooks/useAuth';
 
 export type RootStackParamList = {
     RoomScreen: undefined;
@@ -30,11 +31,11 @@ const RootNavigator = () => {
 
             <RootStack.Group>
                 <RootStack.Screen name="VisitedRoomsScreen" component={VisitedRoomsScreen} />
+                <RootStack.Screen name="LoginScreen" component={LoginScreen} />
                 <RootStack.Screen name="Register" component={RegisterScreen} />
                 <RootStack.Screen name="CreateRoomScreen" component={CreateRoomScreen} />
                 <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
                 <RootStack.Screen name="ScanQrCodeScreen" component={ScanQrCodeScreen} />
-                <RootStack.Screen name="LoginScreen" component={LoginScreen} />
             </RootStack.Group>
 
             <RootStack.Group>
