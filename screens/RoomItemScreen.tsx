@@ -8,12 +8,6 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Image, Input } from '@rneui/themed';
 
-
-export type CustomerScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<TabStackParamList, 'Items'>,
-    NativeStackNavigationProp<RootStackParamList>
->;
-
 const RoomItemScreen = () => {
     const tw = useTailwind();
     const [input, setInput] = useState<string>('');

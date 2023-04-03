@@ -1,10 +1,9 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import useRooms from '../hooks/useRooms';
 import { useTailwind } from 'tailwind-rn/dist';
 import { CustomerScreenNavigationProp } from '../screens/RoomItemScreen';
 import { useNavigation } from '@react-navigation/native';
-import useUsers from '../hooks/useUsers';
+
 import { Card, Icon } from '@rneui/themed';
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 
 const UserCard = ({ email, name, userId }: Props) => {
 
-    const { loading, error, users } = useUsers();
     const tw = useTailwind();
     const navigation = useNavigation<CustomerScreenNavigationProp>();
 
@@ -40,7 +38,7 @@ const UserCard = ({ email, name, userId }: Props) => {
                     </View>
 
                     <View>
-                        <Text>{loading ? "Loading ..." : `${users.length} x`}</Text>
+                        {/* <Text>{loading ? "Loading ..." : `${users.length} x`}</Text> */}
                         <Icon
                             name='user'
                             type='entypo'

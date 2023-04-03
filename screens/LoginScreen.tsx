@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import { CustomerScreenNavigationProp } from './RoomItemScreen';
+import { RootStackNavigationProp } from '../navigator/RootNavigator';
 
 const LoginScreen = () => {
 
     const { signInWithGoogle } = useAuth();
 
-    const navigation = useNavigation<CustomerScreenNavigationProp>();
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

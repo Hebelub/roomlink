@@ -2,7 +2,6 @@ import { FlatList, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { Input } from '@rneui/themed';
-import { GET_MESSAGES } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
 import UserCard from '../components/UserCard';
 import ChatMessage from '../components/ChatMessage';
@@ -13,7 +12,6 @@ const RoomChatScreen = () => {
 
     // const navigation = useNavigation<UserScreenNavigationProp>();
     const [input, setInput] = useState<string>("");
-    const { loading, error, data } = useQuery(GET_MESSAGES);
 
     // For now we will use a dummy data
     // But it should be fetched from the database

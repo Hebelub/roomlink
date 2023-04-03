@@ -9,10 +9,8 @@ import VisitedRoomsScreen from '../screens/VisitedRoomsScreen';
 import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
-import useAuth from '../hooks/useAuth';
-import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { RoomProps } from './TabNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 
 export type RootStackParamList = {

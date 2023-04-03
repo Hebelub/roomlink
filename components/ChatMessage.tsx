@@ -1,11 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
-import useRooms from '../hooks/useRooms';
 import { useTailwind } from 'tailwind-rn/dist';
 import { CustomerScreenNavigationProp } from '../screens/RoomItemScreen';
-import { useNavigation } from '@react-navigation/native';
-import useUsers from '../hooks/useUsers';
-import { Card, Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
     postedBy: string;
@@ -15,7 +12,6 @@ type Props = {
 
 const ChatMessage = (props: Props) => {
 
-    const { loading, error, users } = useUsers();
     const tw = useTailwind();
     const navigation = useNavigation<CustomerScreenNavigationProp>();
 
