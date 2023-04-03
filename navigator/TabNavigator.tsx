@@ -10,16 +10,37 @@ import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
 
+type RoomProps = {
+    roomName: string;
+};
+
 export type TabStackParamList = {
-    RoomProfile: undefined;
-    Chat: undefined;
-    Items: undefined;
-    Users: undefined;
+    RoomProfile: { props: RoomProps };
+    Chat: { props: RoomProps };
+    Items: { props: RoomProps };
+    Users: { props: RoomProps };
 }
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
-const TabNavigator = () => {
+const TabNavigator = ({ route }: any) => {
+
+    const navigation = useNavigation<any>();
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: route.params.roomName,
+            headerRight: () => (
+                <Icon
+                    name="user"
+                    type="entypo"
+                    color="tomato"
+                    onPress={() => { navigation.navigate("ProfileScreen") }
+                    }
+                />
+            ),
+        });
+    }, [navigation]);
 
     return (
         <Tab.Navigator

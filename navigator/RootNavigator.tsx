@@ -10,9 +10,10 @@ import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import useAuth from '../hooks/useAuth';
+import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
-    RoomScreen: undefined;
+    RoomScreen: { roomName: string };
     MyModal: { userId: string; name: string };
 
     Register: undefined;
@@ -22,6 +23,12 @@ export type RootStackParamList = {
     VisitedRoomsScreen: undefined;
     LoginScreen: undefined;
 }
+
+type RoomScreenRouteProp = RouteProp<RootStackParamList, 'RoomScreen'>;
+
+type Props = {
+    route: RoomScreenRouteProp;
+};
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,7 +46,11 @@ const RootNavigator = () => {
             </RootStack.Group>
 
             <RootStack.Group>
-                <RootStack.Screen name="RoomScreen" component={TabNavigator} />
+                <RootStack.Screen
+                    name="RoomScreen"
+                    component={TabNavigator}
+                    initialParams={{ roomName: "Unknown Room" }}
+                />
             </RootStack.Group>
 
             <RootStack.Group
