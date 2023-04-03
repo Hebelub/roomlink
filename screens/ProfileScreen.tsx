@@ -4,6 +4,7 @@ import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import LoginScreen from './LoginScreen';
 import { useNavigation } from '@react-navigation/native';
+import VisitListItem from '../components/VisitListItem';
 
 const ProfileScreen = () => {
 
@@ -35,30 +36,8 @@ const ProfileScreen = () => {
             <View style={tw('flex flex-row items-center')}>
                 <View style={tw('flex flex-col')}>
                     <Text>Your Rooms</Text>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate("RoomScreen") }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text>Room 1</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate("RoomScreen") }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text>Room 2</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate("RoomScreen") }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text>Room 3</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate("RoomScreen") }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text>Room 4</Text>
-                    </TouchableOpacity>
+                    <VisitListItem roomProps={{ roomName: 'My First Room', roomCode: "123427" }} />
+                    <VisitListItem roomProps={{ roomName: 'Best Room', roomCode: "452986" }} />
                 </View>
             </View>
 

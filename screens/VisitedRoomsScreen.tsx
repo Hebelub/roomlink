@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Tex
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '@rneui/base';
+import VisitListItem from '../components/VisitListItem';
 
 const VisitedRoomsScreen = () => {
 
@@ -27,30 +28,11 @@ const VisitedRoomsScreen = () => {
             <Text>List of rooms you have visited</Text>
 
             <ScrollView>
-                <TouchableOpacity
-                    onPress={() => { navigation.navigate("RoomScreen") }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text>Room 1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => { navigation.navigate("RoomScreen") }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text>Room 2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => { navigation.navigate("RoomScreen") }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text>Room 3</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => { navigation.navigate("RoomScreen") }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text>Room 4</Text>
-                </TouchableOpacity>
+                <VisitListItem roomProps={{ roomName: 'My First Room', roomCode: "123427" }} />
+                <VisitListItem roomProps={{ roomName: 'Citchen number 241', roomCode: "248523" }} />
+                <VisitListItem roomProps={{ roomName: 'Barnabases Visit Card', roomCode: "774286" }} />
+                <VisitListItem roomProps={{ roomName: 'Information about statue', roomCode: "247591" }} />
+                <VisitListItem roomProps={{ roomName: 'Study Group', roomCode: "582938" }} />
             </ScrollView>
 
             <View>

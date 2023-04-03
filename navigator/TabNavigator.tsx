@@ -9,34 +9,38 @@ import LoginScreen from '../screens/LoginScreen';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
+import RoomInfoScreen from '../screens/RoomInfoScreen';
 
-type RoomProps = {
+export type RoomProps = {
     roomName: string;
+    roomCode: string;
 };
 
 export type TabStackParamList = {
-    RoomProfile: { props: RoomProps };
-    Chat: { props: RoomProps };
-    Items: { props: RoomProps };
-    Users: { props: RoomProps };
+    navigate(arg0: string): unknown;
+    setOptions(arg0: { headerTitle: any; headerRight: () => JSX.Element; }): unknown;
+    Profile: undefined;
+    Chat: undefined;
+    Items: undefined;
+    Users: undefined;
+    Info: { roomProps: RoomProps };
 }
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigator = ({ route }: any) => {
 
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<TabStackParamList>();
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: route.params.roomName,
+            headerTitle: route.params.roomProps.roomName,
             headerRight: () => (
                 <Icon
                     name="user"
                     type="entypo"
                     color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }
-                    }
+                    onPress={() => { navigation.navigate("ProfileScreen") }}
                 />
             ),
         });
@@ -48,7 +52,7 @@ const TabNavigator = ({ route }: any) => {
                 tabBarActiveTintColor: "tomato",
                 tabBarInactiveTintColor: "gray",
                 tabBarIcon: ({ focused }) => {
-                    if (route.name === 'RoomProfile') {
+                    if (route.name === 'Profile') {
                         return (
                             <Icon
                                 name="user"
@@ -84,14 +88,23 @@ const TabNavigator = ({ route }: any) => {
                             />
                         );
                     }
+                    else if (route.name === 'Info') {
+                        return (
+                            <Icon
+                                name="info"
+                                type="entypo"
+                                color={focused ? 'tomato' : 'gray'}
+                            />
+                        );
+                    }
                 }
             })}>
             {/* The ProfileScreen should be located another place */}
-            <Tab.Screen name="RoomProfile" component={RoomProfileScreen}></Tab.Screen>
-            <Tab.Screen name="Chat" component={RoomChatScreen}></Tab.Screen>
-            <Tab.Screen name="Items" component={RoomItemScreen}></Tab.Screen>
-            <Tab.Screen name="Users" component={RoomUsersScreen}></Tab.Screen>
-        </Tab.Navigator>
+            <Tab.Screen name="Profile" component={RoomProfileScreen} />
+            <Tab.Screen name="Chat" component={RoomChatScreen} />
+            <Tab.Screen name="Items" component={RoomItemScreen} />
+            <Tab.Screen name="Users" component={RoomUsersScreen} />
+        </Tab.Navigator >
     )
 }
 

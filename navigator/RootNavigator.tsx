@@ -11,11 +11,15 @@ import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import useAuth from '../hooks/useAuth';
 import { RouteProp } from '@react-navigation/native';
+import { RoomProps } from './TabNavigator';
 
 export type RootStackParamList = {
-    RoomScreen: { roomName: string };
-    MyModal: { userId: string; name: string };
+    setOptions(arg0: { headerTitle: any; headerRight: () => JSX.Element; }): unknown;
+    navigate(arg0: string, arg1: { roomProps: RoomProps; }): unknown;
 
+    RoomScreen: { roomProps: RoomProps };
+
+    MyModal: { userId: string; name: string };
     Register: undefined;
     CreateRoomScreen: undefined;
     ProfileScreen: undefined;
@@ -49,7 +53,6 @@ const RootNavigator = () => {
                 <RootStack.Screen
                     name="RoomScreen"
                     component={TabNavigator}
-                    initialParams={{ roomName: "Unknown Room" }}
                 />
             </RootStack.Group>
 
