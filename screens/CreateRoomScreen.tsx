@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
+import { RootStackNavigationProp } from '../navigator/RootNavigator';
 
 const CreateRoomScreen = () => {
     // Should contain:
@@ -11,7 +12,8 @@ const CreateRoomScreen = () => {
     // 5. A button to create the room
 
     const [roomName, setRoomName] = useState('');
-    const navigation = useNavigation<any>();
+    const [roomCode, setRoomCode] = useState('RXcN4');
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -31,7 +33,7 @@ const CreateRoomScreen = () => {
             <Text>THIS WILL BE A GENERATED QR-CODE</Text>
 
             <TouchableOpacity
-                onPress={() => { navigation.navigate("RoomScreen") }}
+                onPress={() => { navigation.navigate("RoomScreen", { roomProps: { roomName: roomName, roomCode: roomCode } }) }}
                 style={styles.button}
             >
                 <Text>Create Room</Text>
