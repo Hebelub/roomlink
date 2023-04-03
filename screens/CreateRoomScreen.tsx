@@ -27,7 +27,7 @@ const CreateRoomScreen = () => {
             />
 
             <Text>Generated Code</Text>
-            <Text>RXcN4</Text>
+            <Text>{roomCode}</Text>
 
             <Text>Generated QR-Code</Text>
             <Text>THIS WILL BE A GENERATED QR-CODE</Text>

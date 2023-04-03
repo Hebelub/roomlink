@@ -26,12 +26,6 @@ export type RootStackParamList = {
 
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-type RoomScreenRouteProp = RouteProp<RootStackParamList, 'RoomScreen'>;
-
-type Props = {
-    route: RoomScreenRouteProp;
-};
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
