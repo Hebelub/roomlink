@@ -13,13 +13,6 @@ const ProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Log out button */}
-            <TouchableOpacity
-                onPress={() => { navigation.navigate("LoginScreen") }}
-                style={[styles.button, styles.buttonOutline]}
-            >
-                <Text>Log Out</Text>
-            </TouchableOpacity>
 
             {/* User info */}
             <View style={tw('flex flex-row items-center')}>
@@ -30,6 +23,13 @@ const ProfileScreen = () => {
                 </View>
             </View>
 
+            {/* Log out button */}
+            <TouchableOpacity
+                onPress={() => { navigation.navigate("LoginScreen") }}
+                style={[styles.button, styles.buttonOutline]}
+            >
+                <Text>Log Out</Text>
+            </TouchableOpacity>
 
             {/* Your rooms */}
             <View style={tw('flex flex-row items-center')}>
