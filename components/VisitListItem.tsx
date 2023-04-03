@@ -1,18 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/RootNavigator';
+import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
 import { RoomProps, TabStackParamList } from '../navigator/TabNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Props = {
     roomProps: RoomProps;
 }
 
-
 const VisitListItem = ({ roomProps }: Props) => {
-    const navigation = useNavigation<RootStackParamList>();
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     return (
         <TouchableOpacity

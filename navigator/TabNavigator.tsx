@@ -1,15 +1,17 @@
 import { Text, View } from 'react-native'
 import React, { Component, useLayoutEffect } from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileScreen from '../screens/ProfileScreen';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
 import RoomUsersScreen from '../screens/RoomUsersScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { useNavigation } from '@react-navigation/native';
+import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
 import RoomInfoScreen from '../screens/RoomInfoScreen';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './RootNavigator';
 
 export type RoomProps = {
     roomName: string;
@@ -17,8 +19,6 @@ export type RoomProps = {
 };
 
 export type TabStackParamList = {
-    navigate(arg0: string): unknown;
-    setOptions(arg0: { headerTitle: any; headerRight: () => JSX.Element; }): unknown;
     Profile: undefined;
     Chat: undefined;
     Items: undefined;
@@ -26,15 +26,26 @@ export type TabStackParamList = {
     Info: { roomProps: RoomProps };
 }
 
+export type TabNavigatorScreenNavigationProp = CompositeNavigationProp<
+    BottomTabNavigationProp<TabStackParamList>,
+    NativeStackNavigationProp<RootStackParamList, "RoomScreen">
+>;
+
+type TabNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
+
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
-const TabNavigator = ({ route }: any) => {
+const TabNavigator = () => {
 
-    const navigation = useNavigation<TabStackParamList>();
+    const navigation = useNavigation<TabNavigatorScreenNavigationProp>();
+
+    const {
+        params: { roomProps },
+    } = useRoute<TabNavigatorRouteProp>();
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: route.params.roomProps.roomName,
+            headerTitle: roomProps.roomName,
             headerRight: () => (
                 <Icon
                     name="user"
@@ -100,6 +111,7 @@ const TabNavigator = ({ route }: any) => {
                 }
             })}>
             {/* The ProfileScreen should be located another place */}
+            <Tab.Screen name="Info" component={RoomInfoScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Profile" component={RoomProfileScreen} />
             <Tab.Screen name="Chat" component={RoomChatScreen} />
             <Tab.Screen name="Items" component={RoomItemScreen} />
