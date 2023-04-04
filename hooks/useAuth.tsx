@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }: Props) => {
     <AuthContext.Provider
       value={{
         user: {
+          id: "the_user_id",
           name: "Gabriel Løsnesløkken",
           email: "gabriell@uia.no",
         },

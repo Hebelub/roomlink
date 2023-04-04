@@ -1,11 +1,11 @@
 export type Room = {
     name: string;
     code: string;
-    description?: string;
-    image?: string;
+    description: string;
+    imageUrl: string;
 
-    createdAt?: Date;
-    createdBy?: string;
+    createdAt: Date;
+    createdById: string;
 };
 
 export type Message = {

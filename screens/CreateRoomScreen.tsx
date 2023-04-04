@@ -2,45 +2,61 @@ import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity } fro
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import useAuth from '../hooks/useAuth';
+import { Image } from "@rneui/themed"
+
+
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+const generateString = (length: number) => {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
 
 const CreateRoomScreen = () => {
-    // Should contain:
-    // 1. An inputfield to enter a room name
-    // 2. An inputfield to enter a room description
-    // 3. Show the generated room code
-    // 4. Show the generated QR-code
-    // 5. A button to create the room
 
     const [roomName, setRoomName] = useState('');
-    const [roomCode, setRoomCode] = useState('RXcN4');
+    const [roomDescription, setRoomDescription] = useState('');
+    const [roomImageUrl, setRoomImageUrl] = useState('');
+
+    // TODO: The room code should also check if if will woverride an existing room. If so, generate a new one.
+    const [roomCode, setRoomCode] = useState(generateString(6));
+
+    const { user } = useAuth();
+
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const createRoom = async () => {
-        navigation.navigate("RoomScreen", {
-            roomProps: {
-                name: roomName,
-                code: roomCode
-            }
-        });
 
         try {
-            const docRef = await addDoc(collection(db, "rooms"), {
+            const room = {
                 name: roomName,
                 code: roomCode,
+                description: roomDescription,
                 createdAt: new Date(),
-            });
+                imageUrl: roomImageUrl,
+                createdById: user.id,
+            }
 
-            console.log("Document written with ID: ", docRef.id);
+            navigation.navigate("RoomScreen", { roomProps: room });
+
+            await setDoc(doc(db, "rooms", roomCode), room);
+
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error setting document: ", e);
         }
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>CreateRoomScreen</Text>
+            <Text style={styles.header}>Create New Room</Text>
 
             <TextInput
                 placeholder="Enter Room Name"
@@ -49,11 +65,31 @@ const CreateRoomScreen = () => {
                 style={styles.input}
             />
 
-            <Text>Generated Code</Text>
-            <Text>{roomCode}</Text>
+            <TextInput
+                placeholder="Enter Room Description (optional)"
+                value={roomDescription}
+                onChangeText={text => { setRoomDescription(text) }}
+                style={styles.input}
+            />
 
-            <Text>Generated QR-Code</Text>
-            <Text>THIS WILL BE A GENERATED QR-CODE</Text>
+            <TextInput
+                placeholder="Enter Image Url (optional)"
+                value={roomImageUrl}
+                onChangeText={text => { setRoomImageUrl(text) }}
+                style={styles.input}
+            />
+
+            <View style={styles.spacing} />
+
+            <Text style={styles.header}>Generated</Text>
+            <Text style={styles.codeText}>{roomCode}</Text>
+
+            <Image
+                source={{ uri: "https://ponderwall.com/wp-content/uploads/2022/05/Qrcode.png" }}
+                style={{ width: 200, height: 200 }}
+            />
+
+            <View style={styles.spacing} />
 
             <TouchableOpacity
                 onPress={() => { createRoom() }}
@@ -90,6 +126,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 10,
     },
+    codeText: {
+        marginTop: -20,
+        fontSize: 100,
+        fontWeight: 'bold',
+    },
+    header: {
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    spacing: {
+        height: 50,
+    }
 })
 
 export default CreateRoomScreen
