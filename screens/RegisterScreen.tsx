@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
     CompositeNavigationProp,
@@ -22,7 +22,8 @@ import { RootStackParamList } from "../navigator/RootNavigator";
 import { RoomStackParamList } from "../navigator/RoomNavigator";
 import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
-import { db, auth, addDoc, collection } from "../firebase";
+import { db, auth } from "../firebase";
+import { addDoc, collection } from "firebase/firestore";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -37,24 +38,38 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
-    const register = async () => {
-        try {
-            const docRef = await addDoc(collection(db, "users"), {
-                name: name,
-                email: email,
-                password: password,
-                imageUrl: imageUrl,
-            });
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerBackTitle: "Back to Login"
+        });
+    }, [navigation]);
 
-            console.log("Document written with ID: ", docRef.id);
-            setName("");
-            setEmail("");
-            setPassword("");
-            setImageUrl("");
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser: any) => {
+            if (authUser) {
+                navigation.replace("HomeScreen");
+            }
+        })
+
+        return unsubscribe;
+    }, [])
+
+
+    const register = (): void => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then((authUser: any) => {
+                authUser.user.updateProfile({
+                    displayName: name,
+                    photoURL:
+                        imageUrl ||
+                        "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+
+                })
+            })
+            .catch((error: any) => alert(error.message));
     };
+
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height">
