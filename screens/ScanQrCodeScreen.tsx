@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Icon } from '@rneui/themed';
 import { Image } from '@rneui/themed';
+import AccountButton from '../components/AccountButton';
 
 
 const ScanQrCodeScreen = () => {
@@ -11,14 +12,7 @@ const ScanQrCodeScreen = () => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
+            headerRight: () => (<AccountButton />),
         });
     }, [navigation]);
 

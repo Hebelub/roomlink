@@ -8,6 +8,8 @@ import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Room } from '../types';
 import { Icon } from '@rneui/themed';
+import { QrCodeScanner } from '@mui/icons-material';
+import AccountButton from '../components/AccountButton';
 
 
 async function getRoom(roomId: string): Promise<Room | null> {
@@ -33,31 +35,11 @@ const HomeScreen = () => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
+            headerRight: () => (<AccountButton />),
         });
     }, [navigation]);
 
     const [roomCode, setRoomCode] = useState('');
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
-        });
-    }, [navigation]);
 
     const joinRoom = () => {
 
@@ -102,10 +84,7 @@ const HomeScreen = () => {
                     onPress={() => { navigation.navigate("ScanQrCodeScreen") }}
                     style={[styles.button, styles.buttonOutline]}
                 >
-                    <Icon
-                        name="entypo-camera"
-                        type="entypo"
-                    />
+                    <QrCodeScanner />
                 </TouchableOpacity>
 
             </View>

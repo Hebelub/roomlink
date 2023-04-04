@@ -11,6 +11,7 @@ import RoomInfoScreen from '../screens/RoomInfoScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
 import { Room } from '../types';
+import AccountButton from '../components/AccountButton';
 
 
 export type RoomStackParamList = {
@@ -41,14 +42,7 @@ const RoomNavigator = () => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: roomProps.name,
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
+            headerRight: () => (<AccountButton />),
         });
     }, [navigation]);
 
