@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import RoomNavigator from './RoomNavigator';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -10,6 +10,8 @@ import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import { Room } from '../types';
+import { Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 
 export type RootStackParamList = {

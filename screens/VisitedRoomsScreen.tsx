@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '@rneui/base';
 import VisitListItem from '../components/VisitListItem';
@@ -31,7 +31,33 @@ async function getRoom(roomId: string): Promise<Room | null> {
 const VisitedRoomsScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Icon
+                    name="user"
+                    type="entypo"
+                    color="tomato"
+                    onPress={() => { navigation.navigate("ProfileScreen") }}
+                />
+            ),
+        });
+    }, [navigation]);
+
     const [roomCode, setRoomCode] = useState('');
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Icon
+                    name="user"
+                    type="entypo"
+                    color="tomato"
+                    onPress={() => { navigation.navigate("ProfileScreen") }}
+                />
+            ),
+        });
+    }, [navigation]);
 
     const joinRoom = () => {
 
@@ -47,14 +73,6 @@ const VisitedRoomsScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Navigate to the profile screen */}
-            <TouchableOpacity
-                onPress={() => { navigation.navigate("ProfileScreen") }}
-                style={[styles.button, styles.buttonOutline, styles.width]}
-            >
-                <Text>Profile</Text>
-            </TouchableOpacity>
-
             <Text style={styles.header}>List of rooms you have visited</Text>
 
             {/* List of rooms */}
@@ -102,9 +120,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    width: {
-        width: 300,
     },
     input: {
         height: 50,
