@@ -3,17 +3,46 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '@rneui/base';
 import VisitListItem from '../components/VisitListItem';
+import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { collection, doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { Room } from '../types';
+
+
+async function getRoom(roomId: string): Promise<Room | null> {
+    const collectionRef = collection(db, "rooms");
+    const documentRef = doc(collectionRef, roomId);
+
+    try {
+        const docSnapshot = await getDoc(documentRef);
+        if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+            return data as Room;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error retrieving document: ", error);
+        return null;
+    }
+}
 
 const VisitedRoomsScreen = () => {
-
-    // Should contain:
-    // 1. A list of rooms that the logged in user has visited
-    // 2. A button to go to the scan QR-code screen
-    // 3. An inputfield to enter a room code and a button to join that room
-
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     const [roomCode, setRoomCode] = useState('');
+
+    const joinRoom = () => {
+
+        getRoom(roomCode).then((room) => {
+            console.log("room", room);
+            if (room) {
+                navigation.navigate("RoomScreen", { roomProps: room })
+            } else {
+                alert("Room does not exist");
+            }
+        });
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -41,7 +70,7 @@ const VisitedRoomsScreen = () => {
                 />
 
                 <TouchableOpacity
-                    onPress={() => { navigation.navigate("RoomScreen") }}
+                    onPress={() => { joinRoom() }}
                     style={styles.button}
                 >
                     <Text>Join Room</Text>
