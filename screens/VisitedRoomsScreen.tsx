@@ -60,7 +60,7 @@ const VisitedRoomsScreen = () => {
             {/* List of rooms */}
 
             <View style={styles.spacing} />
-            x
+
             <Text style={styles.header}>Join a room</Text>
             <View style={styles.sideBySide}>
                 <TextInput
