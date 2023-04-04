@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
-import TabNavigator, { TabStackParamList } from './TabNavigator';
+import RoomNavigator from './RoomNavigator';
 import ProfileScreen from '../screens/ProfileScreen';
 import ModalScreen from '../screens/ModalScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -9,8 +9,7 @@ import VisitedRoomsScreen from '../screens/VisitedRoomsScreen';
 import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { RouteProp } from '@react-navigation/native';
-import { RoomProps } from './TabNavigator';
+import { RoomProps } from '../types';
 
 
 export type RootStackParamList = {
@@ -45,7 +44,7 @@ const RootNavigator = () => {
             <RootStack.Group>
                 <RootStack.Screen
                     name="RoomScreen"
-                    component={TabNavigator}
+                    component={RoomNavigator}
                 />
             </RootStack.Group>
 

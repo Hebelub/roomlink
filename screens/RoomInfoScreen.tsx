@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { TabNavigatorScreenNavigationProp } from '../navigator/TabNavigator';
+import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
 

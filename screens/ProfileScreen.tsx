@@ -2,14 +2,15 @@ import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-na
 import React from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
-import LoginScreen from './LoginScreen';
 import { useNavigation } from '@react-navigation/native';
 import VisitListItem from '../components/VisitListItem';
+import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { RoomProps } from '../types';
 
 const ProfileScreen = () => {
 
     const tw = useTailwind();
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<RootStackNavigationProp>();
     const { user } = useAuth();
 
     return (
@@ -36,8 +37,14 @@ const ProfileScreen = () => {
             <View style={tw('flex flex-row items-center')}>
                 <View style={tw('flex flex-col')}>
                     <Text>Your Rooms</Text>
-                    <VisitListItem roomProps={{ roomName: 'My First Room', roomCode: "123427" }} />
-                    <VisitListItem roomProps={{ roomName: 'Best Room', roomCode: "452986" }} />
+                    <VisitListItem roomProps={{
+                        name: 'My First Room',
+                        code: "123427"
+                    }} />
+                    <VisitListItem roomProps={{
+                        name: 'Best Room',
+                        code: "452986",
+                    }} />
                 </View>
             </View>
 

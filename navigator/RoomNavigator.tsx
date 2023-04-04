@@ -1,24 +1,19 @@
 import { Text, View } from 'react-native'
 import React, { Component, useLayoutEffect } from 'react'
 import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProfileScreen from '../screens/ProfileScreen';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
 import RoomUsersScreen from '../screens/RoomUsersScreen';
-import LoginScreen from '../screens/LoginScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
 import RoomInfoScreen from '../screens/RoomInfoScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
+import { RoomProps } from '../types';
 
-export type RoomProps = {
-    roomName: string;
-    roomCode: string;
-};
 
-export type TabStackParamList = {
+export type RoomStackParamList = {
     Profile: undefined;
     Chat: undefined;
     Items: undefined;
@@ -26,26 +21,26 @@ export type TabStackParamList = {
     Info: { roomProps: RoomProps };
 }
 
-export type TabNavigatorScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<TabStackParamList>,
+export type RoomNavigatorScreenNavigationProp = CompositeNavigationProp<
+    BottomTabNavigationProp<RoomStackParamList>,
     NativeStackNavigationProp<RootStackParamList, "RoomScreen">
 >;
 
-type TabNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
+type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
-const Tab = createBottomTabNavigator<TabStackParamList>();
+const Tab = createBottomTabNavigator<RoomStackParamList>();
 
-const TabNavigator = () => {
+const RoomNavigator = () => {
 
-    const navigation = useNavigation<TabNavigatorScreenNavigationProp>();
+    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
     const {
         params: { roomProps },
-    } = useRoute<TabNavigatorRouteProp>();
+    } = useRoute<RoomNavigatorRouteProp>();
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: roomProps.roomName,
+            headerTitle: roomProps.name,
             headerRight: () => (
                 <Icon
                     name="user"
@@ -120,4 +115,4 @@ const TabNavigator = () => {
     )
 }
 
-export default TabNavigator
+export default RoomNavigator

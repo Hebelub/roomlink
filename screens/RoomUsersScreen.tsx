@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
-import { TabStackParamList } from '../navigator/TabNavigator';
+import { RoomStackParamList } from '../navigator/RoomNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTailwind } from 'tailwind-rn/dist';
@@ -10,7 +10,7 @@ import UserCard from '../components/UserCard';
 import { Input } from '@rneui/themed';
 
 export type UserScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<TabStackParamList, 'Users'>,
+    BottomTabNavigationProp<RoomStackParamList, 'Users'>,
     NativeStackNavigationProp<RootStackParamList>
 >;
 

@@ -1,11 +1,6 @@
 import { ScrollView, Text, View } from 'react-native'
 import React, { Component, useLayoutEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
-import { useNavigation, CompositeNavigationProp } from '@react-navigation/native';
-import { TabStackParamList } from '../navigator/TabNavigator';
-import { RootStackParamList } from '../navigator/RootNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Image, Input } from '@rneui/themed';
 
 const RoomItemScreen = () => {

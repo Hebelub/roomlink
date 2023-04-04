@@ -7,10 +7,10 @@ import { TouchableOpacity, View, Text } from 'react-native'
 import { useTailwind } from 'tailwind-rn/dist';
 import useUsers from '../hooks/useUsers';
 import { RootStackParamList } from '../navigator/RootNavigator';
-import { TabStackParamList } from '../navigator/TabNavigator';
+import { RoomStackParamList } from '../navigator/RoomNavigator';
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<TabStackParamList>,
+    BottomTabNavigationProp<RoomStackParamList>,
     NativeStackNavigationProp<RootStackParamList, "MyModal">
 >;
 

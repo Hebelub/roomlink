@@ -20,13 +20,13 @@ import { Icon } from "@rneui/themed";
 import { useTailwind } from "tailwind-rn/dist";
 import useUsers from "../hooks/useUsers";
 import { RootStackParamList } from "../navigator/RootNavigator";
-import { TabStackParamList } from "../navigator/TabNavigator";
+import { RoomStackParamList } from "../navigator/RoomNavigator";
 import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
 import { db, auth, addDoc, collection } from "../firebase";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<TabStackParamList>,
+    BottomTabNavigationProp<RoomStackParamList>,
     NativeStackNavigationProp<RootStackParamList, "Register">
 >;
 

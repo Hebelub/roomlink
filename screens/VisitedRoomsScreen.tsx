@@ -28,11 +28,11 @@ const VisitedRoomsScreen = () => {
             <Text>List of rooms you have visited</Text>
 
             <ScrollView>
-                <VisitListItem roomProps={{ roomName: 'My First Room', roomCode: "123427" }} />
-                <VisitListItem roomProps={{ roomName: 'Citchen number 241', roomCode: "248523" }} />
-                <VisitListItem roomProps={{ roomName: 'Barnabases Visit Card', roomCode: "774286" }} />
-                <VisitListItem roomProps={{ roomName: 'Information about statue', roomCode: "247591" }} />
-                <VisitListItem roomProps={{ roomName: 'Study Group', roomCode: "582938" }} />
+                <VisitListItem roomProps={{ name: 'My First Room', code: "123427" }} />
+                <VisitListItem roomProps={{ name: 'Citchen number 241', code: "248523" }} />
+                <VisitListItem roomProps={{ name: 'Barnabases Visit Card', code: "774286" }} />
+                <VisitListItem roomProps={{ name: 'Information about statue', code: "247591" }} />
+                <VisitListItem roomProps={{ name: 'Study Group', code: "582938" }} />
             </ScrollView>
 
             <View>

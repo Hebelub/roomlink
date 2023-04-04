@@ -1,10 +1,9 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
-import { CustomerScreenNavigationProp } from '../screens/RoomItemScreen';
 import { useNavigation } from '@react-navigation/native';
-
 import { Card, Icon } from '@rneui/themed';
+import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 
 type Props = {
     userId: string;
@@ -15,7 +14,7 @@ type Props = {
 const UserCard = ({ email, name, userId }: Props) => {
 
     const tw = useTailwind();
-    const navigation = useNavigation<CustomerScreenNavigationProp>();
+    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
     return (
         <TouchableOpacity

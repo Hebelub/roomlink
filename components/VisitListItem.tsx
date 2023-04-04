@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
-import { RoomProps, TabStackParamList } from '../navigator/TabNavigator';
+import { RoomProps } from '../types';
 
 type Props = {
     roomProps: RoomProps;
@@ -18,8 +18,7 @@ const VisitListItem = ({ roomProps }: Props) => {
             }}
             style={[styles.button, styles.buttonOutline]}
         >
-            <Text>{roomProps.roomName}</Text>
-
+            <Text>{roomProps.name}</Text>
         </TouchableOpacity>
     )
 }
