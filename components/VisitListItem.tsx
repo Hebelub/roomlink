@@ -19,6 +19,7 @@ const VisitListItem = ({ roomProps }: Props) => {
             style={[styles.button, styles.buttonOutline]}
         >
             <Text>{roomProps.name}</Text>
+            <Text style={styles.description}>{roomProps.description}</Text>
         </TouchableOpacity>
     )
 }
@@ -50,4 +51,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 10,
     },
+    description: {
+        fontSize: 12,
+        fontStyle: 'italic',
+    }
 })

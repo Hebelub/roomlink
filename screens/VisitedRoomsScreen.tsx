@@ -20,23 +20,19 @@ const VisitedRoomsScreen = () => {
             {/* Navigate to the profile screen */}
             <TouchableOpacity
                 onPress={() => { navigation.navigate("ProfileScreen") }}
-                style={styles.button}
+                style={[styles.button, styles.buttonOutline]}
             >
-                <Text>GOTO: Profile</Text>
+                <Text>Profile</Text>
             </TouchableOpacity>
 
-            <Text>List of rooms you have visited</Text>
+            <Text style={styles.header}>List of rooms you have visited</Text>
 
-            <ScrollView>
-                <VisitListItem roomProps={{ name: 'My First Room', code: "123427" }} />
-                <VisitListItem roomProps={{ name: 'Citchen number 241', code: "248523" }} />
-                <VisitListItem roomProps={{ name: 'Barnabases Visit Card', code: "774286" }} />
-                <VisitListItem roomProps={{ name: 'Information about statue', code: "247591" }} />
-                <VisitListItem roomProps={{ name: 'Study Group', code: "582938" }} />
-            </ScrollView>
+            {/* List of rooms */}
+
+            <View style={styles.spacing} />
 
             <View>
-                <Text>Enter room code</Text>
+                <Text style={styles.header}>Enter room code</Text>
                 <TextInput
                     placeholder="Enter room code"
                     value={roomCode}
@@ -90,4 +86,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 10,
     },
+    header: {
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    spacing: {
+        height: 50,
+    }
 })

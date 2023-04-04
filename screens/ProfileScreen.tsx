@@ -1,13 +1,35 @@
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import VisitListItem from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
+import { db } from '../firebase';
+import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData } from 'firebase/firestore';
+
+
+const getUserRooms = async (userId: string): Promise<Room[]> => {
+    const q = query(collection(db, "rooms"), where("createdById", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const userRooms: Room[] = [];
+    querySnapshot.forEach((doc) => {
+        userRooms.push(doc.data() as Room);
+    });
+    return userRooms;
+};
 
 const ProfileScreen = () => {
+
+    const [userRooms, setUserRooms] = useState<Room[]>([]);
+
+    useEffect(() => {
+        getUserRooms("the_user_id")
+            .then((r) => {
+                setUserRooms(r);
+            });
+    });
 
     const tw = useTailwind();
     const navigation = useNavigation<RootStackNavigationProp>();
@@ -17,11 +39,11 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
 
             {/* User info */}
-            <View style={tw('flex flex-row items-center')}>
-                <View style={tw('flex flex-col')}>
+            <View>
+                <View>
                     <Text>User Information</Text>
-                    <Text style={tw('text-2xl font-bold')}>{user?.name}</Text>
-                    <Text style={tw('text-gray-500')}>{user?.email}</Text>
+                    <Text>{user?.name}</Text>
+                    <Text>{user?.email}</Text>
                 </View>
             </View>
 
@@ -34,17 +56,19 @@ const ProfileScreen = () => {
             </TouchableOpacity>
 
             {/* Your rooms */}
-            <View style={tw('flex flex-row items-center')}>
-                <View style={tw('flex flex-col')}>
-                    <Text>Your Rooms</Text>
-                    <VisitListItem roomProps={{
-                        name: 'My First Room',
-                        code: "123427"
-                    }} />
-                    <VisitListItem roomProps={{
-                        name: 'Best Room',
-                        code: "452986",
-                    }} />
+            <View>
+                <View>
+                    <Text style={styles.header}>Your Rooms</Text>
+
+                    {/* List of rooms */}
+                    <View>
+                        {userRooms.map((room: Room) => {
+                            return (
+                                <VisitListItem roomProps={room} />
+                            )
+                        })}
+                    </View>
+
                 </View>
             </View>
 
@@ -89,4 +113,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 10,
     },
+    header: {
+        fontSize: 30,
+    }
 })

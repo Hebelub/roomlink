@@ -23,7 +23,7 @@ const RoomInfoScreen = () => {
 
             <View style={styles.spacing} />
 
-            <Text>The room was created at {roomProps.createdAt.toDateString()}</Text>
+            {/* <Text>The room was created at {roomProps.createdAt.toDateString()}</Text> */}
 
             <Text style={styles.codeText}>{roomProps.code}</Text>
 
