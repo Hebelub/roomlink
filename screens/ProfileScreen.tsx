@@ -78,10 +78,6 @@ const ProfileScreen = () => {
             >
                 <Text>Create a new Room</Text>
             </TouchableOpacity>
-
-
-
-
         </SafeAreaView>
     )
 }

@@ -7,6 +7,7 @@ import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Room } from '../types';
+import { Icon } from '@rneui/themed';
 
 
 async function getRoom(roomId: string): Promise<Room | null> {
@@ -49,7 +50,7 @@ const VisitedRoomsScreen = () => {
             {/* Navigate to the profile screen */}
             <TouchableOpacity
                 onPress={() => { navigation.navigate("ProfileScreen") }}
-                style={[styles.button, styles.buttonOutline]}
+                style={[styles.button, styles.buttonOutline, styles.width]}
             >
                 <Text>Profile</Text>
             </TouchableOpacity>
@@ -59,9 +60,9 @@ const VisitedRoomsScreen = () => {
             {/* List of rooms */}
 
             <View style={styles.spacing} />
-
-            <View>
-                <Text style={styles.header}>Enter room code</Text>
+            x
+            <Text style={styles.header}>Join a room</Text>
+            <View style={styles.sideBySide}>
                 <TextInput
                     placeholder="Enter room code"
                     value={roomCode}
@@ -73,14 +74,20 @@ const VisitedRoomsScreen = () => {
                     onPress={() => { joinRoom() }}
                     style={styles.button}
                 >
-                    <Text>Join Room</Text>
+                    <Icon
+                        name="entypo-controller-play"
+                        type="entypo"
+                    />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { navigation.navigate("ScanQrCodeScreen") }}
                     style={[styles.button, styles.buttonOutline]}
                 >
-                    <Text>Scan QR-Code</Text>
+                    <Icon
+                        name="entypo-camera"
+                        type="entypo"
+                    />
                 </TouchableOpacity>
 
             </View>
@@ -96,24 +103,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    width: {
+        width: 300,
+    },
     input: {
         height: 50,
         width: 300,
-        margin: 10,
         borderWidth: 1,
         padding: 10,
     },
     button: {
         backgroundColor: 'lightblue',
         padding: 15,
-        width: 300,
+        width: 40,
         alignItems: 'center',
         borderRadius: 5,
     },
     buttonOutline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
-        marginTop: 10,
     },
     header: {
         fontSize: 30,
@@ -121,5 +129,10 @@ const styles = StyleSheet.create({
     },
     spacing: {
         height: 50,
+    },
+    sideBySide: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     }
 })
