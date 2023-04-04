@@ -33,7 +33,7 @@ const CreateRoomScreen = () => {
             <Text>THIS WILL BE A GENERATED QR-CODE</Text>
 
             <TouchableOpacity
-                onPress={() => { navigation.navigate("RoomScreen", { roomProps: { roomName: roomName, roomCode: roomCode } }) }}
+                onPress={() => { navigation.navigate("RoomScreen", { roomProps: { name: roomName, code: roomCode } }) }}
                 style={styles.button}
             >
                 <Text>Create Room</Text>
