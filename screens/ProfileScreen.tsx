@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import VisitListItem from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { RoomProps } from '../types';
+import { Room } from '../types';
 
 const ProfileScreen = () => {
 

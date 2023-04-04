@@ -14,8 +14,8 @@ const RoomInfoScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text>{roomProps.roomName}</Text>
-            <Text>{roomProps.roomCode}</Text>
+            <Text>{roomProps.name}</Text>
+            <Text>{roomProps.code}</Text>
         </View>
     )
 }

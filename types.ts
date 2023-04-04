@@ -1,4 +1,4 @@
-export type RoomProps = {
+export type Room = {
     name: string;
     code: string;
     description?: string;

@@ -2,6 +2,8 @@ import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity } fro
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const CreateRoomScreen = () => {
     // Should contain:
@@ -14,6 +16,27 @@ const CreateRoomScreen = () => {
     const [roomName, setRoomName] = useState('');
     const [roomCode, setRoomCode] = useState('RXcN4');
     const navigation = useNavigation<RootStackNavigationProp>();
+
+    const createRoom = async () => {
+        navigation.navigate("RoomScreen", {
+            roomProps: {
+                name: roomName,
+                code: roomCode
+            }
+        });
+
+        try {
+            const docRef = await addDoc(collection(db, "rooms"), {
+                name: roomName,
+                code: roomCode,
+                createdAt: new Date(),
+            });
+
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,7 +56,7 @@ const CreateRoomScreen = () => {
             <Text>THIS WILL BE A GENERATED QR-CODE</Text>
 
             <TouchableOpacity
-                onPress={() => { navigation.navigate("RoomScreen", { roomProps: { name: roomName, code: roomCode } }) }}
+                onPress={() => { createRoom() }}
                 style={styles.button}
             >
                 <Text>Create Room</Text>

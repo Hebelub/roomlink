@@ -2,10 +2,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
-import { RoomProps } from '../types';
+import { Room } from '../types';
 
 type Props = {
-    roomProps: RoomProps;
+    roomProps: Room;
 }
 
 const VisitListItem = ({ roomProps }: Props) => {

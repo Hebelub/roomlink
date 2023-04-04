@@ -10,7 +10,7 @@ import RoomProfileScreen from '../screens/RoomProfileScreen';
 import RoomInfoScreen from '../screens/RoomInfoScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
-import { RoomProps } from '../types';
+import { Room } from '../types';
 
 
 export type RoomStackParamList = {
@@ -18,7 +18,7 @@ export type RoomStackParamList = {
     Chat: undefined;
     Items: undefined;
     Users: undefined;
-    Info: { roomProps: RoomProps };
+    Info: { roomProps: Room };
 }
 
 export type RoomNavigatorScreenNavigationProp = CompositeNavigationProp<

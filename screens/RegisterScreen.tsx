@@ -18,7 +18,6 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import { useTailwind } from "tailwind-rn/dist";
-import useUsers from "../hooks/useUsers";
 import { RootStackParamList } from "../navigator/RootNavigator";
 import { RoomStackParamList } from "../navigator/RoomNavigator";
 import { StatusBar } from "expo-status-bar";

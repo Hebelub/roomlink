@@ -9,11 +9,11 @@ import VisitedRoomsScreen from '../screens/VisitedRoomsScreen';
 import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { RoomProps } from '../types';
+import { Room } from '../types';
 
 
 export type RootStackParamList = {
-    RoomScreen: { roomProps: RoomProps };
+    RoomScreen: { roomProps: Room };
     MyModal: { userId: string; name: string };
     Register: undefined;
     CreateRoomScreen: undefined;
