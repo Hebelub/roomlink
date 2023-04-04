@@ -5,7 +5,7 @@ import RoomNavigator from './RoomNavigator';
 import ProfileScreen from '../screens/ProfileScreen';
 import ModalScreen from '../screens/ModalScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import VisitedRoomsScreen from '../screens/VisitedRoomsScreen';
+import HomeScreen from '../screens/HomeScreen';
 import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -21,7 +21,7 @@ export type RootStackParamList = {
     CreateRoomScreen: undefined;
     ProfileScreen: undefined;
     ScanQrCodeScreen: undefined;
-    VisitedRoomsScreen: undefined;
+    HomeScreen: undefined;
     LoginScreen: undefined;
 }
 
@@ -35,7 +35,7 @@ const RootNavigator = () => {
         <RootStack.Navigator>
 
             <RootStack.Group>
-                <RootStack.Screen name="VisitedRoomsScreen" component={VisitedRoomsScreen} />
+                <RootStack.Screen name="HomeScreen" component={HomeScreen} />
                 <RootStack.Screen name="LoginScreen" component={LoginScreen} />
                 <RootStack.Screen name="Register" component={RegisterScreen} />
                 <RootStack.Screen name="CreateRoomScreen" component={CreateRoomScreen} />

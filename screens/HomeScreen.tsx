@@ -28,7 +28,7 @@ async function getRoom(roomId: string): Promise<Room | null> {
     }
 }
 
-const VisitedRoomsScreen = () => {
+const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     useLayoutEffect(() => {
@@ -113,7 +113,7 @@ const VisitedRoomsScreen = () => {
     )
 }
 
-export default VisitedRoomsScreen
+export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
