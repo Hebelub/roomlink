@@ -5,6 +5,7 @@ import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Icon } from '@rneui/themed';
 import { Image } from '@rneui/themed';
 import AccountButton from '../components/AccountButton';
+import { StyleSheet } from 'react-native';
 
 
 const ScanQrCodeScreen = () => {
@@ -17,10 +18,8 @@ const ScanQrCodeScreen = () => {
     }, [navigation]);
 
     return (
-        <View>
-            <Text>Scan with the camera. It will join the room that you scan</Text>
-
-            <Text>This should be a QR-Code camera scanner</Text>
+        <View style={styles.container}>
+            <Text style={styles.header}>Scan Room With Camera</Text>
 
             <Image
                 source={{ uri: "https://ponderwall.com/wp-content/uploads/2022/05/Qrcode.png" }}
@@ -29,5 +28,18 @@ const ScanQrCodeScreen = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 40,
+    },
+});
 
 export default ScanQrCodeScreen
