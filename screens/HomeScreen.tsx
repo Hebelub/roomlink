@@ -8,7 +8,7 @@ import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Room } from '../types';
 import { Icon } from '@rneui/themed';
-import { QrCodeScanner } from '@mui/icons-material';
+import { QrCodeScanner, Send } from '@mui/icons-material';
 import AccountButton from '../components/AccountButton';
 
 
@@ -72,12 +72,9 @@ const HomeScreen = () => {
 
                 <TouchableOpacity
                     onPress={() => { joinRoom() }}
-                    style={styles.button}
+                    style={[styles.button, styles.buttonOutline]}
                 >
-                    <Icon
-                        name="entypo-controller-play"
-                        type="entypo"
-                    />
+                    <Send />
                 </TouchableOpacity>
 
                 <TouchableOpacity

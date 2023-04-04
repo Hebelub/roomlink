@@ -12,6 +12,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
 import { Room } from '../types';
 import AccountButton from '../components/AccountButton';
+import { Info, Accessibility, Chat, Category, Group } from '@mui/icons-material';
 
 
 export type RoomStackParamList = {
@@ -53,49 +54,19 @@ const RoomNavigator = () => {
                 tabBarInactiveTintColor: "gray",
                 tabBarIcon: ({ focused }) => {
                     if (route.name === 'Profile') {
-                        return (
-                            <Icon
-                                name="user"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
+                        return (<Accessibility />);
                     }
                     else if (route.name === 'Chat') {
-                        return (
-                            <Icon
-                                name="chat"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
+                        return (<Chat />);
                     }
                     else if (route.name === 'Items') {
-                        return (
-                            <Icon
-                                name="box"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
+                        return (<Category />);
                     }
                     else if (route.name === 'Users') {
-                        return (
-                            <Icon
-                                name="users"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
+                        return (<Group />);
                     }
                     else if (route.name === 'Info') {
-                        return (
-                            <Icon
-                                name="info"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
+                        return (<Info />);
                     }
                 }
             })}>

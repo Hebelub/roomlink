@@ -55,8 +55,10 @@ const RootNavigator = () => {
                     presentation: "modal",
                 }}
             >
-                <RootStack.Screen name="MyModal" component={ModalScreen} />
-
+                <RootStack.Screen
+                    name="MyModal"
+                    component={ModalScreen}
+                />
             </RootStack.Group>
 
         </RootStack.Navigator>
