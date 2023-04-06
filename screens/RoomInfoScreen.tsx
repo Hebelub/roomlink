@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     codeText: {
-        fontSize: 100,
+        fontSize: 80,
         fontWeight: 'bold',
     },
     header: {

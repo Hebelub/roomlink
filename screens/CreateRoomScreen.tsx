@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
@@ -56,6 +56,7 @@ const CreateRoomScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+
             <Text style={styles.header}>Create New Room</Text>
 
             <TextInput
@@ -81,7 +82,7 @@ const CreateRoomScreen = () => {
 
             <View style={styles.spacing} />
 
-            <Text style={styles.header}>Generated</Text>
+            <Text style={styles.header}>Code</Text>
             <Text style={styles.codeText}>{roomCode}</Text>
 
             <Image
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     },
     codeText: {
         marginTop: -20,
-        fontSize: 100,
+        fontSize: 80,
         fontWeight: 'bold',
     },
     header: {

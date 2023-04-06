@@ -93,7 +93,7 @@ const HomeScreen = () => {
                     style={styles.button}
                 >
                     <Icon
-                        name="entypo-controller-play"
+                        name="controller-play"
                         type="entypo"
                     />
                 </TouchableOpacity>
@@ -103,8 +103,8 @@ const HomeScreen = () => {
                     style={[styles.button, styles.buttonOutline]}
                 >
                     <Icon
-                        name="entypo-camera"
-                        type="entypo"
+                        name="qr-code-scanner"
+                        type="materialIcons"
                     />
                 </TouchableOpacity>
 
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        width: 300,
+        width: 250,
         borderWidth: 1,
         padding: 10,
     },
     button: {
         backgroundColor: 'lightblue',
-        padding: 15,
+        paddingVertical: 8,
         width: 40,
         alignItems: 'center',
         borderRadius: 5,
