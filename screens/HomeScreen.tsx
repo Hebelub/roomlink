@@ -1,18 +1,15 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '@rneui/base';
-import VisitListItem from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Room } from '../types';
-import { Icon } from '@rneui/themed';
 import { QrCodeScanner, Send } from '@mui/icons-material';
 import AccountButton from '../components/AccountButton';
 
 
-async function getRoom(roomId: string): Promise<Room | null> {
+const getRoom = async (roomId: string): Promise<Room | null> => {
     const collectionRef = collection(db, "rooms");
     const documentRef = doc(collectionRef, roomId);
 
@@ -28,7 +25,7 @@ async function getRoom(roomId: string): Promise<Room | null> {
         console.error("Error retrieving document: ", error);
         return null;
     }
-}
+};
 
 const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
@@ -51,7 +48,7 @@ const HomeScreen = () => {
                 alert("Room does not exist");
             }
         });
-    }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -89,8 +86,6 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -126,4 +121,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     }
-})
+});
+
+export default HomeScreen;

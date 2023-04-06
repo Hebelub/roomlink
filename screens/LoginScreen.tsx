@@ -89,6 +89,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 10,
     },
-})
+});
 
-export default LoginScreen
+export default LoginScreen;

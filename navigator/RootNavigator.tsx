@@ -10,8 +10,6 @@ import CreateRoomScreen from '../screens/CreateRoomScreen';
 import ScanQrCodeScreen from '../screens/ScanQrCodeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import { Room } from '../types';
-import { Icon } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
 
 
 export type RootStackParamList = {
@@ -38,8 +36,8 @@ const RootNavigator = () => {
                 <RootStack.Screen name="HomeScreen" component={HomeScreen} />
                 <RootStack.Screen name="LoginScreen" component={LoginScreen} />
                 <RootStack.Screen name="Register" component={RegisterScreen} />
-                <RootStack.Screen name="CreateRoomScreen" component={CreateRoomScreen} />
                 <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
+                <RootStack.Screen name="CreateRoomScreen" component={CreateRoomScreen} />
                 <RootStack.Screen name="ScanQrCodeScreen" component={ScanQrCodeScreen} />
             </RootStack.Group>
 
