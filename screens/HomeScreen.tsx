@@ -1,16 +1,15 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '@rneui/base';
-import VisitListItem from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Room } from '../types';
+import AccountButton from '../components/AccountButton';
 import { Icon } from '@rneui/themed';
 
 
-async function getRoom(roomId: string): Promise<Room | null> {
+const getRoom = async (roomId: string): Promise<Room | null> => {
     const collectionRef = collection(db, "rooms");
     const documentRef = doc(collectionRef, roomId);
 
@@ -26,38 +25,18 @@ async function getRoom(roomId: string): Promise<Room | null> {
         console.error("Error retrieving document: ", error);
         return null;
     }
-}
+};
 
 const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
+            headerRight: () => (<AccountButton />),
         });
     }, [navigation]);
 
     const [roomCode, setRoomCode] = useState('');
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Icon
-                    name="user"
-                    type="entypo"
-                    color="tomato"
-                    onPress={() => { navigation.navigate("ProfileScreen") }}
-                />
-            ),
-        });
-    }, [navigation]);
 
     const joinRoom = () => {
 
@@ -69,7 +48,7 @@ const HomeScreen = () => {
                 alert("Room does not exist");
             }
         });
-    }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -90,7 +69,7 @@ const HomeScreen = () => {
 
                 <TouchableOpacity
                     onPress={() => { joinRoom() }}
-                    style={styles.button}
+                    style={[styles.button, styles.buttonOutline]}
                 >
                     <Icon
                         name="controller-play"
@@ -106,14 +85,12 @@ const HomeScreen = () => {
                         name="qr-code-scanner"
                         type="materialIcons"
                     />
-                </TouchableOpacity>
+                </TouchableOpacity >
 
-            </View>
-        </SafeAreaView>
+            </View >
+        </SafeAreaView >
     )
 }
-
-export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -150,4 +127,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     }
-})
+});
+
+export default HomeScreen;
