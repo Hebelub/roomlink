@@ -1,11 +1,12 @@
 import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 const LoginScreen = () => {
@@ -17,8 +18,25 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const signIn = () => {
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (authUser: any) => {
+            if (authUser) {
+                navigation.replace("HomeScreen");
+            }
+        })
 
+        return unsubscribe;
+    }, [])
+
+    const signIn = () => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential: any) => {
+                const user = userCredential.user;
+            })
+            .catch((error: any) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            })
     }
 
     return (
