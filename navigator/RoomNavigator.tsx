@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native'
-import React, { Component, useLayoutEffect } from 'react'
+import React, { Component, useEffect, useLayoutEffect } from 'react'
 import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
@@ -10,8 +10,10 @@ import RoomProfileScreen from '../screens/RoomProfileScreen';
 import RoomInfoScreen from '../screens/RoomInfoScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
-import { Room } from '../types';
+import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 
 export type RoomStackParamList = {
@@ -31,6 +33,22 @@ type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
 const Tab = createBottomTabNavigator<RoomStackParamList>();
 
+const createVisit = async (roomCode: string, userId: any) => {
+
+    try {
+        const visit: Visit = {
+            visitedRoom: roomCode,
+            visitedBy: userId,
+            lastVisit: new Date(),
+        }
+
+        await setDoc(doc(db, "visits", roomCode + userId), visit);
+
+    } catch (e) {
+        console.error("Error setting document: ", e);
+    }
+}
+
 const RoomNavigator = () => {
 
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
@@ -38,6 +56,16 @@ const RoomNavigator = () => {
     const {
         params: { roomProps },
     } = useRoute<RoomNavigatorRouteProp>();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Create or update visit whenever the room is entered
+
+            createVisit(roomProps.code, "the_user_id");
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     useLayoutEffect(() => {
         navigation.setOptions({

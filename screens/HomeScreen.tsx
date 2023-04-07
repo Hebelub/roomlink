@@ -41,7 +41,6 @@ const HomeScreen = () => {
     const joinRoom = () => {
 
         getRoom(roomCode).then((room) => {
-            console.log("room", room);
             if (room) {
                 navigation.navigate("RoomScreen", { roomProps: room })
             } else {

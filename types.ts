@@ -13,3 +13,9 @@ export type Message = {
     createdAt: Date;
     createdBy: string;
 };
+
+export type Visit = {
+    visitedRoom: string;
+    visitedBy: string;
+    lastVisit: Date;
+}
