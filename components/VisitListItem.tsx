@@ -2,13 +2,14 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
-import { Room } from '../types';
+import { Room, Visit } from '../types';
 
-type Props = {
+export type VisitListItemProps = {
     roomProps: Room;
+    lastVisit: Date | null;
 }
 
-const VisitListItem = ({ roomProps }: Props) => {
+const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     return (

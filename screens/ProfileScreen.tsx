@@ -30,7 +30,7 @@ const ProfileScreen = () => {
             .then((r) => {
                 setUserRooms(r);
             });
-    });
+    }, []);
 
     const tw = useTailwind();
     const navigation = useNavigation<RootStackNavigationProp>();
@@ -67,13 +67,19 @@ const ProfileScreen = () => {
                     <Text style={styles.header}>Your Rooms</Text>
 
                     {/* List of rooms */}
-                    <View>
-                        {userRooms.map((room: Room) => {
-                            return (
-                                <VisitListItem roomProps={room} />
-                            )
-                        })}
-                    </View>
+                    <>
+                        {console.log(userRooms)}
+                        <View>
+                            {userRooms.map((room: Room) => {
+                                return (
+                                    <VisitListItem
+                                        roomProps={room}
+                                        lastVisit={null}
+                                    />
+                                )
+                            })}
+                        </View>
+                    </>
 
                 </View>
             </View>

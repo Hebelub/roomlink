@@ -1,12 +1,13 @@
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput, FlatList } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Room } from '../types';
+import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
 import { Icon } from '@rneui/themed';
+import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 
 
 const getRoom = async (roomId: string): Promise<Room | null> => {
@@ -27,8 +28,25 @@ const getRoom = async (roomId: string): Promise<Room | null> => {
     }
 };
 
+const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
+    const q = query(collection(db, "visits"), where("visitedBy", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const userVisits: VisitListItemProps[] = [];
+    querySnapshot.forEach(async (doc) => {
+        const visit = doc.data() as Visit;
+        userVisits.push({
+            roomProps: (await getRoom(visit.visitedRoom)) as Room,
+            lastVisit: visit.lastVisit,
+        });
+    });
+
+    return userVisits;
+};
+
 const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
+    const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
+    const [roomCode, setRoomCode] = useState('');
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,7 +54,12 @@ const HomeScreen = () => {
         });
     }, [navigation]);
 
-    const [roomCode, setRoomCode] = useState('');
+    useEffect(() => {
+        getUserVisits("the_user_id")
+            .then((r) => {
+                setUserVisits(r);
+            });
+    }, []);
 
     const joinRoom = () => {
 
@@ -54,6 +77,17 @@ const HomeScreen = () => {
             <Text style={styles.header}>List of rooms you have visited</Text>
 
             {/* List of rooms */}
+            <View>
+                {userVisits.map((visit: VisitListItemProps) => {
+                    return (
+                        <VisitListItem
+                            roomProps={visit.roomProps}
+                            lastVisit={visit.lastVisit}
+                        />
+                    );
+                })}
+            </View>
+
 
             <View style={styles.spacing} />
 
