@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import VisitListItem from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
-import { db } from '../firebase';
 import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
+import { db, auth } from "../firebase";
 
 
 const getUserRooms = async (userId: string): Promise<Room[]> => {
@@ -35,6 +36,11 @@ const ProfileScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     const { user } = useAuth();
 
+    const signOut_ = () => {
+        signOut(auth);
+        navigation.navigate("LoginScreen");
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -47,12 +53,12 @@ const ProfileScreen = () => {
                 </View>
             </View>
 
-            {/* Log out button */}
+            {/* Sign out button */}
             <TouchableOpacity
-                onPress={() => { navigation.navigate("LoginScreen") }}
+                onPress={() => { signOut_(); }}
                 style={[styles.button, styles.buttonOutline]}
             >
-                <Text>Log Out</Text>
+                <Text>Sign Out</Text>
             </TouchableOpacity>
 
             {/* Your rooms */}

@@ -4,6 +4,9 @@ import useAuth from '../hooks/useAuth';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { signOut } from "firebase/auth";
+import { db, auth } from "../firebase";
+
 
 const LoginScreen = () => {
 
