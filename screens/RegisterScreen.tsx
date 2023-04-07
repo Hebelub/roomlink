@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Alert,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
@@ -24,6 +25,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
 import { db, auth } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -56,8 +58,7 @@ const RegisterScreen = () => {
 
 
     const register = (): void => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
+        createUserWithEmailAndPassword(auth, email, password)
             .then((authUser: any) => {
                 authUser.user.updateProfile({
                     displayName: name,
