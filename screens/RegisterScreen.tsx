@@ -25,7 +25,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
 import { db, auth } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -49,7 +49,7 @@ const RegisterScreen = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser: any) => {
             if (authUser) {
-                navigation.replace("HomeScreen");
+                // navigation.replace("HomeScreen");
             }
         })
 
@@ -60,7 +60,7 @@ const RegisterScreen = () => {
     const register = (): void => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((authUser: any) => {
-                authUser.user.updateProfile({
+                updateProfile(authUser, {
                     displayName: name,
                     photoURL:
                         imageUrl ||
