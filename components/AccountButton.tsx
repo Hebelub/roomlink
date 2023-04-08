@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigation } from '@react-navigation/native';
@@ -9,12 +9,14 @@ const AccountButton = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     return (
-        <Icon
-            name="user"
-            type="entypo"
-            color="tomato"
-            onPress={() => { navigation.navigate("ProfileScreen") }}
-        />
+        <TouchableOpacity>
+            <Icon
+                name="user"
+                type="entypo"
+                color="black"
+                onPress={() => { navigation.navigate("ProfileScreen") }}
+            />
+        </TouchableOpacity>
     )
 }
 
