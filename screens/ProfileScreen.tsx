@@ -67,20 +67,16 @@ const ProfileScreen = () => {
                     <Text style={styles.header}>Your Rooms</Text>
 
                     {/* List of rooms */}
-                    <>
-                        {console.log(userRooms)}
-                        <View>
-                            {userRooms.map((room: Room) => {
-                                return (
-                                    <VisitListItem
-                                        roomProps={room}
-                                        lastVisit={null}
-                                    />
-                                )
-                            })}
-                        </View>
-                    </>
-
+                    <View>
+                        {userRooms.map((room: Room) => {
+                            return (
+                                <VisitListItem
+                                    roomProps={room}
+                                    lastVisit={null}
+                                />
+                            )
+                        })}
+                    </View>
                 </View>
             </View>
 
