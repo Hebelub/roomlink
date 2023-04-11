@@ -3,7 +3,7 @@ import React, { Component, useEffect, useLayoutEffect } from 'react'
 import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
-import RoomVisitorsScreen from '../screens/RoomUsersScreen';
+import RoomVisitorsScreen from '../screens/RoomVisitorsScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
