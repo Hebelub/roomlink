@@ -46,16 +46,15 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
 const ProfileScreen = () => {
 
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
+    const navigation = useNavigation<RootStackNavigationProp>();
+    const user = auth.currentUser;
 
     useEffect(() => {
-        getUserVisits("the_user_id")
+        getUserVisits(user?.uid ?? "NO ID")
             .then((r) => {
                 setUserVisits(r);
             });
     }, []);
-
-    const navigation = useNavigation<RootStackNavigationProp>();
-    const { user } = useAuth();
 
     const signOut_ = () => {
         signOut(auth);
@@ -69,7 +68,7 @@ const ProfileScreen = () => {
             <View>
                 <View>
                     <Text>User Information</Text>
-                    <Text>{user?.name}</Text>
+                    <Text>{user?.displayName}</Text>
                     <Text>{user?.email}</Text>
                 </View>
             </View>

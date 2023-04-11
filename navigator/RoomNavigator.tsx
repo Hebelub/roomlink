@@ -2,18 +2,16 @@ import { Text, View } from 'react-native'
 import React, { Component, useEffect, useLayoutEffect } from 'react'
 import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RoomChatScreen from '../screens/RoomChatScreen';
-import RoomItemScreen from '../screens/RoomItemScreen';
 import RoomVisitorsScreen from '../screens/RoomVisitorsScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import RoomProfileScreen from '../screens/RoomProfileScreen';
 import RoomInfoScreen from '../screens/RoomInfoScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 
 
 export type RoomStackParamList = {
@@ -58,8 +56,7 @@ const RoomNavigator = () => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             // Create or update visit whenever the room is entered
-
-            createVisit(roomProps.code, "the_user_id");
+            createVisit(roomProps.code, auth.currentUser?.uid ?? "NO ID");
         });
 
         return unsubscribe;

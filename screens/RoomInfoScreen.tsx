@@ -4,6 +4,7 @@ import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { Image } from "@rneui/themed";
+import { auth } from '../firebase';
 
 type RoomInfoScreenRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
@@ -31,6 +32,8 @@ const RoomInfoScreen = () => {
                 source={{ uri: "https://ponderwall.com/wp-content/uploads/2022/05/Qrcode.png" }}
                 style={{ width: 200, height: 200 }}
             />
+
+            <Text>Created By {roomProps.createdById}</Text>
         </View>
     )
 }

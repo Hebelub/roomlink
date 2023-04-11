@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
 import { Icon } from '@rneui/themed';
@@ -57,7 +57,7 @@ const HomeScreen = () => {
     }, [navigation]);
 
     useEffect(() => {
-        getUserVisits("the_user_id")
+        getUserVisits(auth.currentUser?.uid ?? "NO ID")
             .then((r) => {
                 setUserVisits(r);
             });

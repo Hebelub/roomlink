@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 import useAuth from '../hooks/useAuth';
 import { Image } from "@rneui/themed"
 
@@ -29,7 +29,7 @@ const CreateRoomScreen = () => {
     // TODO: The room code should also check if if will woverride an existing room. If so, generate a new one.
     const [roomCode, setRoomCode] = useState(generateString(6));
 
-    const { user } = useAuth();
+    const userUid = auth.currentUser?.uid ?? "";
 
     const navigation = useNavigation<RootStackNavigationProp>();
 
@@ -42,7 +42,7 @@ const CreateRoomScreen = () => {
                 description: roomDescription,
                 createdAt: new Date(),
                 imageUrl: roomImageUrl,
-                createdById: user.id,
+                createdById: userUid,
             }
 
             navigation.navigate("RoomScreen", { roomProps: room });
