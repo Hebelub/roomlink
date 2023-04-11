@@ -44,7 +44,7 @@ const CreateRoomScreen = () => {
                 createdById: userUid,
             }
 
-            navigation.replace("RoomScreen", { roomProps: room });
+            navigation.replace("Room", { roomProps: room });
 
             await setDoc(doc(db, "rooms", roomCode), room);
 

@@ -22,10 +22,10 @@ export type RoomStackParamList = {
 
 export type RoomNavigatorScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
-    NativeStackNavigationProp<RootStackParamList, "RoomScreen">
+    NativeStackNavigationProp<RootStackParamList, "Room">
 >;
 
-export type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
+export type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "Room">;
 
 const Tab = createBottomTabNavigator<RoomStackParamList>();
 
@@ -105,7 +105,7 @@ const RoomNavigator = () => {
                     }
                 }
             })}>
-            {/* The ProfileScreen should be located another place */}
+
             <Tab.Screen name="Info" component={RoomInfoScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Chat" component={RoomChatScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Visitors" component={RoomVisitorsScreen} initialParams={{ roomProps: roomProps }} />

@@ -43,7 +43,7 @@ const RegisterScreen = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (authUser: any) => {
             if (authUser) {
-                navigation.replace("HomeScreen");
+                navigation.replace("Home");
             }
         })
 

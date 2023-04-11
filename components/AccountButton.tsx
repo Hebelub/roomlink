@@ -14,7 +14,7 @@ const AccountButton = () => {
                 name="user"
                 type="entypo"
                 color="black"
-                onPress={() => { navigation.navigate("ProfileScreen") }}
+                onPress={() => { navigation.navigate("Profile") }}
             />
         </TouchableOpacity>
     )

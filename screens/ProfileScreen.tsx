@@ -61,7 +61,7 @@ const ProfileScreen = () => {
 
     const signOut_ = () => {
         signOut(auth);
-        navigation.replace("LoginScreen");
+        navigation.replace("Login");
     }
 
     return (
@@ -105,7 +105,7 @@ const ProfileScreen = () => {
             </View>
 
             <TouchableOpacity
-                onPress={() => { navigation.navigate("CreateRoomScreen") }}
+                onPress={() => { navigation.navigate("CreateRoom") }}
                 style={styles.button}
             >
                 <Text>Create a new Room</Text>
@@ -114,7 +114,7 @@ const ProfileScreen = () => {
     )
 }
 
-export default ProfileScreen
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container: {

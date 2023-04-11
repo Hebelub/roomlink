@@ -7,7 +7,7 @@ import { auth, db } from '../firebase';
 import { Room } from '../types';
 
 
-type EditRoomScreenRouteProp = RouteProp<RootStackParamList, "EditRoomScreen">;
+type EditRoomScreenRouteProp = RouteProp<RootStackParamList, "EditRoom">;
 
 const EditRoomScreen = () => {
 
@@ -35,7 +35,7 @@ const EditRoomScreen = () => {
 
             await setDoc(doc(db, "rooms", roomProps.code), room);
 
-            navigation.replace("RoomScreen", { roomProps: room });
+            navigation.replace("Room", { roomProps: room });
 
         } catch (e) {
             console.error("Error setting document: ", e);
@@ -44,8 +44,6 @@ const EditRoomScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-
-            <Text style={styles.header}>Edit Room</Text>
 
             <TextInput
                 placeholder="Enter Room Name"

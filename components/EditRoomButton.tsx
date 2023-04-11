@@ -21,7 +21,7 @@ const EditRoomButton = ({ roomProps }: EditRoomButtonProps) => {
                 name="edit"
                 type="entypo"
                 color="black"
-                onPress={() => { navigation.navigate("EditRoomScreen", { roomProps: roomProps }) }}
+                onPress={() => { navigation.navigate("EditRoom", { roomProps: roomProps }) }}
             />
         </TouchableOpacity>
     )

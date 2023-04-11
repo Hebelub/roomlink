@@ -34,6 +34,7 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
 
     const promises = querySnapshot.docs.map(async (doc) => {
         const visit = doc.data() as Visit;
+        console.log(visit);
         const room = await getRoom(visit.visitedRoom);
 
         return {
@@ -71,7 +72,7 @@ const HomeScreen = () => {
 
         getRoom(roomCode).then((room) => {
             if (room) {
-                navigation.navigate("RoomScreen", { roomProps: room })
+                navigation.navigate("Room", { roomProps: room })
             } else {
                 alert("Room does not exist");
             }
@@ -117,7 +118,7 @@ const HomeScreen = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { navigation.navigate("ScanQrCodeScreen") }}
+                    onPress={() => { navigation.navigate("ScanQrCode") }}
                     style={[styles.button, styles.buttonOutline]}
                 >
                     <Icon

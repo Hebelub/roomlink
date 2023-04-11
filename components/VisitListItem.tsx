@@ -36,7 +36,7 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate("RoomScreen", { roomProps: roomProps })
+                navigation.navigate("Room", { roomProps: roomProps })
             }}
             style={[styles.button, styles.buttonOutline]}
         >

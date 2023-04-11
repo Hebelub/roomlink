@@ -16,15 +16,15 @@ import EditRoomScreen from '../screens/EditRoomScreen';
 
 
 export type RootStackParamList = {
-    RoomScreen: { roomProps: Room };
+    Room: { roomProps: Room };
     MyModal: { userId: string; name: string };
     Register: undefined;
-    CreateRoomScreen: undefined;
-    EditRoomScreen: { roomProps: Room };
-    ProfileScreen: undefined;
-    ScanQrCodeScreen: undefined;
-    HomeScreen: undefined;
-    LoginScreen: undefined;
+    CreateRoom: undefined;
+    EditRoom: { roomProps: Room };
+    Profile: undefined;
+    ScanQrCode: undefined;
+    Home: undefined;
+    Login: undefined;
 }
 
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -37,18 +37,18 @@ const RootNavigator = () => {
         <RootStack.Navigator>
 
             <RootStack.Group>
-                <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-                <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+                <RootStack.Screen name="Home" component={HomeScreen} />
+                <RootStack.Screen name="Login" component={LoginScreen} />
                 <RootStack.Screen name="Register" component={RegisterScreen} />
-                <RootStack.Screen name="CreateRoomScreen" component={CreateRoomScreen} />
-                <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
-                <RootStack.Screen name="ScanQrCodeScreen" component={ScanQrCodeScreen} />
-                <RootStack.Screen name="EditRoomScreen" component={EditRoomScreen} />
+                <RootStack.Screen name="CreateRoom" component={CreateRoomScreen} />
+                <RootStack.Screen name="Profile" component={ProfileScreen} />
+                <RootStack.Screen name="ScanQrCode" component={ScanQrCodeScreen} />
+                <RootStack.Screen name="EditRoom" component={EditRoomScreen} />
             </RootStack.Group>
 
             <RootStack.Group>
                 <RootStack.Screen
-                    name="RoomScreen"
+                    name="Room"
                     component={RoomNavigator}
                 />
             </RootStack.Group>

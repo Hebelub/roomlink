@@ -21,7 +21,7 @@ export type VisitorsScreenNavigationProp = CompositeNavigationProp<
     NativeStackNavigationProp<RootStackParamList>
 >;
 
-type VisitorsScreenRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
+type VisitorsScreenRouteProp = RouteProp<RootStackParamList, "Room">;
 
 
 const getVisitorCardPropsFromRoom = async (roomId: string): Promise<VisitorCardProps[]> => {
