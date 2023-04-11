@@ -3,36 +3,57 @@ import React, { useEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
-import VisitListItem from '../components/VisitListItem';
+import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
-import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData } from 'firebase/firestore';
+import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData, orderBy, limit } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
 
 
-const getUserRooms = async (userId: string): Promise<Room[]> => {
+const getLastVisit = async (roomId: string): Promise<Room | null> => {
+    const q = query(collection(db, "visits"),
+        where('visitedRoom', '==', roomId),
+        orderBy('lastVisit', 'desc'),
+        limit(1)
+    );
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) {
+        console.log("What", snapshot)
+        return null;
+    }
+    const doc = snapshot.docs[0];
+    return doc.data().lastVisit.toDate();
+};
+
+const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
     const q = query(collection(db, "rooms"), where("createdById", "==", userId));
     const querySnapshot = await getDocs(q);
-    const userRooms: Room[] = [];
-    querySnapshot.forEach((doc) => {
-        userRooms.push(doc.data() as Room);
+
+    const promises = querySnapshot.docs.map(async (doc) => {
+        const room = doc.data() as Room;
+        const lastVisit = await getLastVisit(room.code);
+
+        return {
+            roomProps: room,
+            lastVisit: lastVisit as (Date | null),
+        };
     });
-    return userRooms;
+
+    return await Promise.all(promises);
 };
 
 const ProfileScreen = () => {
 
-    const [userRooms, setUserRooms] = useState<Room[]>([]);
+    const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
 
     useEffect(() => {
-        getUserRooms("the_user_id")
+        getUserVisits("the_user_id")
             .then((r) => {
-                setUserRooms(r);
+                setUserVisits(r);
             });
     }, []);
 
-    const tw = useTailwind();
     const navigation = useNavigation<RootStackNavigationProp>();
     const { user } = useAuth();
 
@@ -68,11 +89,12 @@ const ProfileScreen = () => {
 
                     {/* List of rooms */}
                     <View>
-                        {userRooms.map((room: Room) => {
+                        {userVisits.map((room: VisitListItemProps, index: number) => {
                             return (
                                 <VisitListItem
-                                    roomProps={room}
-                                    lastVisit={null}
+                                    key={index}
+                                    roomProps={room.roomProps}
+                                    lastVisit={room.lastVisit}
                                 />
                             )
                         })}
