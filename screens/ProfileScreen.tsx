@@ -50,11 +50,15 @@ const ProfileScreen = () => {
     const user = auth.currentUser;
 
     useEffect(() => {
-        getUserVisits(user?.uid ?? "NO ID")
-            .then((r) => {
-                setUserVisits(r);
-            });
-    }, []);
+        const unsubscribe = navigation.addListener('focus', () => {
+            getUserVisits(user?.uid ?? "NO ID")
+                .then((r) => {
+                    setUserVisits(r);
+                });
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     const signOut_ = () => {
         signOut(auth);

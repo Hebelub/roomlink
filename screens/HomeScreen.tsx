@@ -57,11 +57,15 @@ const HomeScreen = () => {
     }, [navigation]);
 
     useEffect(() => {
-        getUserVisits(auth.currentUser?.uid ?? "NO ID")
-            .then((r) => {
-                setUserVisits(r);
-            });
-    }, []);
+        const unsubscribe = navigation.addListener('focus', () => {
+            getUserVisits(auth.currentUser?.uid ?? "NO ID")
+                .then((r) => {
+                    setUserVisits(r);
+                });
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     const joinRoom = () => {
 
