@@ -3,7 +3,7 @@ import React, { Component, useEffect, useLayoutEffect } from 'react'
 import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomItemScreen from '../screens/RoomItemScreen';
-import RoomUsersScreen from '../screens/RoomUsersScreen';
+import RoomVisitorsScreen from '../screens/RoomUsersScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import RoomProfileScreen from '../screens/RoomProfileScreen';
@@ -20,7 +20,7 @@ export type RoomStackParamList = {
     Profile: undefined;
     Chat: undefined;
     Items: undefined;
-    Users: undefined;
+    Visitors: undefined;
     Info: { roomProps: Room };
 }
 
@@ -107,7 +107,7 @@ const RoomNavigator = () => {
                             />
                         );
                     }
-                    else if (route.name === 'Users') {
+                    else if (route.name === 'Visitors') {
                         return (
                             <Icon
                                 name="users"
@@ -132,7 +132,7 @@ const RoomNavigator = () => {
             <Tab.Screen name="Profile" component={RoomProfileScreen} />
             <Tab.Screen name="Chat" component={RoomChatScreen} />
             <Tab.Screen name="Items" component={RoomItemScreen} />
-            <Tab.Screen name="Users" component={RoomUsersScreen} />
+            <Tab.Screen name="Visitors" component={RoomVisitorsScreen} />
         </Tab.Navigator >
     )
 }

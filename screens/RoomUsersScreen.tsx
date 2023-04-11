@@ -10,11 +10,11 @@ import UserCard from '../components/UserCard';
 import { Input } from '@rneui/themed';
 
 export type UserScreenNavigationProp = CompositeNavigationProp<
-    BottomTabNavigationProp<RoomStackParamList, 'Users'>,
+    BottomTabNavigationProp<RoomStackParamList, 'Visitors'>,
     NativeStackNavigationProp<RootStackParamList>
 >;
 
-const RoomUsersScreen = () => {
+const RoomVisitorsScreen = () => {
 
     const tw = useTailwind();
     const navigation = useNavigation<UserScreenNavigationProp>();
@@ -28,20 +28,9 @@ const RoomUsersScreen = () => {
                 onChangeText={setInput}
                 containerStyle={tw('bg-white pt-5 pb-0 px-10')}
             />
-            {/* {data?.getUsers
-                ?.filter((user: UserList) =>
-                    user.value.name.includes(input)
-                )
-                .map(({ name: ID, value: { email, name } }: UserResponse) => (
-                    <UserCard
-                        key={ID}
-                        email={email}
-                        name={name}
-                        userId={ID}
-                    />
-                ))} */}
+
         </ScrollView>
     );
 };
 
-export default RoomUsersScreen
+export default RoomVisitorsScreen
