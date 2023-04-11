@@ -2,10 +2,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { Icon } from '@rneui/themed';
+import { RootStackNavigationProp } from '../navigator/RootNavigator';
+import { Room } from '../types';
 
-const EditRoomButton = () => {
+type EditRoomButtonProps = {
+    roomProps: Room;
+}
+
+
+const EditRoomButton = ({ roomProps }: EditRoomButtonProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     return (
@@ -14,7 +21,7 @@ const EditRoomButton = () => {
                 name="edit"
                 type="entypo"
                 color="black"
-                onPress={() => { navigation.navigate("ProfileScreen") }}
+                onPress={() => { navigation.navigate("EditRoomScreen", { roomProps: roomProps }) }}
             />
         </TouchableOpacity>
     )

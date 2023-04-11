@@ -8,18 +8,14 @@ import ChatMessage from '../components/ChatMessage';
 import EditRoomButton from '../components/EditRoomButton';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
-import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
+import { RoomNavigatorRouteProp, RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { auth } from '../firebase';
 
-
-type RoomChatRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
 const RoomChatScreen = () => {
     const {
         params: { roomProps },
-    } = useRoute<RoomChatRouteProp>();
-
-    const tw = useTailwind();
+    } = useRoute<RoomNavigatorRouteProp>();
 
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
     const [input, setInput] = useState<string>("");
@@ -42,13 +38,15 @@ const RoomChatScreen = () => {
     const isOwner = roomProps.createdById === auth.currentUser?.uid;
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => (isOwner && <EditRoomButton />),
+            headerRight: () => (
+                isOwner && <EditRoomButton roomProps={roomProps} />
+            ),
         });
     }, [navigation]);
 
     return (
         <SafeAreaView>
-            <Text style={tw('text-red-500')}>RoomChatScreen</Text>
+            <Text style={{ color: 'red' }}>RoomChatScreen</Text>
 
             <FlatList
                 data={messages}

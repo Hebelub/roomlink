@@ -25,7 +25,7 @@ export type RoomNavigatorScreenNavigationProp = CompositeNavigationProp<
     NativeStackNavigationProp<RootStackParamList, "RoomScreen">
 >;
 
-type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
+export type RoomNavigatorRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
 const Tab = createBottomTabNavigator<RoomStackParamList>();
 

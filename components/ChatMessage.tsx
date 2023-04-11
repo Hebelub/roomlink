@@ -8,7 +8,6 @@ import { Message } from '../types';
 
 const ChatMessage = (props: Message) => {
 
-    const tw = useTailwind();
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
     return (

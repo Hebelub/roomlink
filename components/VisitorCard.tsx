@@ -14,7 +14,6 @@ export type VisitorCardProps = {
 
 export const VisitorCard = ({ imageUrl, name, userId }: VisitorCardProps) => {
 
-    const tw = useTailwind();
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
     return (

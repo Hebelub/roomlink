@@ -4,7 +4,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Icon } from '@rneui/themed'
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
-import { useTailwind } from 'tailwind-rn/dist';
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { RoomStackParamList } from '../navigator/RoomNavigator';
 
@@ -17,7 +16,6 @@ type ModalScreenRouteProp = RouteProp<RootStackParamList, "MyModal">;
 
 
 const ModalScreen = () => {
-    const tw = useTailwind();
     const navigation = useNavigation<ModalScreenNavigationProp>();
     const {
         params: { name, userId },

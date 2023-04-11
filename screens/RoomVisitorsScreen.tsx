@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
@@ -50,7 +50,6 @@ const RoomVisitorsScreen = () => {
         params: { roomProps },
     } = useRoute<VisitorsScreenRouteProp>();
 
-    const tw = useTailwind();
     const navigation = useNavigation<VisitorsScreenNavigationProp>();
     const [input, setInput] = useState<string>("");
 
@@ -66,7 +65,9 @@ const RoomVisitorsScreen = () => {
     const isOwner = roomProps.createdById === auth.currentUser?.uid;
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => (isOwner && <EditRoomButton />),
+            headerRight: () => (isOwner &&
+                isOwner && <EditRoomButton roomProps={roomProps} />
+            ),
         });
     }, [navigation]);
 
@@ -76,7 +77,7 @@ const RoomVisitorsScreen = () => {
                 placeholder="Search"
                 value={input}
                 onChangeText={setInput}
-                containerStyle={tw('bg-white pt-5 pb-0 px-10')}
+                style={styles.input}
             />
 
             {/* List of rooms */}
@@ -98,8 +99,11 @@ const RoomVisitorsScreen = () => {
     );
 };
 
-export default RoomVisitorsScreen
-function getUserVisits(arg0: string) {
-    throw new Error('Function not implemented.');
-}
+const styles = StyleSheet.create({
+    input: {
+        padding: 10,
+        backgroundColor: "white",
+    },
+});
 
+export default RoomVisitorsScreen
