@@ -20,7 +20,7 @@ export type RoomStackParamList = {
     Profile: undefined;
     Chat: undefined;
     Items: undefined;
-    Visitors: undefined;
+    Visitors: { roomProps: Room };
     Info: { roomProps: Room };
 }
 
@@ -132,7 +132,7 @@ const RoomNavigator = () => {
             <Tab.Screen name="Profile" component={RoomProfileScreen} />
             <Tab.Screen name="Chat" component={RoomChatScreen} />
             <Tab.Screen name="Items" component={RoomItemScreen} />
-            <Tab.Screen name="Visitors" component={RoomVisitorsScreen} />
+            <Tab.Screen name="Visitors" component={RoomVisitorsScreen} initialParams={{ roomProps: roomProps }} />
         </Tab.Navigator >
     )
 }

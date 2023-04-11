@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { Input } from '@rneui/themed';
 import { useQuery } from '@apollo/client';
-import UserCard from '../components/UserCard';
+import VisitorCard from '../components/VisitorCard';
 import ChatMessage from '../components/ChatMessage';
 
 const RoomChatScreen = () => {

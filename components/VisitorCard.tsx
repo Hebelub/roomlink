@@ -5,13 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, Icon } from '@rneui/themed';
 import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 
-type Props = {
+export type VisitorCardProps = {
     userId: string;
     name: string;
-    email: string;
+    imageUrl: string;
+    lastVisit: Date;
 }
 
-const UserCard = ({ email, name, userId }: Props) => {
+export const VisitorCard = ({ imageUrl, name, userId }: VisitorCardProps) => {
 
     const tw = useTailwind();
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
@@ -47,11 +48,10 @@ const UserCard = ({ email, name, userId }: Props) => {
                     </View>
                 </View>
                 <Card.Divider />
-                <Text>{email}</Text>
             </Card>
 
         </TouchableOpacity>
     )
 }
 
-export default UserCard
+export default VisitorCard
