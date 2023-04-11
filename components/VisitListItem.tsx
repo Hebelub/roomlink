@@ -40,9 +40,10 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
             }}
             style={[styles.button, styles.buttonOutline]}
         >
-            <Text style={styles.header}>{roomProps.name}</Text>
-            <Text style={styles.description}>{roomProps.description}</Text>
-            <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>
+            <Text numberOfLines={1} style={styles.header}>{roomProps.name}</Text>
+            <Text numberOfLines={1} style={styles.description}>{roomProps.description}</Text>
+            {lastVisit && <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>}
+            {!lastVisit && <Text style={styles.timeSince}>Never visited</Text>}
         </TouchableOpacity>
     )
 }
