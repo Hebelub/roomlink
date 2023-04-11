@@ -59,7 +59,7 @@ const ProfileScreen = () => {
 
     const signOut_ = () => {
         signOut(auth);
-        navigation.navigate("LoginScreen");
+        navigation.replace("LoginScreen");
     }
 
     return (

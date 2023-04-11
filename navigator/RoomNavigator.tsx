@@ -17,9 +17,7 @@ import { db } from '../firebase';
 
 
 export type RoomStackParamList = {
-    Profile: undefined;
     Chat: undefined;
-    Items: undefined;
     Visitors: { roomProps: Room };
     Info: { roomProps: Room };
 }
@@ -80,28 +78,10 @@ const RoomNavigator = () => {
                 tabBarActiveTintColor: "tomato",
                 tabBarInactiveTintColor: "gray",
                 tabBarIcon: ({ focused }) => {
-                    if (route.name === 'Profile') {
-                        return (
-                            <Icon
-                                name="user"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
-                    }
-                    else if (route.name === 'Chat') {
+                    if (route.name === 'Chat') {
                         return (
                             <Icon
                                 name="chat"
-                                type="entypo"
-                                color={focused ? 'tomato' : 'gray'}
-                            />
-                        );
-                    }
-                    else if (route.name === 'Items') {
-                        return (
-                            <Icon
-                                name="box"
                                 type="entypo"
                                 color={focused ? 'tomato' : 'gray'}
                             />
@@ -129,9 +109,7 @@ const RoomNavigator = () => {
             })}>
             {/* The ProfileScreen should be located another place */}
             <Tab.Screen name="Info" component={RoomInfoScreen} initialParams={{ roomProps: roomProps }} />
-            <Tab.Screen name="Profile" component={RoomProfileScreen} />
             <Tab.Screen name="Chat" component={RoomChatScreen} />
-            <Tab.Screen name="Items" component={RoomItemScreen} />
             <Tab.Screen name="Visitors" component={RoomVisitorsScreen} initialParams={{ roomProps: roomProps }} />
         </Tab.Navigator >
     )
