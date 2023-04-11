@@ -31,16 +31,18 @@ const getRoom = async (roomId: string): Promise<Room | null> => {
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
     const q = query(collection(db, "visits"), where("visitedBy", "==", userId));
     const querySnapshot = await getDocs(q);
-    const userVisits: VisitListItemProps[] = [];
-    querySnapshot.forEach(async (doc) => {
+
+    const promises = querySnapshot.docs.map(async (doc) => {
         const visit = doc.data() as Visit;
-        userVisits.push({
-            roomProps: (await getRoom(visit.visitedRoom)) as Room,
+        const room = await getRoom(visit.visitedRoom);
+
+        return {
+            roomProps: room as Room,
             lastVisit: visit.lastVisit,
-        });
+        };
     });
 
-    return userVisits;
+    return await Promise.all(promises);
 };
 
 const HomeScreen = () => {
@@ -77,17 +79,17 @@ const HomeScreen = () => {
             <Text style={styles.header}>List of rooms you have visited</Text>
 
             {/* List of rooms */}
-            <View>
-                {userVisits.map((visit: VisitListItemProps) => {
+            {<View>
+                {userVisits.map((visit: VisitListItemProps, index: number) => {
                     return (
                         <VisitListItem
+                            key={index}
                             roomProps={visit.roomProps}
                             lastVisit={visit.lastVisit}
                         />
                     );
                 })}
-            </View>
-
+            </View>}
 
             <View style={styles.spacing} />
 

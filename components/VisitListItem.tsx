@@ -9,6 +9,27 @@ export type VisitListItemProps = {
     lastVisit: Date | null;
 }
 
+function getElapsedTimeSince(date: Date): string {
+
+    const timeDiff = (new Date().valueOf() - date.valueOf());
+
+    const seconds = Math.floor(timeDiff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return `${days} day${days > 1 ? 's' : ''} ago`;
+    }
+    if (hours > 0) {
+        return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    }
+    if (minutes > 0) {
+        return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    }
+    return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+}
+
 const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
@@ -19,8 +40,9 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
             }}
             style={[styles.button, styles.buttonOutline]}
         >
-            <Text>{roomProps.name}</Text>
+            <Text style={styles.header}>{roomProps.name}</Text>
             <Text style={styles.description}>{roomProps.description}</Text>
+            <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>
         </TouchableOpacity>
     )
 }
@@ -55,5 +77,12 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 12,
         fontStyle: 'italic',
-    }
+    },
+    timeSince: {
+        fontSize: 10,
+    },
+    header: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
 })
