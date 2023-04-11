@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { Image } from "@rneui/themed";
 import { auth } from '../firebase';
+import EditRoomButton from '../components/EditRoomButton';
 
 type RoomInfoScreenRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
@@ -13,6 +14,15 @@ const RoomInfoScreen = () => {
     const {
         params: { roomProps },
     } = useRoute<RoomInfoScreenRouteProp>();
+
+    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
+
+    const isOwner = roomProps.createdById === auth.currentUser?.uid;
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (isOwner && <EditRoomButton />),
+        });
+    }, [navigation]);
 
     return (
         <View style={styles.container}>

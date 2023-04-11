@@ -1,16 +1,27 @@
 import { FlatList, SafeAreaView, ScrollView, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { Input } from '@rneui/themed';
 import { useQuery } from '@apollo/client';
 import VisitorCard from '../components/VisitorCard';
 import ChatMessage from '../components/ChatMessage';
+import EditRoomButton from '../components/EditRoomButton';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../navigator/RootNavigator';
+import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
+import { auth } from '../firebase';
+
+
+type RoomChatRouteProp = RouteProp<RootStackParamList, "RoomScreen">;
 
 const RoomChatScreen = () => {
+    const {
+        params: { roomProps },
+    } = useRoute<RoomChatRouteProp>();
 
     const tw = useTailwind();
 
-    // const navigation = useNavigation<UserScreenNavigationProp>();
+    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
     const [input, setInput] = useState<string>("");
 
     // For now we will use a dummy data
@@ -27,6 +38,13 @@ const RoomChatScreen = () => {
             createdBy: "Mark Robinson",
         },
     ];
+
+    const isOwner = roomProps.createdById === auth.currentUser?.uid;
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (isOwner && <EditRoomButton />),
+        });
+    }, [navigation]);
 
     return (
         <SafeAreaView>

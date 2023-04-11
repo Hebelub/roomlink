@@ -15,7 +15,7 @@ import { auth, db } from '../firebase';
 
 
 export type RoomStackParamList = {
-    Chat: undefined;
+    Chat: { roomProps: Room };
     Visitors: { roomProps: Room };
     Info: { roomProps: Room };
 }
@@ -47,15 +47,16 @@ const createVisit = async (roomCode: string, userId: any) => {
 
 const RoomNavigator = () => {
 
-    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
-
     const {
         params: { roomProps },
     } = useRoute<RoomNavigatorRouteProp>();
 
+    const user = auth.currentUser;
+
+    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            // Create or update visit whenever the room is entered
             createVisit(roomProps.code, auth.currentUser?.uid ?? "NO ID");
         });
 
@@ -106,7 +107,7 @@ const RoomNavigator = () => {
             })}>
             {/* The ProfileScreen should be located another place */}
             <Tab.Screen name="Info" component={RoomInfoScreen} initialParams={{ roomProps: roomProps }} />
-            <Tab.Screen name="Chat" component={RoomChatScreen} />
+            <Tab.Screen name="Chat" component={RoomChatScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Visitors" component={RoomVisitorsScreen} initialParams={{ roomProps: roomProps }} />
         </Tab.Navigator >
     )

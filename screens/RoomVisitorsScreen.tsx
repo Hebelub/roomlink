@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { RoomStackParamList } from '../navigator/RoomNavigator';
@@ -13,6 +13,7 @@ import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
 import { VisitListItemProps } from '../components/VisitListItem';
 import { User } from 'firebase/auth';
+import EditRoomButton from '../components/EditRoomButton';
 
 
 export type VisitorsScreenNavigationProp = CompositeNavigationProp<
@@ -61,6 +62,13 @@ const RoomVisitorsScreen = () => {
                 setVisitors(r);
             });
     }, []);
+
+    const isOwner = roomProps.createdById === auth.currentUser?.uid;
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (isOwner && <EditRoomButton />),
+        });
+    }, [navigation]);
 
     return (
         <ScrollView style={{ backgroundColor: "#06cf85" }}>
