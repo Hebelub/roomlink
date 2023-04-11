@@ -1,6 +1,5 @@
 import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import useAuth from '../hooks/useAuth';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
@@ -10,8 +9,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 const LoginScreen = () => {
-
-    const { signInWithGoogle } = useAuth();
 
     const navigation = useNavigation<RootStackNavigationProp>();
 
@@ -45,10 +42,6 @@ const LoginScreen = () => {
             behavior='padding'
         >
             <View>
-                <Button title="login" onPress={signInWithGoogle}>
-                    Sign in with Google
-                </Button>
-
                 <TextInput
                     placeholder="Email"
                     value={email}

@@ -1,7 +1,6 @@
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
-import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';

@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import useAuth from '../hooks/useAuth';
 import { Image } from "@rneui/themed"
 
 
@@ -45,7 +44,7 @@ const CreateRoomScreen = () => {
                 createdById: userUid,
             }
 
-            navigation.navigate("RoomScreen", { roomProps: room });
+            navigation.replace("RoomScreen", { roomProps: room });
 
             await setDoc(doc(db, "rooms", roomCode), room);
 
