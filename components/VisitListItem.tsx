@@ -3,6 +3,8 @@ import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
 import { Room, Visit } from '../types';
+import { auth } from '../firebase';
+import EditRoomButton from './EditRoomButton';
 
 export type VisitListItemProps = {
     roomProps: Room;
@@ -33,17 +35,26 @@ function getElapsedTimeSince(date: Date): string {
 const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
+    const isOwner = roomProps.createdById === auth.currentUser?.uid;
+
     return (
         <TouchableOpacity
             onPress={() => {
                 navigation.navigate("Room", { roomProps: roomProps })
             }}
-            style={[styles.button, styles.buttonOutline]}
+            style={[styles.button, styles.buttonOutline, styles.horizontal]}
         >
-            <Text numberOfLines={1} style={styles.header}>{roomProps.name}</Text>
-            <Text numberOfLines={1} style={styles.description}>{roomProps.description}</Text>
-            {lastVisit && <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>}
-            {!lastVisit && <Text style={styles.timeSince}>Never visited</Text>}
+            <View style={styles.container}>
+                <Text numberOfLines={1} style={styles.header}>{roomProps.name}</Text>
+                <Text numberOfLines={1} style={styles.description}>{roomProps.description}</Text>
+                {lastVisit && <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>}
+                {!lastVisit && <Text style={styles.timeSince}>Never visited</Text>}
+            </View>
+            {
+                isOwner && <View style={{ position: 'absolute', right: 8 }}>
+                    <EditRoomButton roomProps={roomProps} />
+                </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -55,6 +66,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    horizontal: {
+        flexDirection: 'row',
     },
     input: {
         height: 50,
