@@ -10,7 +10,7 @@ import { signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
 
 
-const getLastVisit = async (roomId: string): Promise<Room | null> => {
+const getLastVisit = async (roomId: string): Promise<Date | null> => {
     const q = query(collection(db, "visits"),
         where('visitedRoom', '==', roomId),
         orderBy('lastVisit', 'desc'),

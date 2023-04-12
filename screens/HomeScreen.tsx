@@ -33,13 +33,11 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
     const querySnapshot = await getDocs(q);
 
     const promises = querySnapshot.docs.map(async (doc) => {
-        const visit = doc.data() as Visit;
-        console.log(visit);
-        const room = await getRoom(visit.visitedRoom);
+        const room = await getRoom(doc.data().visitedRoom);
 
         return {
             roomProps: room as Room,
-            lastVisit: visit.lastVisit,
+            lastVisit: doc.data().lastVisit.toDate(),
         };
     });
 
