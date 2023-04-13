@@ -80,9 +80,9 @@ const CreateRoomScreen = () => {
 
             <View style={styles.spacing} />
 
+            {/* RoomCode */}
             <Text style={styles.header}>Code</Text>
             <Text style={styles.codeText}>{roomCode}</Text>
-
             <RoomQrCode code={roomCode} />
 
             <View style={styles.spacing} />

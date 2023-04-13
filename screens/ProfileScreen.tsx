@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { useNavigation } from '@react-navigation/native';
@@ -67,13 +67,9 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
 
             {/* User info */}
-            <View>
-                <View>
-                    <Text>User Information</Text>
-                    <Text>{user?.displayName}</Text>
-                    <Text>{user?.email}</Text>
-                </View>
-            </View>
+            <Text style={styles.header}>User Information</Text>
+            <Text>{user?.displayName}</Text>
+            <Text>{user?.email}</Text>
 
             {/* Sign out button */}
             <TouchableOpacity
@@ -83,32 +79,33 @@ const ProfileScreen = () => {
                 <Text>Sign Out</Text>
             </TouchableOpacity>
 
-            {/* Your rooms */}
-            <View>
-                <View>
-                    <Text style={styles.header}>Your Rooms</Text>
+            <View style={styles.spacing} />
 
-                    {/* List of rooms */}
-                    <View>
-                        {userVisits.map((room: VisitListItemProps, index: number) => {
-                            return (
-                                <VisitListItem
-                                    key={index}
-                                    roomProps={room.roomProps}
-                                    lastVisit={room.lastVisit}
-                                />
-                            )
-                        })}
-                    </View>
-                </View>
-            </View>
+            {/* Your rooms */}
+            <Text style={styles.header}>Your Rooms</Text>
+
+            {/* List of rooms */}
+            <ScrollView>
+                {userVisits.map((room: VisitListItemProps, index: number) => {
+                    return (
+                        <VisitListItem
+                            key={index}
+                            roomProps={room.roomProps}
+                            lastVisit={room.lastVisit}
+                        />
+                    )
+                })}
+            </ScrollView>
+
+            <View style={styles.spacing} />
 
             <TouchableOpacity
                 onPress={() => { navigation.navigate("CreateRoom") }}
                 style={styles.button}
             >
-                <Text>Create a new Room</Text>
+                <Text>Create Room</Text>
             </TouchableOpacity>
+
         </SafeAreaView>
     )
 }
@@ -120,13 +117,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    input: {
-        height: 50,
-        width: 300,
-        margin: 10,
-        borderWidth: 1,
-        padding: 10,
     },
     button: {
         backgroundColor: 'lightblue',
@@ -142,5 +132,8 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 30,
+    },
+    spacing: {
+        height: 50,
     }
 })

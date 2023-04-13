@@ -79,10 +79,10 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>List of rooms you have visited</Text>
+            <Text style={styles.header}>Visited Rooms</Text>
 
             {/* List of rooms */}
-            {<View>
+            {<ScrollView>
                 {userVisits.map((visit: VisitListItemProps, index: number) => {
                     return (
                         <VisitListItem
@@ -92,11 +92,11 @@ const HomeScreen = () => {
                         />
                     );
                 })}
-            </View>}
+            </ScrollView>}
 
             <View style={styles.spacing} />
 
-            <Text style={styles.header}>Join a room</Text>
+            <Text style={styles.header}>Join Room</Text>
             <View style={styles.sideBySide}>
                 <TextInput
                     placeholder="Enter room code"
