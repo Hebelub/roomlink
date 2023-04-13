@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { Image } from "@rneui/themed"
-
+import RoomQrCode from '../components/RoomQrCode';
 
 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -84,10 +83,7 @@ const CreateRoomScreen = () => {
             <Text style={styles.header}>Code</Text>
             <Text style={styles.codeText}>{roomCode}</Text>
 
-            <Image
-                source={{ uri: "https://ponderwall.com/wp-content/uploads/2022/05/Qrcode.png" }}
-                style={{ width: 200, height: 200 }}
-            />
+            <RoomQrCode code={roomCode} />
 
             <View style={styles.spacing} />
 

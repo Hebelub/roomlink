@@ -1,0 +1,17 @@
+import QrCode from 'react-native-qrcode-svg';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+
+type Props = {
+    code: string;
+}
+
+const RoomQrCode = ({code}: Props) => {
+  return (
+    <QrCode value={'https://www.roomlink.com/' + code} />
+  )
+}
+
+export default RoomQrCode
+
+const styles = StyleSheet.create({})
