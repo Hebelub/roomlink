@@ -37,6 +37,7 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-qrcode-svg": "^6.2.0",
+    "react-native-svg": "^13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.12",
     "tailwind-rn": "^4.2.0"
