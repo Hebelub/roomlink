@@ -18,7 +18,6 @@ const getLastVisit = async (roomId: string): Promise<Date | null> => {
     );
     const snapshot = await getDocs(q);
     if (snapshot.empty) {
-        console.log("What", snapshot)
         return null;
     }
     const doc = snapshot.docs[0];

@@ -34,8 +34,6 @@ function getElapsedTimeSince(date: Date): string {
 
 const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
 
-    console.log("LastVisit", lastVisit);
-
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const isOwner = roomProps.createdById === auth.currentUser?.uid;
