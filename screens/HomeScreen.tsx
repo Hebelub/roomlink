@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, Tex
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
@@ -24,7 +24,20 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
         };
     });
 
-    return await Promise.all(promises);
+    const results = await Promise.all(promises);
+    // Order the results by lastVisit in descending order
+    return results.sort((a, b) => {
+        if (!a.lastVisit && !b.lastVisit) {
+            return 0;
+        }
+        if (!a.lastVisit) {
+            return 1;
+        }
+        if (!b.lastVisit) {
+            return -1;
+        }
+        return b.lastVisit.getTime() - a.lastVisit.getTime();
+    });
 };
 
 const HomeScreen = () => {

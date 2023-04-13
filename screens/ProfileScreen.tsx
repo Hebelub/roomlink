@@ -10,10 +10,9 @@ import { signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
 
 
-const getLastVisit = async (roomId: string): Promise<Date | null> => {
+const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
     const q = query(collection(db, "visits"),
         where('visitedRoom', '==', roomId),
-        orderBy('lastVisit', 'desc'),
         limit(1)
     );
     const snapshot = await getDocs(q);
@@ -25,12 +24,14 @@ const getLastVisit = async (roomId: string): Promise<Date | null> => {
 };
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
-    const q = query(collection(db, "rooms"), where("createdById", "==", userId));
+    const q = query(collection(db, "rooms"),
+        where("createdById", "==", userId),
+    );
     const querySnapshot = await getDocs(q);
 
     const promises = querySnapshot.docs.map(async (doc) => {
         const room = doc.data() as Room;
-        const lastVisit = await getLastVisit(room.code);
+        const lastVisit = await getRoomVisitTime(room.code);
 
         return {
             roomProps: room,
@@ -38,7 +39,20 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
         };
     });
 
-    return await Promise.all(promises);
+    const results = await Promise.all(promises);
+    // Order the results by lastVisit in descending order
+    return results.sort((a, b) => {
+        if (!a.lastVisit && !b.lastVisit) {
+            return 0;
+        }
+        if (!a.lastVisit) {
+            return 1;
+        }
+        if (!b.lastVisit) {
+            return -1;
+        }
+        return b.lastVisit.getTime() - a.lastVisit.getTime();
+    });
 };
 
 const ProfileScreen = () => {
