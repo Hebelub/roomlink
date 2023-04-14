@@ -1,22 +1,83 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { useTailwind } from 'tailwind-rn/dist';
-import { useNavigation } from '@react-navigation/native'
-import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
-import { Message } from '../types';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RoomNavigatorScreenNavigationProp } from "../navigator/RoomNavigator";
+import { Message } from "../types";
+import { dark } from "@mui/material/styles/createPalette";
 
-
-const ChatMessage = (props: Message) => {
-
-    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
-
-    return (
-        <View>
-            <Text>{props.text}</Text>
-            <Text>{props.createdBy}</Text>
-            <Text>{props.createdAt.toDateString()}</Text>
-        </View>
-    )
+interface ChatMessageProps {
+  text: string;
+  createdBy: string;
+  createdAt: Date;
 }
 
-export default ChatMessage
+const ChatMessage: React.FC<ChatMessageProps> = ({
+  text,
+  createdBy,
+  createdAt,
+}) => {
+  const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.messagecontainer}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{createdBy.charAt(0)}</Text>
+        </View>
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageText}>{text}</Text>
+          <Text style={styles.dateText}>{createdAt.toDateString()}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {},
+  messagecontainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 8,
+    backgroundColor: "#F7FAFC",
+  },
+  avatar: {
+    backgroundColor: "#E2E8F0",
+    borderRadius: 9999,
+    padding: 12,
+  },
+  avatarText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#4A5568",
+  },
+  messageContainer: {
+    marginLeft: 16,
+    marginRight: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: "#F7FAFC",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    flex: 1,
+  },
+  messageText: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#1A202C",
+  },
+  dateText: {
+    fontSize: 12,
+    color: "#4A5568",
+    marginTop: 4,
+  },
+});
+
+export default ChatMessage;
