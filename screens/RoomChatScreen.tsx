@@ -1,65 +1,178 @@
-import { FlatList, SafeAreaView, ScrollView, Text, View } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
-import { useTailwind } from 'tailwind-rn/dist';
-import { Input } from '@rneui/themed';
-import { useQuery } from '@apollo/client';
-import VisitorCard from '../components/VisitorCard';
-import ChatMessage from '../components/ChatMessage';
-import EditRoomButton from '../components/EditRoomButton';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/RootNavigator';
-import { RoomNavigatorRouteProp, RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
-import { auth } from '../firebase';
-
+import {
+  TouchableWithoutFeedback,
+  TextInput,
+  Keyboard,
+  StatusBar,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  KeyboardEvent,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
+import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
+import React, { useLayoutEffect, useState, useEffect } from "react";
+import { useTailwind } from "tailwind-rn/dist";
+import { Input } from "@rneui/themed";
+import { useQuery } from "@apollo/client";
+import VisitorCard from "../components/VisitorCard";
+import ChatMessage from "../components/ChatMessage";
+import EditRoomButton from "../components/EditRoomButton";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "../navigator/RootNavigator";
+import {
+  RoomNavigatorRouteProp,
+  RoomNavigatorScreenNavigationProp,
+} from "../navigator/RoomNavigator";
+import { auth, db } from "../firebase";
+import { Button } from "@rneui/base";
+import {
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 const RoomChatScreen = () => {
-    const {
-        params: { roomProps },
-    } = useRoute<RoomNavigatorRouteProp>();
+  const {
+    params: { roomProps },
+  } = useRoute<RoomNavigatorRouteProp>();
 
-    const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
-    const [input, setInput] = useState<string>("");
+  const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
+  const [input, setInput] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const userUid = auth.currentUser?.uid ?? "";
 
-    // For now we will use a dummy data
-    // But it should be fetched from the database
-    const messages = [
-        {
-            text: "Hello. Where are you?",
-            createdAt: new Date(),
-            createdBy: "John Doe",
-        },
-        {
-            text: "I am at the office right now. Did you want to meet?",
-            createdAt: new Date(),
-            createdBy: "Mark Robinson",
-        },
-    ];
+  const readChat = async () => {
+    const chatRef = collection(db, "chats");
+    const chatQuery = query(chatRef, orderBy("createdAt"));
 
-    const isOwner = roomProps.createdById === auth.currentUser?.uid;
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                isOwner && <EditRoomButton roomProps={roomProps} />
-            ),
-        });
-    }, [navigation]);
+    const unsubscribe = onSnapshot(chatQuery, (snapshot) => {
+      const newMessages = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        createdBy: doc.data().createdBy,
+        createdAt: doc.data().createdAt.toDate(),
+        text: doc.data().text,
+      }));
+      setMessages(newMessages);
+    });
 
-    return (
-        <SafeAreaView>
-            <Text style={{ color: 'red' }}>RoomChatScreen</Text>
+    return unsubscribe;
+  };
+
+  useEffect(() => {
+    const unsubscribePromise = readChat();
+    unsubscribePromise.then((unsubscribe) => {
+      return () => unsubscribe();
+    });
+  }, []);
+
+  interface Message {
+    id: string;
+    createdBy: string;
+    createdAt: Date;
+    text: string;
+  }
+
+  const isOwner = roomProps.createdById === auth.currentUser?.uid;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => isOwner && <EditRoomButton roomProps={roomProps} />,
+    });
+  }, [navigation]);
+
+  const createchat = async () => {
+    Keyboard.dismiss();
+    try {
+      const chat = {
+        createdBy: userUid,
+        createdAt: new Date(),
+        text: input,
+      };
+
+      await addDoc(collection(db, "chats"), chat);
+      setInput("");
+      // navigation.goBack();
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={130}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>
+            <View style={styles.contentContainer}></View>
 
             <FlatList
-                data={messages}
-                renderItem={({ item }) =>
-                    <ChatMessage
-                        createdBy={item.createdBy}
-                        createdAt={item.createdAt}
-                        text={item.text}
-                    />
-                }
+              data={messages}
+              renderItem={({ item }) => (
+                <ChatMessage
+                  createdBy={item.createdBy}
+                  createdAt={item.createdAt}
+                  text={item.text}
+                />
+              )}
             />
-        </SafeAreaView>
-    )
-}
+            <View style={[styles.footer]}>
+              <TextInput
+                placeholder="write a message"
+                value={input}
+                onChangeText={(text) => setInput(text)}
+                // onSubmitEditing={createchat}
+                style={[styles.textInput, {}]}
+              />
+              <TouchableOpacity onPress={createchat} activeOpacity={0.5}>
+                <Ionicons name="send" size={24} color="#2B68E6" />
+              </TouchableOpacity>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
 
-export default RoomChatScreen
+export default RoomChatScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    //flexGrow: 1,
+  },
+  footer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    padding: 15,
+    borderTopColor: "#DDDDDD",
+    backgroundColor: "#FFF",
+  },
+  textInput: {
+    bottom: 0,
+    height: 40,
+    flex: 1,
+    marginRight: 15,
+    backgroundColor: "#ECECEC",
+    borderColor: "transparent",
+    borderWidth: 1,
+    padding: 10,
+    color: "grey",
+    borderRadius: 30,
+  },
+});

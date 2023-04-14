@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RoomNavigatorScreenNavigationProp } from "../navigator/RoomNavigator";
 import { Message } from "../types";
@@ -19,17 +19,19 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.messagecontainer}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{createdBy.charAt(0)}</Text>
+    <SafeAreaView>
+      <ScrollView style={styles.container}>
+        <View style={styles.messagecontainer}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{createdBy.charAt(0)}</Text>
+          </View>
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>{text}</Text>
+            <Text style={styles.dateText}>{createdAt.toDateString()}</Text>
+          </View>
         </View>
-        <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>{text}</Text>
-          <Text style={styles.dateText}>{createdAt.toDateString()}</Text>
-        </View>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 8,
-    backgroundColor: "#F7FAFC",
+    // backgroundColor: "#F7FAFC",
   },
   avatar: {
     backgroundColor: "#E2E8F0",
