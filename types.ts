@@ -9,9 +9,9 @@ export type Room = {
 };
 
 export type Message = {
-    text: string;
-    createdAt: Date;
     createdBy: string;
+    createdAt: Date;
+    text: string;
 };
 
 export type Visit = {
