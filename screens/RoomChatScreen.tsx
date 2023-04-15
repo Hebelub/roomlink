@@ -52,7 +52,7 @@ const RoomChatScreen = () => {
 
 	const messagesRef = collection(doc(collection(db, "rooms"), roomProps.code), "messages");
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const chatQuery = query(messagesRef, orderBy("createdAt"));
 
 		const unsubscribe = onSnapshot(chatQuery, (snapshot) => {
