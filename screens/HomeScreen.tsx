@@ -8,7 +8,7 @@ import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
 import { Icon } from '@rneui/themed';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
-import { getRoom } from './utils/utils';
+import { getRoom } from '../utils/utils';
 
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {

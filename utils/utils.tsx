@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Room } from '../../types';
+import { Room } from '../types';
 import { collection, doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { db } from '../firebase';
 
 export const getRoom = async (roomCode: string): Promise<Room | null> => {
     const collectionRef = collection(db, "rooms");

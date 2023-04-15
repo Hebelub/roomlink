@@ -5,19 +5,21 @@ import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomVisitorsScreen from '../screens/RoomVisitorsScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import RoomInfoScreen from '../screens/RoomInfoScreen';
+import RoomRichTextScreen from '../screens/RoomRichTextScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import RoomInfoScreen from '../screens/RoomInfoScreen';
 
 
 export type RoomStackParamList = {
     Chat: { roomProps: Room };
     Visitors: { roomProps: Room };
     Info: { roomProps: Room };
+    RichText: { roomProps: Room };
 }
 
 export type RoomNavigatorScreenNavigationProp = CompositeNavigationProp<
@@ -103,10 +105,20 @@ const RoomNavigator = () => {
                             />
                         );
                     }
+                    else if (route.name === 'RichText') {
+                        return (
+                            <Icon
+                                name="text"
+                                type="entypo"
+                                color={focused ? 'tomato' : 'gray'}
+                            />
+                        );
+                    }
                 }
             })}>
 
             <Tab.Screen name="Info" component={RoomInfoScreen} initialParams={{ roomProps: roomProps }} />
+            <Tab.Screen name="RichText" component={RoomRichTextScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Chat" component={RoomChatScreen} initialParams={{ roomProps: roomProps }} />
             <Tab.Screen name="Visitors" component={RoomVisitorsScreen} initialParams={{ roomProps: roomProps }} />
         </Tab.Navigator >

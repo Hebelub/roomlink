@@ -7,7 +7,7 @@ import { Image } from '@rneui/themed';
 import AccountButton from '../components/AccountButton';
 import { StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { getRoom } from './utils/utils';
+import { getRoom } from '../utils/utils';
 
 const ScanQrCodeScreen = () => {
 
