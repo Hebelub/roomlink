@@ -9,6 +9,7 @@ import AccountButton from '../components/AccountButton';
 import { Icon } from '@rneui/themed';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { getRoom } from '../utils/utils';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
@@ -50,6 +51,21 @@ const HomeScreen = () => {
             headerRight: () => (<AccountButton />),
         });
     }, [navigation]);
+
+    useEffect(() => {
+        const fetchUserVisits = async () => {
+            const visits = await getUserVisits(auth.currentUser?.uid ?? "NO ID");
+            setUserVisits(visits);
+        };
+
+        const unsubscribe = onAuthStateChanged(auth, (authUser: any) => {
+            if (authUser) {
+                fetchUserVisits();
+            }
+        })
+
+        return unsubscribe;
+    }, [])
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
