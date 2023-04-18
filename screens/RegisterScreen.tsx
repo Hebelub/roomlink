@@ -54,7 +54,8 @@ const RegisterScreen = () => {
     const register = (): void => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((authUser: any) => {
-                updateProfile(authUser, {
+                const user = authUser.user;
+                return updateProfile(user, {
                     displayName: name,
                     photoURL:
                         imageUrl ||

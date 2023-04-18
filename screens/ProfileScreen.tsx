@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView, Image, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { useNavigation } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
 import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData, orderBy, limit } from 'firebase/firestore';
-import { signOut } from "firebase/auth";
+import { signOut, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
 
 
@@ -24,6 +24,7 @@ const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
 };
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
+
     const q = query(collection(db, "rooms"),
         where("createdById", "==", userId),
     );
@@ -57,9 +58,15 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
 
 const ProfileScreen = () => {
 
+    const [isInEditMode, setIsInEditMode] = useState(false);
+
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
     const navigation = useNavigation<RootStackNavigationProp>();
     const user = auth.currentUser;
+
+    // If editing user info
+    const [name, setName] = useState(user?.displayName ?? "");
+    const [imageUrl, setImageUrl] = useState(user?.photoURL ?? "");
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -77,21 +84,87 @@ const ProfileScreen = () => {
         navigation.replace("Login");
     }
 
+    const editUserInformation = () => {
+        setIsInEditMode(true);
+    }
+
+    const saveUserInformation = async () => {
+        setIsInEditMode(false);
+
+        user && updateProfile(user, {
+            displayName: name,
+            photoURL:
+                imageUrl ||
+                "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+
+        })
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
             {/* User info */}
-            <Text style={styles.header}>User Information</Text>
-            <Text>{user?.displayName}</Text>
-            <Text>{user?.email}</Text>
+            {user?.displayName && <Text style={styles.header}>Hi {user?.displayName}</Text>}
 
-            {/* Sign out button */}
-            <TouchableOpacity
-                onPress={() => { signOut_(); }}
-                style={[styles.button, styles.buttonOutline]}
-            >
-                <Text>Sign Out</Text>
-            </TouchableOpacity>
+            {isInEditMode ? (
+                <View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Name"
+                        value={name}
+                        onChangeText={(text) => setName(text)}
+                    />
+
+                    <Text>{user?.email}</Text>
+
+                    {user?.photoURL && <Image
+                        style={{ width: 200, height: 200 }}
+                        source={{ uri: user?.photoURL }}
+                    />}
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Profile Image URL (optional)"
+                        value={imageUrl}
+                        onChangeText={(text) => setImageUrl(text)}
+                        onSubmitEditing={saveUserInformation}
+                    />
+
+                    {/* Edit User Information */}
+                    <TouchableOpacity
+                        onPress={() => { saveUserInformation(); }}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Text>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <View>
+                    <Text>{user?.email}</Text>
+                    <Image
+                        style={{ width: 200, height: 200 }}
+                        source={{ uri: imageUrl }}
+                    />
+
+                    <View style={[styles.container, { display: 'flex' }]}>
+                        {/* Sign out button */}
+                        <TouchableOpacity
+                            onPress={() => { signOut_(); }}
+                            style={[styles.button, styles.buttonOutline]}
+                        >
+                            <Text>Sign Out</Text>
+                        </TouchableOpacity>
+
+                        {/* Edit User Information */}
+                        <TouchableOpacity
+                            onPress={() => { editUserInformation(); }}
+                            style={[styles.button, styles.buttonOutline]}
+                        >
+                            <Text>Edit user info</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
 
             <View style={styles.spacing} />
 
@@ -149,5 +222,15 @@ const styles = StyleSheet.create({
     },
     spacing: {
         height: 50,
-    }
+    },
+    input: {
+        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 5,
+        height: 50,
+        padding: 10,
+        marginBottom: 10,
+        fontSize: 16,
+    },
 })
