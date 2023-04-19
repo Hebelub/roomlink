@@ -47,8 +47,9 @@ const useUser = (userID: string): LocalUser | undefined => {
                     setUser(parsedUser);
                 }
 
-                // If the user is not cached or the cached user is older than 1 minute, fetch the user from the database
-                if (!parsedUser || (parsedUser && Date.now() - parsedUser.lastUpdated > 60000)) {
+                // If the user is not cached or the cached user is older than 10 seconds, fetch the user from the database
+                if (!parsedUser || (parsedUser && Date.now() - parsedUser.lastUpdated > 10000)) {
+
                     const userDocRef = doc(collection(db, 'users'), userID);
 
                     const userDocSnap = await getDoc(userDocRef);

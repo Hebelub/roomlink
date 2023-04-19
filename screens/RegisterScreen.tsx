@@ -25,7 +25,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
 import { db, auth } from "../firebase";
 import { addDoc, collection, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { User, createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { setUserInDb } from "../hooks/useUser";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
@@ -57,7 +57,12 @@ const RegisterScreen = () => {
             .then((authUser: any) => {
                 const user = authUser.user;
 
-                setUserInDb(user);
+                setUserInDb({
+                    uid: user?.uid ?? "",
+                    displayName: name,
+                    email: user?.email ?? "",
+                    photoURL: imageUrl,
+                } as User);
 
                 return updateProfile(user, {
                     displayName: name,
