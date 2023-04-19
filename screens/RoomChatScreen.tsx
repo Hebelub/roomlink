@@ -79,7 +79,7 @@ const RoomChatScreen = () => {
 		Keyboard.dismiss();
 
 		const message: Message = {
-			createdBy: auth.currentUser?.displayName ?? "",
+			createdBy: auth.currentUser?.uid ?? "unknown",
 			createdAt: new Date(),
 			text: input,
 		};

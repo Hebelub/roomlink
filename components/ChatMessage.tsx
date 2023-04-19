@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import { RoomNavigatorScreenNavigationProp } from "../navigator/RoomNavigator";
 import { Message } from "../types";
 import { dark } from "@mui/material/styles/createPalette";
+import { Image } from "@rneui/themed";
+import useUser from "../hooks/useUser";
 
 type ChatMessageProps = {
 	text: string;
@@ -11,16 +13,20 @@ type ChatMessageProps = {
 	createdAt: Date;
 }
 
-const ChatMessage = ({ text, createdBy, createdAt }: Message) => {
+const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 	const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
+
+	const user = useUser(createdBy);
 
 	return (
 		<SafeAreaView>
 			<ScrollView style={styles.container}>
 				<View style={styles.messagecontainer}>
-					<View style={styles.avatar}>
-						<Text style={styles.avatarText}>{createdBy.charAt(0)}</Text>
-					</View>
+					{user?.photoURL && <Image
+						style={styles.avatar}
+						source={{ uri: user?.photoURL }}
+					/>}
+
 					<View style={styles.messageContainer}>
 						<Text style={styles.messageText}>{text}</Text>
 						<Text style={styles.dateText}>{createdAt.toDateString()}</Text>
@@ -40,7 +46,8 @@ const styles = StyleSheet.create({
 		// backgroundColor: "#F7FAFC",
 	},
 	avatar: {
-		backgroundColor: "#E2E8F0",
+		height: 50,
+		width: 50,
 		borderRadius: 9999,
 		padding: 12,
 	},

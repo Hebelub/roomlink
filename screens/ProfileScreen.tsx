@@ -6,8 +6,9 @@ import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
 import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, DocumentData, orderBy, limit } from 'firebase/firestore';
-import { signOut, updateProfile } from "firebase/auth";
+import { User, signOut, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
+import { setUserInDb } from '../hooks/useUser';
 
 
 const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
@@ -65,7 +66,7 @@ const ProfileScreen = () => {
     const user = auth.currentUser;
 
     // If editing user info
-    const [name, setName] = useState(user?.displayName ?? "");
+    const [displayName, setName] = useState(user?.displayName ?? "");
     const [imageUrl, setImageUrl] = useState(user?.photoURL ?? "");
 
     useEffect(() => {
@@ -91,8 +92,15 @@ const ProfileScreen = () => {
     const saveUserInformation = async () => {
         setIsInEditMode(false);
 
+        setUserInDb({
+            uid: user?.uid ?? "",
+            displayName: displayName,
+            email: user?.email ?? "",
+            photoURL: imageUrl,
+        } as User);
+
         user && updateProfile(user, {
-            displayName: name,
+            displayName: displayName,
             photoURL:
                 imageUrl ||
                 "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
@@ -104,14 +112,14 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
 
             {/* User info */}
-            {user?.displayName && <Text style={styles.header}>Hi {user?.displayName}</Text>}
+            {user?.displayName && <Text style={styles.header}>Hi {displayName}</Text>}
 
             {isInEditMode ? (
                 <View>
                     <TextInput
                         style={styles.input}
                         placeholder="Name"
-                        value={name}
+                        value={displayName}
                         onChangeText={(text) => setName(text)}
                     />
 

@@ -24,8 +24,9 @@ import { RoomStackParamList } from "../navigator/RoomNavigator";
 import { StatusBar } from "expo-status-bar";
 import { Button, Input } from "@rneui/base";
 import { db, auth } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { setUserInDb } from "../hooks/useUser";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -55,13 +56,16 @@ const RegisterScreen = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((authUser: any) => {
                 const user = authUser.user;
+
+                setUserInDb(user);
+
                 return updateProfile(user, {
                     displayName: name,
                     photoURL:
                         imageUrl ||
                         "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+                });
 
-                })
             })
             .catch((error: any) => alert(error.message));
     };
