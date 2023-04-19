@@ -137,14 +137,14 @@ const styles = StyleSheet.create({
     createdBy: {
         // styles for the "Created By" text
         fontSize: 28,
-        fontWeight: '400',
+        fontWeight: '200',
         color: '#333',
         marginBottom: 10,
 
     },
     displayName: {
         // styles for the user's display name
-        fontSize: 60,
+        fontSize: 28,
         fontWeight: '200',
         color: '#333',
 
