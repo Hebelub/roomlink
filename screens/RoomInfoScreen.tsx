@@ -6,7 +6,7 @@ import { RootStackParamList } from '../navigator/RootNavigator';
 import { auth } from '../firebase';
 import EditRoomButton from '../components/EditRoomButton';
 import RoomQrCode from '../components/RoomQrCode';
-
+import useUser from '../hooks/useUser';
 
 const RoomInfoScreen = () => {
 
@@ -25,23 +25,26 @@ const RoomInfoScreen = () => {
         });
     }, [navigation]);
 
+    const user = useUser(roomProps.createdById);
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>{roomProps.name}</Text>
 
             <View style={styles.spacing} />
 
-            <Text>{roomProps.description}</Text>
+            <Text style={styles.description}>{roomProps.description}</Text>
 
             <View style={styles.spacing} />
 
             {/* <Text>The room was created at {roomProps.createdAt.toDateString()}</Text> */}
 
-            <Text style={styles.codeText}>{roomProps.code}</Text>
+            <View style={styles.qrContainer}>
+                <Text style={styles.codeText}>{roomProps.code}</Text>
+                <RoomQrCode code={roomProps.code} />
+            </View>
 
-            <RoomQrCode code={roomProps.code} />
-
-            <Text>Created By {roomProps.createdById}</Text>
+            <Text style={styles.createdBy}>Created By {user?.displayName}</Text>
         </View>
     )
 }
@@ -52,16 +55,45 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    codeText: {
-        fontSize: 80,
-        fontWeight: 'bold',
+        paddingHorizontal: 20,
+        paddingTop: 20,
     },
     header: {
         fontSize: 30,
         fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    description: {
+        fontSize: 18,
+        lineHeight: 24,
+        textAlign: 'center',
+    },
+    codeText: {
+        fontSize: 60,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+
+    qrContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOpacity: 0.7,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowRadius: 4,
+        elevation: 5,
+    },
+
+    createdBy: {
+        fontSize: 16,
+        marginTop: 20,
     },
     spacing: {
         height: 20,
