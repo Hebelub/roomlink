@@ -6,6 +6,7 @@ import { auth, db } from '../firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface LocalUser {
     lastUpdated: number;
@@ -32,7 +33,7 @@ const useUser = (userID: string): LocalUser | undefined => {
         let unsubscribe: Unsubscribe | undefined;
         const getUser = async (userID: string) => {
             if (userID) {
-                const cachedUser = localStorage.getItem(userID);
+                const cachedUser = await AsyncStorage.getItem(userID);
                 let parsedUser: LocalUser | undefined;
                 if (cachedUser) {
                     try {
@@ -57,7 +58,7 @@ const useUser = (userID: string): LocalUser | undefined => {
                     if (userDocSnap.exists()) {
                         const { uid, displayName, email, photoURL } = userDocSnap.data();
                         const newUser = { uid, displayName, email, photoURL, lastUpdated: Date.now() };
-                        localStorage.setItem(userID, JSON.stringify(newUser));
+                        await AsyncStorage.setItem(userID, JSON.stringify(newUser));
                         setUser({ uid, displayName, email, photoURL } as LocalUser);
                     }
                 }
