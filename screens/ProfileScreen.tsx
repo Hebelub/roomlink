@@ -58,7 +58,7 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
 };
 
 const ProfileScreen = () => {
-
+    
     const [isInEditMode, setIsInEditMode] = useState(false);
 
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
@@ -90,6 +90,11 @@ const ProfileScreen = () => {
     }
 
     const saveUserInformation = async () => {
+        
+        if (displayName.trim() === "") 
+       { alert ("Update room name!")
+         return;
+       }
         setIsInEditMode(false);
 
         setUserInDb({
@@ -112,7 +117,7 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
 
             {/* User info */}
-            {user?.displayName && <Text style={styles.header}>Hi {displayName}</Text>}
+            <Text style={styles.header}>{displayName}</Text>
 
             {isInEditMode ? (
                 <View>
