@@ -22,6 +22,11 @@ const EditRoomScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const updateRoom = async () => {
+        
+        if (roomName === ''){
+            alert('Enter a room name!'); 
+            return;
+        }
 
         try {
             const room = {

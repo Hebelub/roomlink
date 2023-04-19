@@ -34,7 +34,7 @@ const CreateRoomScreen = () => {
     const createRoom = async () => {
 
         if (roomName === ''){
-            alert('Please provide a room name as it cannot be left blank.'); 
+            alert('Enter room name.'); 
             return;
         }
 
