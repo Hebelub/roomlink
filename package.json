@@ -40,7 +40,8 @@
     "react-native-svg": "^13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.12",
-    "tailwind-rn": "^4.2.0"
+    "tailwind-rn": "^4.2.0",
+    "expo-clipboard": "~4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
