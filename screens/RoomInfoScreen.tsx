@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { RoomNavigatorRouteProp, RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { auth } from '../firebase';
 import EditRoomButton from '../components/EditRoomButton';
 import RoomQrCode from '../components/RoomQrCode';
 import useUser from '../hooks/useUser';
+import * as Clipboard from 'expo-clipboard';
 
 const RoomInfoScreen = () => {
 
@@ -40,15 +41,15 @@ const RoomInfoScreen = () => {
 
             {/* <Text>The room was created at {roomProps.createdAt.toDateString()}</Text> */}
 
-            <View style={styles.qrContainer}>
+            <TouchableOpacity onPress={() => (Clipboard.setStringAsync(roomProps.code))} style={styles.qrContainer}>
                 <Text style={styles.codeText}>{roomProps.code}</Text>
                 <RoomQrCode code={roomProps.code} />
-            </View>
+            </TouchableOpacity>
+
             <View style={styles.CreatedContainer}>
                 <Text style={styles.createdBy}>Created By </Text>
                 <Text style={styles.displayName}>{user?.displayName}</Text>
             </View>
-
         </View>
     )
 }
