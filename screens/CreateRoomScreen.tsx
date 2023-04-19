@@ -33,6 +33,11 @@ const CreateRoomScreen = () => {
 
     const createRoom = async () => {
 
+        if (roomName === ''){
+            alert('Please provide a room name as it cannot be left blank.'); 
+            return;
+        }
+
         try {
             const room = {
                 name: roomName,
