@@ -33,6 +33,11 @@ const CreateRoomScreen = () => {
 
     const createRoom = async () => {
 
+        if (roomName === ''){
+            alert('Enter room name.'); 
+            return;
+        }
+
         try {
             const room = {
                 name: roomName,
