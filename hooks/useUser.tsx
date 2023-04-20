@@ -26,14 +26,24 @@ export const setUserInDb = (user: User | null): void => {
     });
 }
 
-const useUser = (userID: string): LocalUser | undefined => {
+const useUser = (userID?: string): LocalUser | undefined => {
     const [user, setUser] = useState<LocalUser>();
+
+    const [userUID, setUserUID] = useState<string | undefined>(userID);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setUserUID(user?.uid);
+        });
+
+        return unsubscribe;
+    }, []);
 
     useEffect(() => {
         let unsubscribe: Unsubscribe | undefined;
-        const getUser = async (userID: string) => {
-            if (userID) {
-                const cachedUser = await AsyncStorage.getItem(userID);
+        const getUser = async () => {
+            if (userUID) {
+                const cachedUser = await AsyncStorage.getItem(userUID);
                 let parsedUser: LocalUser | undefined;
                 if (cachedUser) {
                     try {
@@ -51,28 +61,28 @@ const useUser = (userID: string): LocalUser | undefined => {
                 // If the user is not cached or the cached user is older than 10 seconds, fetch the user from the database
                 if (!parsedUser || (parsedUser && Date.now() - parsedUser.lastUpdated > 10000)) {
 
-                    const userDocRef = doc(collection(db, 'users'), userID);
+                    const userDocRef = doc(collection(db, 'users'), userUID);
 
                     const userDocSnap = await getDoc(userDocRef);
 
                     if (userDocSnap.exists()) {
                         const { uid, displayName, email, photoURL } = userDocSnap.data();
                         const newUser = { uid, displayName, email, photoURL, lastUpdated: Date.now() };
-                        await AsyncStorage.setItem(userID, JSON.stringify(newUser));
+                        await AsyncStorage.setItem(userUID, JSON.stringify(newUser));
                         setUser({ uid, displayName, email, photoURL } as LocalUser);
                     }
                 }
             }
         };
 
-        getUser(userID);
+        getUser();
 
         return () => {
             if (unsubscribe) {
                 unsubscribe();
             }
         };
-    }, [userID]);
+    }, [userUID]);
 
     return user;
 };
