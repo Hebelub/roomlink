@@ -90,11 +90,50 @@ const HomeScreen = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>Visited Rooms</Text>
+        <SafeAreaView style={styles.Bcontainer}>
+
+
+            <View style={styles.container}>
+                <Text style={styles.header}>Join Room</Text>
+
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Enter room code"
+                        value={roomCode}
+                        onChangeText={text => setRoomCode(text)}
+                        style={styles.input}
+                    />
+
+                    <TouchableOpacity
+                        onPress={() => joinRoom()}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Icon
+                            name="controller-play"
+                            type="entypo"
+                            size={24}
+                            color="#FFF"
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("ScanQrCode")}
+                        style={[styles.button, styles.buttonOutline]}
+                    >
+                        <Icon
+                            name="qr-code-scanner"
+                            type="materialIcons"
+                            size={24}
+                            color="#FFF"
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <Text style={styles.headerV}>Visited Rooms</Text>
 
             {/* List of rooms */}
-            {<ScrollView>
+            {<ScrollView  >
+
                 {userVisits.map((visit: VisitListItemProps, index: number) => {
                     return (
                         <VisitListItem
@@ -106,77 +145,66 @@ const HomeScreen = () => {
                 })}
             </ScrollView>}
 
-            <View style={styles.spacing} />
 
-            <Text style={styles.header}>Join Room</Text>
-            <View style={styles.sideBySide}>
-                <TextInput
-                    placeholder="Enter room code"
-                    value={roomCode}
-                    onChangeText={text => { setRoomCode(text) }}
-                    style={styles.input}
-                />
-
-                <TouchableOpacity
-                    onPress={() => { joinRoom() }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Icon
-                        name="controller-play"
-                        type="entypo"
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => { navigation.navigate("ScanQrCode") }}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Icon
-                        name="qr-code-scanner"
-                        type="materialIcons"
-                    />
-                </TouchableOpacity >
-
-            </View >
         </SafeAreaView >
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    Bcontainer: {
+        backgroundColor: 'lightgreen',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    input: {
-        height: 50,
-        width: 250,
-        borderWidth: 1,
-        padding: 10,
-    },
-    button: {
-        backgroundColor: 'lightblue',
-        paddingVertical: 8,
-        width: 40,
+    container: {
+
         alignItems: 'center',
-        borderRadius: 5,
+        justifyContent: 'center'
     },
-    buttonOutline: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
+    headerV: {
+        paddingTop: 80,
+        fontSize: 19,
+        fontWeight: '400',
+        marginBottom: 20,
+        color: '#333'
     },
     header: {
-        fontSize: 30,
-        fontWeight: 'bold',
+        paddingTop: 30,
+        fontSize: 32,
+        fontWeight: '400',
+        marginBottom: 20,
+        color: '#333'
     },
-    spacing: {
-        height: 50,
-    },
-    sideBySide: {
+    inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center'
+    },
+    input: {
+        height: 40,
+        width: '60%',
+        backgroundColor: '#FFF',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: '#CCC'
+    },
+    button: {
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        paddingHorizontal: 10
+    },
+    buttonOutline: {
+        backgroundColor: '#333',
+        borderWidth: 1,
+        borderColor: '#333',
+        marginLeft: 10
     }
 });
+
 
 export default HomeScreen;

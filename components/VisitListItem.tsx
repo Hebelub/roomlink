@@ -5,6 +5,7 @@ import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNa
 import { Room, Visit } from '../types';
 import { auth } from '../firebase';
 import EditRoomButton from './EditRoomButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export type VisitListItemProps = {
     roomProps: Room;
@@ -43,14 +44,31 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
             onPress={() => {
                 navigation.navigate("Room", { roomProps: roomProps })
             }}
-            style={[styles.button, styles.buttonOutline, styles.horizontal]}
+        //   style={[styles.button, styles.buttonOutline, styles.horizontal]}
         >
             <View style={styles.container}>
-                <Text numberOfLines={1} style={styles.header}>{roomProps.name}</Text>
-                <Text numberOfLines={1} style={styles.description}>{roomProps.description}</Text>
-                {lastVisit && <Text style={styles.timeSince}>Last visited {lastVisit && getElapsedTimeSince(lastVisit)}</Text>}
-                {!lastVisit && <Text style={styles.timeSince}>Never visited</Text>}
+                <Text numberOfLines={1} style={styles.header}>
+                    {roomProps.name}
+                </Text>
+                <Text numberOfLines={1} style={styles.description}>
+                    {roomProps.description}
+                </Text>
+                <View style={styles.separator} />
+                {lastVisit && (
+                    <View style={styles.lastVisitContainer}>
+                        <Icon name="clock-o" size={24} color="black" />
+                        <Text style={styles.lastVisitText}>
+                            -  {getElapsedTimeSince(lastVisit)}
+                        </Text>
+                    </View>
+                )}
+                {!lastVisit && (
+                    <Text style={styles.lastVisitText}>Never visited</Text>
+                )}
+
+
             </View>
+
             {
                 isOwner && <View style={{ position: 'absolute', right: 8 }}>
                     <EditRoomButton roomProps={roomProps} />
@@ -63,42 +81,53 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
 export default VisitListItem
 
 const styles = StyleSheet.create({
+
     container: {
-        flex: 1,
+        width: '96%',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    horizontal: {
-        flexDirection: 'row',
-    },
-    input: {
-        height: 50,
-        width: 300,
-        margin: 10,
+        backgroundColor: '#FFFFFFFF',
+        borderRadius: 15,
+        padding: 5,
+        shadowColor: '',
+        shadowOpacity: 0.2,
+        shadowOffset: {
+            width: 1,
+            height: 2,
+        },
+        shadowRadius: 4,
+        elevation: 5,
         borderWidth: 1,
-        padding: 10,
+        marginBottom: 15,
+        borderColor: 'black',
+        // marginBottom: 30,
     },
-    button: {
-        backgroundColor: 'lightblue',
-        padding: 15,
-        width: 300,
-        alignItems: 'center',
-        borderRadius: 5,
+    separator: {
+        width: '80%',
+        height: 1,
+        backgroundColor: 'black',
+        marginVertical: 5,
     },
-    buttonOutline: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
-        marginTop: 10,
+
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
     },
     description: {
-        fontSize: 12,
-        fontStyle: 'italic',
+        fontSize: 16,
+        color: '#555',
+        marginBottom: 6,
+        paddingHorizontal: 40,
+
     },
-    timeSince: {
-        fontSize: 10,
+    lastVisitContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
     },
-    header: {
+    lastVisitText: {
         fontSize: 14,
-        fontWeight: 'bold',
+        marginLeft: 8,
     },
-})
+});
