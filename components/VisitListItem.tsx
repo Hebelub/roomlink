@@ -89,7 +89,7 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
                 {!lastVisit && <Text style={styles.lastVisitText}>Never visited</Text>}
             </View>
             {isOwner && (
-                <View style={{ position: 'absolute', left: 20, top: 50 }}>
+                <View style={{ position: 'absolute', left: 20, top: 70 }}>
                     <Icon
                         size={24}
                         name="gear"
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF5555',
         borderRadius: 15,
         padding: 5,
-        shadowColor: '',
+        // shadowColor: '',
         shadowOpacity: 0.2,
         shadowOffset: {
             width: 1,

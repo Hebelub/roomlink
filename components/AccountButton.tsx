@@ -18,9 +18,7 @@ const AccountButton = () => {
         <View
             style={styles.container}
         >
-            <Text
-                style={styles.displayName}
-            >{user?.displayName}</Text>
+
             <TouchableOpacity onPress={() => { navigation.navigate("Profile") }}>
                 {user?.photoURL && <Image
                     style={styles.avatar}
@@ -35,10 +33,9 @@ export default AccountButton
 
 const styles = StyleSheet.create({
     avatar: {
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         borderRadius: 9999,
-        padding: 12,
     },
     displayName: {
         fontSize: 40,

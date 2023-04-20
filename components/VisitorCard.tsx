@@ -42,7 +42,7 @@ export const VisitorCard = ({ imageUrl, name, userId }: VisitorCardProps) => {
                             name='user'
                             type='entypo'
                             color='tomato'
-                            size={200}
+                            size={50}
                         />
                     </View>
                 </View>
