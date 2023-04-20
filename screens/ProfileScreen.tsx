@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView, Image, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { useNavigation } from '@react-navigation/native';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
@@ -9,6 +9,7 @@ import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, Documen
 import { User, signOut, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { setUserInDb } from '../hooks/useUser';
+import { Card, Icon } from '@rneui/themed';
 
 
 const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
@@ -58,7 +59,7 @@ const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
 };
 
 const ProfileScreen = () => {
-    
+
     const [isInEditMode, setIsInEditMode] = useState(false);
 
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
@@ -68,6 +69,21 @@ const ProfileScreen = () => {
     // If editing user info
     const [displayName, setName] = useState(user?.displayName ?? "");
     const [imageUrl, setImageUrl] = useState(user?.photoURL ?? "");
+
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (<TouchableOpacity>
+                <Icon
+                    size={34}
+                    name="log-out"
+                    type="entypo"
+                    color="lightred"
+                    onPress={() => { signOut_(); }}
+                />
+            </TouchableOpacity>),
+        });
+    }, [navigation]);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -90,11 +106,11 @@ const ProfileScreen = () => {
     }
 
     const saveUserInformation = async () => {
-        
-        if (displayName.trim() === "") 
-       { alert ("Update room name!")
-         return;
-       }
+
+        if (displayName.trim() === "") {
+            alert("Update room name!")
+            return;
+        }
         setIsInEditMode(false);
 
         setUserInDb({
@@ -114,98 +130,103 @@ const ProfileScreen = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-
-            {/* User info */}
-            <Text style={styles.header}>{displayName}</Text>
-
-            {isInEditMode ? (
-                <View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Name"
-                        value={displayName}
-                        onChangeText={(text) => setName(text)}
-                    />
-
-                    <Text>{user?.email}</Text>
-
-                    {user?.photoURL && <Image
-                        style={{ width: 200, height: 200 }}
-                        source={{ uri: user?.photoURL }}
-                    />}
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Profile Image URL (optional)"
-                        value={imageUrl}
-                        onChangeText={(text) => setImageUrl(text)}
-                        onSubmitEditing={saveUserInformation}
-                    />
-
-                    {/* Edit User Information */}
-                    <TouchableOpacity
-                        onPress={() => { saveUserInformation(); }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text>Save</Text>
-                    </TouchableOpacity>
-                </View>
-            ) : (
-                <View>
-                    <Text>{user?.email}</Text>
-                    <Image
-                        style={{ width: 200, height: 200 }}
-                        source={{ uri: imageUrl }}
-                    />
-
-                    <View style={[styles.container, { display: 'flex' }]}>
-                        {/* Sign out button */}
-                        <TouchableOpacity
-                            onPress={() => { signOut_(); }}
-                            style={[styles.button, styles.buttonOutline]}
-                        >
-                            <Text>Sign Out</Text>
-                        </TouchableOpacity>
-
-                        {/* Edit User Information */}
-                        <TouchableOpacity
-                            onPress={() => { editUserInformation(); }}
-                            style={[styles.button, styles.buttonOutline]}
-                        >
-                            <Text>Edit user info</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )}
-
-            <View style={styles.spacing} />
-
-            {/* Your rooms */}
-            <Text style={styles.header}>Your Rooms</Text>
-
-            {/* List of rooms */}
+        <SafeAreaView>
             <ScrollView>
-                {userVisits.map((room: VisitListItemProps, index: number) => {
-                    return (
-                        <VisitListItem
-                            key={index}
-                            roomProps={room.roomProps}
-                            lastVisit={room.lastVisit}
+                <View style={styles.container}>
+                    {/* User info */}
+                    <Text style={styles.header}>{displayName}</Text>
+
+                    {isInEditMode ? (
+                        <View>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Name"
+                                value={displayName}
+                                onChangeText={(text) => setName(text)}
+                            />
+
+                            <Text>{user?.email}</Text>
+
+                            {user?.photoURL && <Image
+                                style={{ width: 200, height: 200 }}
+                                source={{ uri: user?.photoURL }}
+                            />}
+
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Profile Image URL (optional)"
+                                value={imageUrl}
+                                onChangeText={(text) => setImageUrl(text)}
+                                onSubmitEditing={saveUserInformation}
+                            />
+
+                            {/* Edit User Information */}
+                            <TouchableOpacity
+                                onPress={() => { saveUserInformation(); }}
+                                style={[styles.button, styles.buttonOutline]}
+                            >
+                                <Text>Save</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <View>
+                            <Image
+                                style={[styles.image]}
+                                source={{ uri: imageUrl }}
+                            />
+
+                            <View style={[styles.container, { display: 'flex' }]}>
+                                {/* Sign out button */}
+
+
+
+                                {/* Edit User Information */}
+                                <TouchableOpacity
+                                    onPress={() => { editUserInformation(); }}
+                                    style={[styles.button, styles.buttonOutline]}
+                                >
+                                    <Text>Edit user info</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
+
+                    <View style={styles.spacing} />
+
+
+                    <TouchableOpacity>
+                        <Icon
+                            size={54}
+                            name="add-business"
+                            type="MaterialIcons"
+                            color="green"
+                            onPress={() => { navigation.navigate("CreateRoom") }}
                         />
-                    )
-                })}
+                    </TouchableOpacity>
+
+
+
+
+
+                    <View style={styles.spacing} />
+                    {/* Your rooms */}
+                    <Text style={styles.header}>Your Rooms</Text>
+
+                    {/* List of rooms */}
+                    <ScrollView>
+                        {userVisits.map((room: VisitListItemProps, index: number) => {
+                            return (
+                                <VisitListItem
+                                    key={index}
+                                    roomProps={room.roomProps}
+                                    lastVisit={room.lastVisit}
+                                />
+                            )
+                        })}
+                    </ScrollView>
+
+                </View>
             </ScrollView>
-
-            <View style={styles.spacing} />
-
-            <TouchableOpacity
-                onPress={() => { navigation.navigate("CreateRoom") }}
-                style={styles.button}
-            >
-                <Text>Create Room</Text>
-            </TouchableOpacity>
-
         </SafeAreaView>
     )
 }
@@ -213,13 +234,20 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
+    image: {
+
+        left: 50,
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        marginBottom: 20,
+    },
     container: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        backgroundColor: 'lightblue',
+        backgroundColor: 'lightgreen',
         padding: 15,
         width: 300,
         alignItems: 'center',
@@ -231,7 +259,17 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     header: {
+
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
         fontSize: 30,
+        fontWeight: '100',
+        textAlign: 'center',
+        padding: 1,
+        color: '#333'
     },
     spacing: {
         height: 50,
