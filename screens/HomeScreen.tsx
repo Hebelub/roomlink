@@ -102,6 +102,9 @@ const HomeScreen = () => {
                         value={roomCode}
                         onChangeText={text => setRoomCode(text)}
                         style={styles.input}
+
+
+
                     />
 
                     <TouchableOpacity
@@ -163,18 +166,31 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     headerV: {
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
+        fontSize: 30,
+        fontWeight: '100',
+        textAlign: 'center',
+        padding: 1,
+
         paddingTop: 80,
-        fontSize: 19,
-        fontWeight: '400',
         marginBottom: 20,
         color: '#333'
     },
     header: {
-        paddingTop: 30,
-        fontSize: 32,
-        fontWeight: '400',
-        marginBottom: 20,
-        color: '#333'
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
+        fontSize: 50,
+        fontWeight: '100',
+        textAlign: 'center',
+        padding: 1,
+
     },
     inputContainer: {
         flexDirection: 'row',
@@ -189,7 +205,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginRight: 10,
         borderWidth: 1,
-        borderColor: '#CCC'
+        borderColor: '#CCC',
+        fontSize: 23,
+
     },
     button: {
         height: 40,

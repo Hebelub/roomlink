@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, TouchableWithoutFeedback, Alert } from 'react-native'
 import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
@@ -33,19 +33,43 @@ function getElapsedTimeSince(date: Date): string {
     return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
 }
 
+
+
 const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
 
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const isOwner = roomProps.createdById === auth.currentUser?.uid;
+    const handleLongPress = () => {
+        navigation.setOptions({
+            gestureEnabled: false,
+        });
+
+        Alert.alert(
+            'Delete Room',
+            'Are you sure you want to delete this visit?',
+            [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => {
+                        // perform the delete action here
+                        console.log('Room deleted!');
+                    },
+                },
+            ],
+            { cancelable: true },
+        );
+    };
+
 
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate("Room", { roomProps: roomProps })
+                navigation.navigate('Room', { roomProps });
             }}
-        //   style={[styles.button, styles.buttonOutline, styles.horizontal]}
-        >
+            onLongPress={handleLongPress}>
             <View style={styles.container}>
                 <Text numberOfLines={1} style={styles.header}>
                     {roomProps.name}
@@ -58,25 +82,27 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
                     <View style={styles.lastVisitContainer}>
                         <Icon name="clock-o" size={24} color="black" />
                         <Text style={styles.lastVisitText}>
-                            -  {getElapsedTimeSince(lastVisit)}
+                            - {getElapsedTimeSince(lastVisit)}
                         </Text>
                     </View>
                 )}
-                {!lastVisit && (
-                    <Text style={styles.lastVisitText}>Never visited</Text>
-                )}
-
-
+                {!lastVisit && <Text style={styles.lastVisitText}>Never visited</Text>}
             </View>
-
-            {
-                isOwner && <View style={{ position: 'absolute', right: 8 }}>
-                    <EditRoomButton roomProps={roomProps} />
+            {isOwner && (
+                <View style={{ position: 'absolute', left: 20, top: 50 }}>
+                    <Icon
+                        size={24}
+                        name="gear"
+                        color="green"
+                        onPress={() => {
+                            navigation.navigate('EditRoom', { roomProps });
+                        }}
+                    />
                 </View>
-            }
+            )}
         </TouchableOpacity>
-    )
-}
+    );
+};
 
 export default VisitListItem
 
@@ -86,7 +112,7 @@ const styles = StyleSheet.create({
         width: '96%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FFFFFFFF',
+        backgroundColor: '#FFFF5555',
         borderRadius: 15,
         padding: 5,
         shadowColor: '',
@@ -103,22 +129,35 @@ const styles = StyleSheet.create({
         // marginBottom: 30,
     },
     separator: {
-        width: '80%',
+        width: '70%',
         height: 1,
         backgroundColor: 'black',
         marginVertical: 5,
     },
 
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 8,
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
+        fontSize: 30,
+        fontWeight: '800',
+        textAlign: 'center',
+        padding: 1,
+
     },
     description: {
-        fontSize: 16,
-        color: '#555',
-        marginBottom: 6,
-        paddingHorizontal: 40,
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
+        fontSize: 20,
+        fontWeight: '200',
+        textAlign: 'center',
+        padding: 1,
+
 
     },
     lastVisitContainer: {
