@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		marginVertical: 8,
-		// backgroundColor: "#F7FAFC",
+		backgroundColor: "#90EE9000",
 	},
 	avatar: {
 		height: 50,
@@ -68,16 +68,17 @@ const styles = StyleSheet.create({
 		marginRight: 8,
 		paddingVertical: 12,
 		paddingHorizontal: 16,
-		backgroundColor: "#F7FAFC",
+		backgroundColor: 'transparent',
+
 		borderRadius: 8,
 		shadowColor: "#000",
 		shadowOffset: {
-			width: 0,
-			height: 1,
+			width: 10,
+			height: 18,
 		},
 		shadowOpacity: 0.2,
 		shadowRadius: 1.41,
-		elevation: 2,
+		elevation: 6,
 		flex: 1,
 	},
 	messageText: {

@@ -142,6 +142,7 @@ export default RoomChatScreen;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "lightgreen"
 	},
 	contentContainer: {
 		//flexGrow: 1,

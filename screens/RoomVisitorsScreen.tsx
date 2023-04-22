@@ -71,13 +71,16 @@ const RoomVisitorsScreen = () => {
     }, [navigation]);
 
     return (
-        <ScrollView style={{ backgroundColor: "#06cf85" }}>
+        <ScrollView style={{ backgroundColor: "lightgreen" }}>
             <Input
                 placeholder="Search"
                 value={input}
                 onChangeText={setInput}
                 style={styles.input}
+                inputStyle={styles.inputText}
+                containerStyle={styles.inputContainer}
             />
+
 
             {/* List of rooms */}
             {<View>
@@ -95,12 +98,30 @@ const RoomVisitorsScreen = () => {
         </ScrollView>
     );
 };
-
 const styles = StyleSheet.create({
     input: {
-        padding: 10,
-        backgroundColor: "white",
+        backgroundColor: "transparent",
+        borderBottomWidth: 0,
+        paddingHorizontal: 20,
+        marginVertical: 10,
+    },
+    inputContainer: {
+        backgroundColor: "transparent",
+        borderRadius: 10,
+        marginHorizontal: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    inputText: {
+        color: "black",
     },
 });
+
 
 export default RoomVisitorsScreen
