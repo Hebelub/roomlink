@@ -33,7 +33,15 @@ const useUser = (userID?: string): LocalUser | undefined => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            setUserUID(user?.uid);
+            if (user) {
+                setUser({
+                    ...user,
+                    lastUpdated: Date.now(),
+                });
+            }
+            else {
+                setUser(undefined);
+            }
         });
 
         return unsubscribe;
