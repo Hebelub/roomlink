@@ -3,9 +3,11 @@ import React from 'react'
 import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
 import { Room, Visit } from '../types';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import EditRoomButton from './EditRoomButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { DocumentData, collection, deleteDoc, doc, getDocs, limit, query, where } from 'firebase/firestore';
+import useUser from '../hooks/useUser';
 
 export type VisitListItemProps = {
     roomProps: Room;
@@ -33,11 +35,24 @@ export function getElapsedTimeSince(date: Date): string {
     return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
 }
 
+const deleteVisit = async (visitedRoom: string, visitedBy: string) => {
+    const q = query(collection(db, "visits"),
+        where('visitedRoom', '==', visitedRoom),
+        where('visitedBy', '==', visitedBy),
+        limit(1)
+    );
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) {
+        return null;
+    }
 
+    await deleteDoc(doc(db, "visits", snapshot.docs[0].id));
+};
 
 const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
 
     const navigation = useNavigation<RootStackNavigationProp>();
+    const user = useUser();
 
     const isOwner = roomProps.createdById === auth.currentUser?.uid;
     const handleLongPress = () => {
@@ -54,8 +69,7 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
                     text: 'Delete',
                     style: 'destructive',
                     onPress: () => {
-                        // perform the delete action here
-                        console.log('Room deleted!');
+                        user && deleteVisit(roomProps.code, user?.uid);
                     },
                 },
             ],
