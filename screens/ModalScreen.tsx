@@ -37,30 +37,42 @@ const ModalScreen = () => {
             </View>
 
             <View style={styles.container}>
-                <View>
-                    <Text>{user?.displayName}</Text>
+                <Text style={styles.header}>{user?.displayName}</Text>
 
-                    {user?.photoURL && <Image
-                        style={styles.avatar}
-                        source={{ uri: user?.photoURL }}
-                    />}
-                </View>
+                {user?.photoURL && <Image
+                    style={[styles.image]}
+                    source={{ uri: user?.photoURL }}
+                />}
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    image: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        marginBottom: 20,
+    },
     container: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    avatar: {
-        height: 400,
-        width: 400,
-        borderRadius: 9999,
+    header: {
+
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            width: 0.1,
+            height: 0.2,
+        },
+        fontSize: 30,
+        fontWeight: '100',
+        textAlign: 'center',
+        padding: 1,
+        color: '#333'
     },
-});
+})
+
 
 export default ModalScreen

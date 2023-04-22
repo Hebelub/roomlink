@@ -235,7 +235,6 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
     image: {
-
         left: 50,
         width: 200,
         height: 200,
