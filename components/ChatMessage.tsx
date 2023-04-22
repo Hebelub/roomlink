@@ -6,6 +6,7 @@ import { Message } from "../types";
 import { dark } from "@mui/material/styles/createPalette";
 import { Image } from "@rneui/themed";
 import useUser from "../hooks/useUser";
+import { getElapsedTimeSince } from "./VisitListItem";
 
 type ChatMessageProps = {
 	text: string;
@@ -36,7 +37,7 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 
 					<View style={styles.messageContainer}>
 						<Text style={styles.messageText}>{text}</Text>
-						<Text style={styles.dateText}>{createdAt.toDateString()}</Text>
+						<Text style={styles.dateText}>{getElapsedTimeSince(createdAt)}</Text>
 					</View>
 				</View>
 			</ScrollView>
