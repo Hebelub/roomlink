@@ -3,10 +3,11 @@ import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@re
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Icon } from '@rneui/themed'
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { RoomStackParamList } from '../navigator/RoomNavigator';
 import useUser from '../hooks/useUser';
+import { Image } from "@rneui/themed";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -35,13 +36,31 @@ const ModalScreen = () => {
                 </TouchableOpacity>
             </View>
 
-            <View>
+            <View style={styles.container}>
                 <View>
                     <Text>{user?.displayName}</Text>
+
+                    {user?.photoURL && <Image
+                        style={styles.avatar}
+                        source={{ uri: user?.photoURL }}
+                    />}
                 </View>
             </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    avatar: {
+        height: 400,
+        width: 400,
+        borderRadius: 9999,
+    },
+});
 
 export default ModalScreen
