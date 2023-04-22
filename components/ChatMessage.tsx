@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RoomNavigatorScreenNavigationProp } from "../navigator/RoomNavigator";
 import { Message } from "../types";
@@ -22,10 +22,17 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 		<SafeAreaView>
 			<ScrollView style={styles.container}>
 				<View style={styles.messagecontainer}>
-					{user?.photoURL && <Image
-						style={styles.avatar}
-						source={{ uri: user?.photoURL }}
-					/>}
+					{user?.photoURL && <TouchableOpacity
+						onPress={() =>
+							navigation.navigate('MyModal', {
+								userId: createdBy,
+							})
+						}>
+						<Image
+							style={styles.avatar}
+							source={{ uri: user?.photoURL }}
+						/>
+					</TouchableOpacity>}
 
 					<View style={styles.messageContainer}>
 						<Text style={styles.messageText}>{text}</Text>
