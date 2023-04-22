@@ -29,14 +29,13 @@ const getVisitorCardPropsFromRoom = async (roomId: string): Promise<VisitorCardP
     const querySnapshot = await getDocs(q);
 
     const promises = querySnapshot.docs.map(async (doc) => {
-        const visit = doc.data() as Visit;
-        const u = { uid: "test_id", displayName: "test_name", photoURL: "test_photo" } as User;
+        const lastVisit = doc.data().lastVisit.toDate();
+        const visit = doc.data() as Visit
+        const u = { uid: visit.visitedBy };
 
         return {
             userId: u.uid,
-            name: u.displayName ? u.displayName : "No name",
-            imageUrl: u.photoURL ? u.photoURL : "https://www.gravatar.com/avatar/0",
-            lastVisit: visit.lastVisit as Date,
+            lastVisit: lastVisit,
         };
     });
 
@@ -87,8 +86,6 @@ const RoomVisitorsScreen = () => {
                         <VisitorCard
                             key={index}
                             userId={v.userId}
-                            name={v.name}
-                            imageUrl={v.imageUrl}
                             lastVisit={v.lastVisit}
                         />
                     );

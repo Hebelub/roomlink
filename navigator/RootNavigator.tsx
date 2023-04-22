@@ -17,7 +17,7 @@ import EditRoomScreen from '../screens/EditRoomScreen';
 
 export type RootStackParamList = {
     Room: { roomProps: Room };
-    MyModal: { userId: string; name: string };
+    MyModal: { userId: string };
     Register: undefined;
     CreateRoom: undefined;
     EditRoom: { roomProps: Room };

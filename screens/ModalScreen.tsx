@@ -6,6 +6,7 @@ import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { RoomStackParamList } from '../navigator/RoomNavigator';
+import useUser from '../hooks/useUser';
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -18,8 +19,10 @@ type ModalScreenRouteProp = RouteProp<RootStackParamList, "MyModal">;
 const ModalScreen = () => {
     const navigation = useNavigation<ModalScreenNavigationProp>();
     const {
-        params: { name, userId },
+        params: { userId },
     } = useRoute<ModalScreenRouteProp>();
+
+    const user = useUser(userId);
 
     return (
         <View>
@@ -34,7 +37,7 @@ const ModalScreen = () => {
 
             <View>
                 <View>
-                    <Text>{name}</Text>
+                    <Text>{user?.displayName}</Text>
                 </View>
             </View>
         </View>

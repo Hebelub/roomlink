@@ -12,7 +12,7 @@ export type VisitListItemProps = {
     lastVisit: Date | null;
 }
 
-function getElapsedTimeSince(date: Date): string {
+export function getElapsedTimeSince(date: Date): string {
 
     const timeDiff = (new Date().valueOf() - date.valueOf());
 

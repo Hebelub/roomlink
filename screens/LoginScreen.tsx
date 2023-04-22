@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, KeyboardAvoidingView, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -41,6 +41,16 @@ const LoginScreen = () => {
             style={styles.container}
             behavior='padding'
         >
+
+            <View style={styles.imageContainer}>
+                <Image
+                    source={require('../assets/fire.png')}
+                    style={styles.image}
+                />
+            </View>
+
+
+
             <View>
                 <TextInput
                     placeholder="Email"
@@ -90,6 +100,7 @@ const styles = StyleSheet.create({
         margin: 10,
         borderWidth: 1,
         padding: 10,
+        borderRadius: 5,
     },
     button: {
         backgroundColor: 'lightblue',
@@ -102,6 +113,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderWidth: 1,
         marginTop: 10,
+    },
+    imageContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor: '#f5fcff',
+    },
+
+    image: {
+        width: 400,
+        height: 400,
+        borderRadius: 100,
+        //borderWidth: 2,
+        //borderColor: '#4caf50',
     },
 });
 
