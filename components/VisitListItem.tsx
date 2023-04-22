@@ -70,7 +70,6 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
                     style: 'destructive',
                     onPress: () => {
                         user && deleteVisit(roomProps.code, user?.uid);
-                        navigation.replace('Home');
                     },
                 },
             ],
