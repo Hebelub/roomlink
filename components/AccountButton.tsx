@@ -19,12 +19,25 @@ const AccountButton = () => {
             style={styles.container}
         >
 
-            <TouchableOpacity onPress={() => { navigation.navigate("Profile") }}>
-                {user?.photoURL && <Image
-                    style={styles.avatar}
-                    source={{ uri: user?.photoURL }}
-                />}
-            </TouchableOpacity>
+            {
+                user ?
+                    <TouchableOpacity onPress={() => { navigation.navigate("Profile") }}>
+                        {user?.photoURL && <Image
+                            style={styles.avatar}
+                            source={{ uri: user?.photoURL }}
+                        />}
+                    </TouchableOpacity> :
+                    <TouchableOpacity>
+                        <Icon
+                            size={34}
+                            name="login"
+                            type="entypo"
+                            color="lightred"
+                            onPress={() => { navigation.navigate("Login") }}
+                        />
+                    </TouchableOpacity>
+            }
+
         </View>
     )
 }
