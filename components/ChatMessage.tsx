@@ -24,17 +24,17 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 		<SafeAreaView>
 			<ScrollView style={styles.container}>
 				<View style={styles.messagecontainer}>
-					{user?.photoURL && <TouchableOpacity
+					<TouchableOpacity
 						onPress={() =>
 							navigation.navigate('MyModal', {
 								userId: createdBy,
 							})
 						}>
 						<UserAvatar
-							photoURL={user?.photoURL}
+							photoURL={user?.photoURL ?? null}
 							size={50}
 						/>
-					</TouchableOpacity>}
+					</TouchableOpacity>
 
 					<View style={styles.messageContainer}>
 						<Text style={styles.messageText}>{text}</Text>

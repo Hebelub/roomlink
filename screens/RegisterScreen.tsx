@@ -66,9 +66,7 @@ const RegisterScreen = () => {
 
                 return updateProfile(user, {
                     displayName: name,
-                    photoURL:
-                        imageUrl ||
-                        "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+                    photoURL: imageUrl,
                 });
 
             })

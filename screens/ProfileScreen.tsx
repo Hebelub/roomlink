@@ -123,10 +123,7 @@ const ProfileScreen = () => {
 
         user && updateProfile(user, {
             displayName: displayName,
-            photoURL:
-                imageUrl ||
-                "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
-
+            photoURL: imageUrl,
         })
     }
 

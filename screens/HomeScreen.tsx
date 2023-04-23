@@ -102,9 +102,6 @@ const HomeScreen = () => {
                         value={roomCode}
                         onChangeText={text => setRoomCode(text)}
                         style={styles.input}
-
-
-
                     />
 
                     <TouchableOpacity

@@ -8,6 +8,11 @@ type UserAvatarProps = {
 }
 
 const UserAvatar = ({ photoURL, size }: UserAvatarProps) => {
+
+    if (photoURL === "") {
+        photoURL = null;
+    }
+
     return (
         <Image
             style={{

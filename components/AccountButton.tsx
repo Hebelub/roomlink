@@ -15,10 +15,7 @@ const AccountButton = () => {
     const user = useUser();
 
     return (
-        <View
-            style={styles.container}
-        >
-
+        <View style={styles.container}>
             {
                 user ?
                     <TouchableOpacity onPress={() => { navigation.navigate("Profile") }}>
