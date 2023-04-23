@@ -7,6 +7,7 @@ import { dark } from "@mui/material/styles/createPalette";
 import { Image } from "@rneui/themed";
 import useUser from "../hooks/useUser";
 import { getElapsedTimeSince } from "./VisitListItem";
+import UserAvatar from "./UserAvatar";
 
 type ChatMessageProps = {
 	text: string;
@@ -29,9 +30,9 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 								userId: createdBy,
 							})
 						}>
-						<Image
-							style={styles.avatar}
-							source={{ uri: user?.photoURL }}
+						<UserAvatar
+							photoURL={user?.photoURL}
+							size={50}
 						/>
 					</TouchableOpacity>}
 
@@ -52,12 +53,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		marginVertical: 8,
 		backgroundColor: "#90EE9000",
-	},
-	avatar: {
-		height: 50,
-		width: 50,
-		borderRadius: 9999,
-		padding: 12,
 	},
 	avatarText: {
 		fontWeight: "bold",

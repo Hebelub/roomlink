@@ -6,7 +6,7 @@ import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Icon } from '@rneui/themed';
 import { auth } from '../firebase';
 import useUser from '../hooks/useUser';
-import { Image } from "@rneui/themed";
+import UserAvatar from './UserAvatar';
 
 
 const AccountButton = () => {
@@ -22,10 +22,10 @@ const AccountButton = () => {
             {
                 user ?
                     <TouchableOpacity onPress={() => { navigation.navigate("Profile") }}>
-                        {user?.photoURL && <Image
-                            style={styles.avatar}
-                            source={{ uri: user?.photoURL }}
-                        />}
+                        <UserAvatar
+                            photoURL={user?.photoURL}
+                            size={40}
+                        />
                     </TouchableOpacity> :
                     <TouchableOpacity>
                         <Icon
@@ -45,11 +45,6 @@ const AccountButton = () => {
 export default AccountButton
 
 const styles = StyleSheet.create({
-    avatar: {
-        height: 40,
-        width: 40,
-        borderRadius: 9999,
-    },
     displayName: {
         fontSize: 40,
         paddingRight: 20,

@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         marginVertical: 5,
     },
-
     header: {
         shadowOpacity: 0.1,
         shadowOffset: {

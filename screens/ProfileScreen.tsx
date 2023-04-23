@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView, Image, TextInput } from 'react-native'
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, ScrollView, TextInput } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useTailwind } from 'tailwind-rn/dist';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import { User, signOut, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { setUserInDb } from '../hooks/useUser';
 import { Card, Icon } from '@rneui/themed';
+import UserAvatar from '../components/UserAvatar';
 
 
 const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
@@ -137,7 +138,9 @@ const ProfileScreen = () => {
                     <Text style={styles.header}>{displayName}</Text>
 
                     {isInEditMode ? (
-                        <View>
+                        <View style={{
+                            alignItems: 'center'
+                        }}>
                             <TextInput
                                 style={styles.input}
                                 placeholder="Name"
@@ -145,12 +148,10 @@ const ProfileScreen = () => {
                                 onChangeText={(text) => setName(text)}
                             />
 
-                            <Text>{user?.email}</Text>
-
-                            {user?.photoURL && <Image
-                                style={{ width: 200, height: 200 }}
-                                source={{ uri: user?.photoURL }}
-                            />}
+                            <UserAvatar
+                                photoURL={user?.photoURL ?? null}
+                                size={200}
+                            />
 
                             <TextInput
                                 style={styles.input}
@@ -169,10 +170,12 @@ const ProfileScreen = () => {
                             </TouchableOpacity>
                         </View>
                     ) : (
-                        <View>
-                            <Image
-                                style={[styles.image]}
-                                source={{ uri: imageUrl }}
+                        <View style={{
+                            alignItems: 'center'
+                        }}>
+                            <UserAvatar
+                                photoURL={imageUrl}
+                                size={200}
                             />
 
                             <View style={[styles.container, { display: 'flex' }]}>
@@ -193,7 +196,6 @@ const ProfileScreen = () => {
 
                     <View style={styles.spacing} />
 
-
                     <TouchableOpacity>
                         <Icon
                             size={54}
@@ -203,10 +205,6 @@ const ProfileScreen = () => {
                             onPress={() => { navigation.navigate("CreateRoom") }}
                         />
                     </TouchableOpacity>
-
-
-
-
 
                     <View style={styles.spacing} />
                     {/* Your rooms */}
@@ -224,7 +222,6 @@ const ProfileScreen = () => {
                             )
                         })}
                     </ScrollView>
-
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -234,13 +231,6 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-    image: {
-        left: 50,
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        marginBottom: 20,
-    },
     container: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -258,7 +248,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     header: {
-
         shadowOpacity: 0.1,
         shadowOffset: {
             width: 0.1,

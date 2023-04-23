@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Card, Icon } from '@rneui/themed';
 import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
 import useUser from '../hooks/useUser';
-import { Image } from "@rneui/themed";
 import { getElapsedTimeSince } from './VisitListItem';
+import UserAvatar from './UserAvatar';
 
 export type VisitorCardProps = {
     userId: string;
@@ -15,16 +15,9 @@ export type VisitorCardProps = {
 
 const VisitorCard = ({ userId, lastVisit }: VisitorCardProps) => {
 
-
-
-
-
     const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
     const user = useUser(userId);
-
-
-
 
     return (
         <TouchableOpacity
@@ -38,9 +31,9 @@ const VisitorCard = ({ userId, lastVisit }: VisitorCardProps) => {
                 <View style={styles.container}>
                     <View style={styles.leftContainer}>
                         {user?.photoURL && (
-                            <Image
-                                style={styles.avatar}
-                                source={{ uri: user?.photoURL }}
+                            <UserAvatar
+                                imageURL={user?.photoURL}
+                                size={50}
                             />
                         )}
                         <View style={styles.textContainer}>
@@ -91,12 +84,6 @@ const styles = StyleSheet.create({
     leftContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    avatar: {
-        height: 50,
-        width: 50,
-        borderRadius: 25,
-        marginRight: 10,
     },
     textContainer: {
         justifyContent: 'center',
