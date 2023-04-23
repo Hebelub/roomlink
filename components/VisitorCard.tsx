@@ -30,12 +30,11 @@ const VisitorCard = ({ userId, lastVisit }: VisitorCardProps) => {
             <View style={styles.card}>
                 <View style={styles.container}>
                     <View style={styles.leftContainer}>
-                        {user?.photoURL && (
-                            <UserAvatar
-                                imageURL={user?.photoURL}
-                                size={50}
-                            />
-                        )}
+                        <UserAvatar
+                            photoURL={user?.photoURL ?? null}
+                            size={50}
+                        />
+
                         <View style={styles.textContainer}>
                             <Text style={styles.displayName}>
                                 {user?.displayName}
