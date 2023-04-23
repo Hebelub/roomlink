@@ -31,7 +31,7 @@ const VisitorCard = ({ userId, lastVisit }: VisitorCardProps) => {
                 <View style={styles.container}>
                     <View style={styles.leftContainer}>
                         <UserAvatar
-                            photoURL={user?.photoURL ?? null}
+                            photoURL={user?.photoURL}
                             size={50}
                         />
 

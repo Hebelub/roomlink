@@ -146,7 +146,7 @@ const ProfileScreen = () => {
                             />
 
                             <UserAvatar
-                                photoURL={user?.photoURL ?? null}
+                                photoURL={user?.photoURL}
                                 size={200}
                             />
 
@@ -177,8 +177,6 @@ const ProfileScreen = () => {
 
                             <View style={[styles.container, { display: 'flex' }]}>
                                 {/* Sign out button */}
-
-
 
                                 {/* Edit User Information */}
                                 <TouchableOpacity

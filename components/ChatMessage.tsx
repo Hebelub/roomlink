@@ -31,7 +31,7 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 							})
 						}>
 						<UserAvatar
-							photoURL={user?.photoURL ?? null}
+							photoURL={user?.photoURL}
 							size={50}
 						/>
 					</TouchableOpacity>

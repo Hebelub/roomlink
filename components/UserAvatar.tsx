@@ -3,7 +3,7 @@ import React from 'react'
 import { Image } from "@rneui/themed";
 
 type UserAvatarProps = {
-    photoURL: string | null,
+    photoURL: string | null | undefined,
     size: number,
 }
 

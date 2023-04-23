@@ -8,6 +8,7 @@ import { RootStackParamList } from '../navigator/RootNavigator';
 import { RoomStackParamList } from '../navigator/RoomNavigator';
 import useUser from '../hooks/useUser';
 import { Image } from "@rneui/themed";
+import UserAvatar from '../components/UserAvatar';
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -39,22 +40,16 @@ const ModalScreen = () => {
             <View style={styles.container}>
                 <Text style={styles.header}>{user?.displayName}</Text>
 
-                {user?.photoURL && <Image
-                    style={[styles.image]}
-                    source={{ uri: user?.photoURL }}
-                />}
+                <UserAvatar
+                    photoURL={user?.photoURL}
+                    size={200}
+                />
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    image: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        marginBottom: 20,
-    },
     container: {
         alignItems: 'center',
         justifyContent: 'center',
