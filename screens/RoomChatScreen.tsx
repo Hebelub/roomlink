@@ -15,7 +15,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
-import React, { useLayoutEffect, useState, useEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect, useRef } from "react";
 import ChatMessage from "../components/ChatMessage";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
@@ -44,6 +44,7 @@ const RoomChatScreen = () => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
 	const messagesRef = collection(doc(collection(db, "rooms"), roomProps.code), "messages");
+	const flatListRef = useRef<FlatList>(null);
 
 	useLayoutEffect(() => {
 		const chatQuery = query(messagesRef, orderBy("createdAt"));
@@ -61,6 +62,10 @@ const RoomChatScreen = () => {
 		return unsubscribe;
 	}, []);
 
+	useEffect(() => {
+		flatListRef.current?.scrollToEnd({ animated: true });
+	}, [messages]);
+
 	const sendMessage = () => {
 		if (input.trim() === '') {
 			//alert('write a message!'); 
@@ -69,7 +74,7 @@ const RoomChatScreen = () => {
 		Keyboard.dismiss();
 
 		const message: Message = {
-			createdBy: auth.currentUser?.uid ?? "unknown",
+			createdBy: auth.currentUser ?.uid ?? "unknown",
 			createdAt: new Date(),
 			text: input,
 		};
@@ -91,7 +96,7 @@ const RoomChatScreen = () => {
 					<>
 						<View style={styles.contentContainer}></View>
 
-						<FlatList
+						<FlatList ref={flatListRef}
 							data={messages}
 							renderItem={({ item }) => (
 								<ChatMessage
