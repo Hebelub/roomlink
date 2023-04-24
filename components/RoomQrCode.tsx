@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 type Props = {
-  code: string;
+  code: string,
+  size?: number,
 }
 
-const RoomQrCode = ({ code }: Props) => {
+const RoomQrCode = ({ code, size }: Props) => {
   return (
-    <QrCode value={'https://www.roomlink.com/' + code} size={220} />
+    <QrCode value={'https://www.roomlink.com/' + code} size={size ?? 220} />
   )
 }
 
