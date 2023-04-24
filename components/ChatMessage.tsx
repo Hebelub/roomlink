@@ -19,36 +19,34 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 	const navigation = useNavigation<RoomNavigatorScreenNavigationProp>();
 
 	const user = useUser(createdBy);
+	const sender = useUser();
+	const isSender = sender?.uid === createdBy;
 
 	return (
-		<SafeAreaView>
-			<ScrollView style={styles.container}>
-				<View style={styles.messagecontainer}>
-					<TouchableOpacity
-						onPress={() =>
-							navigation.navigate('MyModal', {
-								userId: createdBy,
-							})
-						}>
-						<UserAvatar
-							photoURL={user?.photoURL}
-							size={50}
-						/>
-					</TouchableOpacity>
+		<View style={styles.container}>
 
-					<View style={styles.messageContainer}>
-						<View style={{
-							flexDirection: 'row',
-							justifyContent: 'space-between',
-						}}>
-							<Text style={styles.displayName}>{user?.displayName}</Text>
-							<Text style={styles.dateText}>{getElapsedTimeSince(createdAt)}</Text>
-						</View>
-						<Text style={styles.messageText}>{text}</Text>
-					</View>
+			<View style={[
+				styles.messagecontainer,
+				isSender ? styles.sender : styles.receiver]}>
+				<TouchableOpacity
+					onPress={() =>
+						navigation.navigate('MyModal', {
+							userId: createdBy,
+						})
+					}>
+					<UserAvatar
+						photoURL={user?.photoURL}
+						size={30}
+					/>
+				</TouchableOpacity>
+				<View style={styles.messageContainer}>
+					<Text style={styles.displayName}>{user?.displayName}</Text>
+					<Text style={styles.messageText}>{text}</Text>
+					<Text style={styles.dateText}>{getElapsedTimeSince(createdAt)}</Text>
 				</View>
-			</ScrollView>
-		</SafeAreaView>
+
+			</View>
+		</View>
 	);
 };
 
@@ -56,10 +54,10 @@ const styles = StyleSheet.create({
 	container: {},
 	messagecontainer: {
 		flexDirection: "row",
-		alignItems: "center",
+		alignItems: "flex-start",
 		marginVertical: 8,
-		backgroundColor: "#90EE9000",
 	},
+
 	avatarText: {
 		fontWeight: "bold",
 		fontSize: 20,
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
 		marginRight: 8,
 		paddingVertical: 12,
 		paddingHorizontal: 16,
-		backgroundColor: 'transparent',
+		backgroundColor: "white",
 
 		borderRadius: 8,
 		shadowColor: "#000",
@@ -83,6 +81,17 @@ const styles = StyleSheet.create({
 		elevation: 6,
 		flex: 1,
 	},
+	sender: {
+		// justifyContent: "flex-start",
+		// marginLeft: "auto",
+
+		flexDirection: "row-reverse",
+		justifyContent: "flex-end",
+	},
+	receiver: {
+		justifyContent: "flex-end",
+		marginRight: "auto",
+	},
 	messageText: {
 		fontSize: 16,
 		color: "#1A202C",
@@ -90,7 +99,8 @@ const styles = StyleSheet.create({
 	dateText: {
 		fontSize: 12,
 		color: "#4A5568",
-		marginTop: 4,
+		marginBottom: 2,
+		alignSelf: 'flex-end',
 	},
 	displayName: {
 		fontWeight: "bold",
