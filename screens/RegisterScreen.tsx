@@ -27,6 +27,7 @@ import { db, auth } from "../firebase";
 import { addDoc, collection, setDoc } from "firebase/firestore";
 import { User, createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { setUserInDb } from "../hooks/useUser";
+import { checkURL } from "../utils/utils";
 
 export type ModalScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList>,
@@ -52,7 +53,20 @@ const RegisterScreen = () => {
     }, [])
 
 
-    const register = (): void => {
+    const register = async (): Promise<void> => {
+
+        if (name.trim() === "") {
+            alert("Fill in name!")
+            return;
+        }
+
+        const isValidImageURL = imageUrl.trim() === "" || await checkURL(imageUrl);
+
+        if (!isValidImageURL) {
+            alert("Invalid image URL!");
+            return;
+        }
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((authUser: any) => {
                 const user = authUser.user;

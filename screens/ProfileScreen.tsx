@@ -11,6 +11,7 @@ import { db, auth } from "../firebase";
 import { setUserInDb } from '../hooks/useUser';
 import { Card, Icon } from '@rneui/themed';
 import UserAvatar from '../components/UserAvatar';
+import { checkURL } from '../utils/utils'
 
 
 const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
@@ -109,9 +110,17 @@ const ProfileScreen = () => {
     const saveUserInformation = async () => {
 
         if (displayName.trim() === "") {
-            alert("Update room name!")
+            alert("Fill in name!")
             return;
         }
+
+        const isValidImageURL = imageUrl.trim() === "" || await checkURL(imageUrl);
+
+        if (!isValidImageURL) {
+            alert("Invalid image URL!");
+            return;
+        }
+
         setIsInEditMode(false);
 
         setUserInDb({
