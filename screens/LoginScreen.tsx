@@ -41,15 +41,12 @@ const LoginScreen = () => {
             style={styles.container}
             behavior='padding'
         >
-
             <View style={styles.imageContainer}>
                 <Image
                     source={require('../assets/fire.png')}
                     style={styles.image}
                 />
             </View>
-
-
 
             <View>
                 <TextInput
@@ -120,13 +117,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // backgroundColor: '#f5fcff',
     },
-
     image: {
         width: 400,
         height: 400,
         borderRadius: 100,
-        //borderWidth: 2,
-        //borderColor: '#4caf50',
     },
 });
 

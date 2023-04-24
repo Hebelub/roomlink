@@ -16,20 +16,14 @@ import {
 } from "react-native";
 import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import React, { useLayoutEffect, useState, useEffect } from "react";
-import { useTailwind } from "tailwind-rn/dist";
-import { Input } from "@rneui/themed";
-import { useQuery } from "@apollo/client";
-import VisitorCard from "../components/VisitorCard";
 import ChatMessage from "../components/ChatMessage";
 import EditRoomButton from "../components/EditRoomButton";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { RootStackParamList } from "../navigator/RootNavigator";
 import {
 	RoomNavigatorRouteProp,
 	RoomNavigatorScreenNavigationProp,
 } from "../navigator/RoomNavigator";
 import { auth, db } from "../firebase";
-import { Button } from "@rneui/base";
 import {
 	addDoc,
 	collection,

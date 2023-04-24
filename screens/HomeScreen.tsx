@@ -10,6 +10,7 @@ import { Icon } from '@rneui/themed';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { getRoom } from '../utils/utils';
 import { onAuthStateChanged } from 'firebase/auth';
+import useUser from '../hooks/useUser';
 
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
@@ -45,6 +46,7 @@ const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
     const [roomCode, setRoomCode] = useState('');
+    const currentUser = useUser();
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -93,6 +95,7 @@ const HomeScreen = () => {
         <SafeAreaView style={styles.Bcontainer}>
 
 
+            {/* Join a New Room */}
             <View style={styles.container}>
                 <Text style={styles.header}>Join Room</Text>
 
@@ -129,22 +132,31 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            {/* Visited Rooms */}
             <Text style={styles.headerV}>Visited Rooms</Text>
-
-            {/* List of rooms */}
-            {<ScrollView  >
-
-                {userVisits.map((visit: VisitListItemProps, index: number) => {
-                    return (
-                        <VisitListItem
-                            key={index}
-                            roomProps={visit.roomProps}
-                            lastVisit={visit.lastVisit}
-                        />
-                    );
-                })}
-            </ScrollView>}
-
+            {
+                currentUser ?
+                    <ScrollView>
+                        {userVisits.map((visit: VisitListItemProps, index: number) => {
+                            return (
+                                <VisitListItem
+                                    key={index}
+                                    roomProps={visit.roomProps}
+                                    lastVisit={visit.lastVisit}
+                                />
+                            );
+                        })}
+                    </ScrollView> :
+                    <>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Login')}
+                            style={styles.gotoLogin}>
+                            <Text>Login</Text>
+                        </TouchableOpacity>
+                        <Text>Login to see visited rooms</Text>
+                    </>
+            }
 
         </SafeAreaView >
     )
@@ -158,7 +170,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
-
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -218,6 +229,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#333',
         marginLeft: 10
+    },
+    gotoLogin: {
+        backgroundColor: 'orange',
+        padding: 15,
+        width: 300,
+        alignItems: 'center',
+        borderRadius: 5,
     }
 });
 
