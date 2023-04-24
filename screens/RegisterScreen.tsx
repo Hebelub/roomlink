@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     View,
     Alert,
+    Image
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
@@ -90,7 +91,7 @@ const RegisterScreen = () => {
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height">
-            <Text style={styles.title}>Create a Roomlink account</Text>
+            {/** <Text style={styles.title}>Create a Roomlink account</Text> */}
             <View style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={styles.form}>
                     <TextInput
@@ -119,18 +120,39 @@ const RegisterScreen = () => {
                         onChangeText={(text) => setImageUrl(text)}
                         onSubmitEditing={register}
                     />
+
+
                     <TouchableOpacity style={styles.button} onPress={register}>
                         <Text style={styles.buttonText}>Register</Text>
                     </TouchableOpacity>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../assets/RooMLinK.png')}
+                            style={styles.image}
+                        />
+                    </View>
+
                 </ScrollView>
             </View>
+
         </KeyboardAvoidingView>
     );
 };
 
 export default RegisterScreen;
-
 const styles = StyleSheet.create({
+    imageContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 5,
+
+
+    },
+    image: {
+
+        width: 400,
+        height: 400,
+    },
     container: {
         flex: 1,
         backgroundColor: "#fff",

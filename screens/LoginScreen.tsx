@@ -43,7 +43,7 @@ const LoginScreen = () => {
         >
             <View style={styles.imageContainer}>
                 <Image
-                    source={require('../assets/fire.png')}
+                    source={require('../assets/RooMLinK.png')}
                     style={styles.image}
                 />
             </View>
@@ -69,14 +69,14 @@ const LoginScreen = () => {
                     onPress={() => { signIn() }}
                     style={styles.button}
                 >
-                    <Text>Login</Text>
+                    <Text style={[styles.login]}>Login</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { navigation.navigate("Register") }}
                     style={[styles.button, styles.buttonOutline]}
                 >
-                    <Text>Register</Text>
+                    <Text style={[styles.register]}>Register</Text>
                 </TouchableOpacity>
             </View>
 
@@ -87,40 +87,61 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'white',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
     input: {
+        fontSize: 22,
+        backgroundColor: 'white',
         height: 50,
         width: 300,
         margin: 10,
-        borderWidth: 1,
+        // borderWidth: 1,
         padding: 10,
         borderRadius: 5,
     },
     button: {
-        backgroundColor: 'lightblue',
+        fontSize: 44,
+        backgroundColor: 'lightgreen',
         padding: 15,
         width: 300,
         alignItems: 'center',
         borderRadius: 5,
     },
     buttonOutline: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
+        fontSize: 22,
+        backgroundColor: 'orange',
+        // borderWidth: 1,
         marginTop: 10,
     },
     imageContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: '#f5fcff',
+        backgroundColor: '#f5fcff',
     },
     image: {
+        marginLeft: 0,
+        marginTop: 20,
         width: 400,
         height: 400,
         borderRadius: 100,
+    },
+    register: {
+        fontSize: 18,
+        fontFamily: 'Arial',
+        color: '#333',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    login: {
+        fontSize: 18,
+        fontFamily: 'Arial',
+        color: '#333',
+        marginTop: 0,
+        marginBottom: 10,
     },
 });
 
