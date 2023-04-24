@@ -33,20 +33,21 @@ const CreateRoomScreen = () => {
 
     const createRoom = async () => {
 
-        if (roomName === ''){
-            alert('Enter room name!'); 
+        if (roomName === '') {
+            alert('Enter room name!');
             return;
         }
-        if (roomDescription.length > 30){ 
-            alert('Room description should be less than 30 characters!') 
-               return;
-            }
+        if (roomDescription.trim().length > 100) {
+            alert('Room description should be less than 100 characters!')
+            return;
+        }
+
 
         try {
             const room = {
                 name: roomName,
                 code: roomCode,
-                description: roomDescription,
+                description: roomDescription.trim(),
                 createdAt: new Date(),
                 imageUrl: roomImageUrl,
                 createdById: userUid,
@@ -63,6 +64,20 @@ const CreateRoomScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+
+            {/* RoomCode */}
+            <Text style={styles.header}>Code</Text>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+
+            }}>
+                <RoomQrCode code={roomCode} size={100} />
+                <Text style={styles.codeText}>{roomCode}</Text>
+            </View>
+
+            <View style={styles.spacing} />
 
             <Text style={styles.header}>Create New Room</Text>
 
@@ -87,14 +102,7 @@ const CreateRoomScreen = () => {
                 style={styles.input}
             />
 
-            <View style={styles.spacing} />
-
-            {/* RoomCode */}
-            <Text style={styles.header}>Code</Text>
-            <Text style={styles.codeText}>{roomCode}</Text>
-            <RoomQrCode code={roomCode} />
-
-            <View style={styles.spacing} />
+            {/* <View style={styles.spacing} /> */}
 
             <TouchableOpacity
                 onPress={() => { createRoom() }}
@@ -122,6 +130,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'lightblue',
         padding: 15,
+        marginTop: 10,
         width: 300,
         alignItems: 'center',
         borderRadius: 5,
@@ -129,12 +138,11 @@ const styles = StyleSheet.create({
     buttonOutline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
-        marginTop: 10,
     },
     codeText: {
-        marginTop: -20,
-        fontSize: 80,
+        fontSize: 60,
         fontWeight: 'bold',
+        marginLeft: 20,
     },
     header: {
         fontSize: 30,
