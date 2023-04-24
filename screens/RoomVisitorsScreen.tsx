@@ -52,7 +52,6 @@ const RoomVisitorsScreen = () => {
     } = useRoute<VisitorsScreenRouteProp>();
 
     const navigation = useNavigation<VisitorsScreenNavigationProp>();
-    const [input, setInput] = useState<string>("");
 
     const [visitors, setVisitors] = useState<VisitorCardProps[]>([]);
 
@@ -74,16 +73,6 @@ const RoomVisitorsScreen = () => {
 
     return (
         <ScrollView style={{ backgroundColor: "lightgreen" }}>
-            <Input
-                placeholder="Search"
-                value={input}
-                onChangeText={setInput}
-                style={styles.input}
-                inputStyle={styles.inputText}
-                containerStyle={styles.inputContainer}
-            />
-
-
             {/* List of rooms */}
             {<View>
                 {visitors.map((v: VisitorCardProps, index: number) => {
