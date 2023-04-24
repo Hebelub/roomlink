@@ -21,3 +21,20 @@ export const getRoom = async (roomCode: string): Promise<Room | null> => {
         return null;
     }
 };
+
+export const checkURL = async (url: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = function () {
+            if (image.width > 0) {
+                console.log("image exists");
+                resolve(true);
+            }
+        }
+        image.onerror = function () {
+            console.log("image doesn't exist");
+            resolve(false);
+        }
+        image.src = url;
+    });
+}
