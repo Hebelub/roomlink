@@ -117,9 +117,10 @@ const styles = StyleSheet.create({
             height: 0.2,
         },
         fontSize: 50,
-        fontWeight: '800',
+        fontWeight: '100',
         textAlign: 'center',
         padding: 1,
+
     },
     description: {
         fontSize: 18,

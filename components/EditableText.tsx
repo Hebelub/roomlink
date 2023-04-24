@@ -40,7 +40,7 @@ const EditableText = ({ initialText, textStyle, containerStyle, enableEdit, onAc
         <View style={containerStyle}>
             {isEditing ? (
                 <View style={[{ flexDirection: 'row', alignItems: 'center' }, containerStyle]}>
-                    <TextInput style={textStyle} value={text} onChangeText={handleChangeText} />
+                    <TextInput autoFocus={true} style={textStyle} value={text} onChangeText={handleChangeText} />
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity style={styles.button} onPress={handleAccept}>
                             <Icon name="done" size={20} color="green" />
