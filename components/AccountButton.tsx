@@ -3,7 +3,7 @@ import React from 'react'
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
-import { Icon } from '@rneui/themed';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { auth } from '../firebase';
 import useUser from '../hooks/useUser';
 import UserAvatar from './UserAvatar';
@@ -28,7 +28,6 @@ const AccountButton = () => {
                         <Icon
                             size={34}
                             name="login"
-                            type="entypo"
                             color="lightred"
                             onPress={() => { navigation.navigate("Login") }}
                         />

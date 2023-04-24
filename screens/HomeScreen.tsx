@@ -6,11 +6,13 @@ import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firesto
 import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
-import { Icon } from '@rneui/themed';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { getRoom } from '../utils/utils';
 import { onAuthStateChanged } from 'firebase/auth';
 import useUser from '../hooks/useUser';
+import EditableText from '../components/EditableText';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
@@ -94,9 +96,9 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={styles.Bcontainer}>
 
-
             {/* Join a New Room */}
             <View style={styles.container}>
+
                 <Text style={styles.header}>Join Room</Text>
 
                 <View style={styles.inputContainer}>
@@ -112,8 +114,7 @@ const HomeScreen = () => {
                         style={[styles.button, styles.buttonOutline]}
                     >
                         <Icon
-                            name="controller-play"
-                            type="entypo"
+                            name="search"
                             size={24}
                             color="#FFF"
                         />
@@ -125,7 +126,6 @@ const HomeScreen = () => {
                     >
                         <Icon
                             name="qr-code-scanner"
-                            type="materialIcons"
                             size={24}
                             color="#FFF"
                         />

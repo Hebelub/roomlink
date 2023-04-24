@@ -9,6 +9,7 @@ import EditRoomButton from '../components/EditRoomButton';
 import RoomQrCode from '../components/RoomQrCode';
 import useUser from '../hooks/useUser';
 import * as Clipboard from 'expo-clipboard';
+import EditableText from '../components/EditableText';
 
 const RoomInfoScreen = () => {
 
@@ -32,9 +33,11 @@ const RoomInfoScreen = () => {
     return (
         <ScrollView style={{ backgroundColor: 'lightgreen' }}>
             <View style={styles.container}>
-                <View style={styles.headerContainer} >
-                    <Text style={styles.header}>{roomProps.name}</Text>
-                </View>
+                <EditableText
+                    containerStyle={styles.headerContainer}
+                    initialText={roomProps.name}
+                    textStyle={styles.header}
+                />
 
                 <View style={styles.spacing} />
                 <View style={styles.descriptionContainer}>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     headerContainer: {
-
+        justifyContent: "center"
     },
     header: {
         shadowOpacity: 0.1,

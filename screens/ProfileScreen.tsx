@@ -9,9 +9,10 @@ import { query, addDoc, collection, doc, setDoc, getDoc, where, getDocs, Documen
 import { User, signOut, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { setUserInDb } from '../hooks/useUser';
-import { Card, Icon } from '@rneui/themed';
 import UserAvatar from '../components/UserAvatar';
 import { checkURL } from '../utils/utils'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 
 const getRoomVisitTime = async (roomId: string): Promise<Date | null> => {
@@ -78,8 +79,7 @@ const ProfileScreen = () => {
             headerRight: () => (<TouchableOpacity>
                 <Icon
                     size={34}
-                    name="log-out"
-                    type="entypo"
+                    name="logout"
                     color="lightred"
                     onPress={() => { signOut_(); }}
                 />
@@ -204,7 +204,6 @@ const ProfileScreen = () => {
                         <Icon
                             size={54}
                             name="add-business"
-                            type="MaterialIcons"
                             color="green"
                             onPress={() => { navigation.navigate("CreateRoom") }}
                         />
