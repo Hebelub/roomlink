@@ -74,16 +74,6 @@ const RoomVisitorsScreen = () => {
 
     return (
         <ScrollView style={{ backgroundColor: "lightgreen" }}>
-            <Input
-                placeholder="Search"
-                value={input}
-                onChangeText={setInput}
-                style={styles.input}
-                inputStyle={styles.inputText}
-                containerStyle={styles.inputContainer}
-            />
-
-
             {/* List of rooms */}
             {<View>
                 {visitors.map((v: VisitorCardProps, index: number) => {
