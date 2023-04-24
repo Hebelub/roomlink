@@ -6,11 +6,12 @@ interface EditableTextProps {
     initialText: string;
     textStyle?: TextStyle;
     containerStyle?: ViewStyle;
+    enableEdit?: boolean;
     onAccept?: (newText: string) => void;
     onDecline?: () => void;
 }
 
-const EditableText = ({ initialText, textStyle, containerStyle, onAccept, onDecline }: EditableTextProps) => {
+const EditableText = ({ initialText, textStyle, containerStyle, enableEdit, onAccept, onDecline }: EditableTextProps) => {
     const [savedText, setSavedText] = useState(initialText)
     const [text, setText] = useState(savedText);
     const [isEditing, setIsEditing] = useState(false);
@@ -52,9 +53,9 @@ const EditableText = ({ initialText, textStyle, containerStyle, onAccept, onDecl
             ) : (
                 <View style={[{ flexDirection: 'row', alignItems: 'center' }, containerStyle]}>
                     <Text style={textStyle}>{text}</Text>
-                    <TouchableOpacity style={styles.button} onPress={handleEdit}>
+                    {enableEdit && <TouchableOpacity style={styles.button} onPress={handleEdit}>
                         <Icon name="edit" size={20} color="black" />
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                 </View>
             )}
         </View>
