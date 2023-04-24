@@ -22,20 +22,20 @@ const EditRoomScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const updateRoom = async () => {
-        
-        if (roomName === ''){
-            alert('Enter room name!'); 
+
+        if (roomName === '') {
+            alert('Enter room name!');
             return;
         }
-        if (roomDescription.length > 30){ 
-            alert('Room description should be less than 30 characters!') 
-               return;
-            }
+        if (roomDescription.trim().length > 100) {
+            alert('Room description should be less than 100 characters!')
+            return;
+        }
         try {
             const room = {
                 name: roomName,
                 code: roomProps.code,
-                description: roomDescription,
+                description: roomDescription.trim(),
                 createdAt: new Date(),
                 imageUrl: roomImageUrl,
                 createdById: roomProps.createdById,
