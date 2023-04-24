@@ -3,7 +3,7 @@ import React from 'react'
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigation } from '@react-navigation/native';
 import { RoomNavigatorScreenNavigationProp } from '../navigator/RoomNavigator';
-import { Icon } from '@rneui/themed';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
 import { Room } from '../types';
 
@@ -19,7 +19,7 @@ const EditRoomButton = ({ roomProps }: EditRoomButtonProps) => {
         <TouchableOpacity>
             <Icon
                 name="edit"
-                type="entypo"
+                size={25}
                 color="black"
                 onPress={() => { navigation.navigate("EditRoom", { roomProps: roomProps }) }}
             />

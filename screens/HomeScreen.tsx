@@ -6,10 +6,13 @@ import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firesto
 import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
 import AccountButton from '../components/AccountButton';
-import { Icon } from '@rneui/themed';
 import VisitListItem, { VisitListItemProps } from '../components/VisitListItem';
 import { getRoom } from '../utils/utils';
 import { onAuthStateChanged } from 'firebase/auth';
+import useUser from '../hooks/useUser';
+import EditableText from '../components/EditableText';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 
 const getUserVisits = async (userId: string): Promise<VisitListItemProps[]> => {
@@ -45,6 +48,7 @@ const HomeScreen = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     const [userVisits, setUserVisits] = useState<VisitListItemProps[]>([]);
     const [roomCode, setRoomCode] = useState('');
+    const currentUser = useUser();
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -92,8 +96,9 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={styles.Bcontainer}>
 
-
+            {/* Join a New Room */}
             <View style={styles.container}>
+
                 <Text style={styles.header}>Join Room</Text>
 
                 <View style={styles.inputContainer}>
@@ -109,8 +114,7 @@ const HomeScreen = () => {
                         style={[styles.button, styles.buttonOutline]}
                     >
                         <Icon
-                            name="controller-play"
-                            type="entypo"
+                            name="search"
                             size={24}
                             color="#FFF"
                         />
@@ -122,29 +126,37 @@ const HomeScreen = () => {
                     >
                         <Icon
                             name="qr-code-scanner"
-                            type="materialIcons"
                             size={24}
                             color="#FFF"
                         />
                     </TouchableOpacity>
                 </View>
             </View>
+
+            {/* Visited Rooms */}
             <Text style={styles.headerV}>Visited Rooms</Text>
-
-            {/* List of rooms */}
-            {<ScrollView  >
-
-                {userVisits.map((visit: VisitListItemProps, index: number) => {
-                    return (
-                        <VisitListItem
-                            key={index}
-                            roomProps={visit.roomProps}
-                            lastVisit={visit.lastVisit}
-                        />
-                    );
-                })}
-            </ScrollView>}
-
+            {
+                currentUser ?
+                    <ScrollView>
+                        {userVisits.map((visit: VisitListItemProps, index: number) => {
+                            return (
+                                <VisitListItem
+                                    key={index}
+                                    roomProps={visit.roomProps}
+                                    lastVisit={visit.lastVisit}
+                                />
+                            );
+                        })}
+                    </ScrollView> :
+                    <>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Login')}
+                            style={styles.gotoLogin}>
+                            <Text>Login</Text>
+                        </TouchableOpacity>
+                        <Text>Login to see visited rooms</Text>
+                    </>
+            }
 
         </SafeAreaView >
     )
@@ -158,7 +170,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
-
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -218,6 +229,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#333',
         marginLeft: 10
+    },
+    gotoLogin: {
+        backgroundColor: 'orange',
+        padding: 15,
+        width: 300,
+        alignItems: 'center',
+        borderRadius: 5,
     }
 });
 

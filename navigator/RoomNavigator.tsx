@@ -4,7 +4,7 @@ import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-naviga
 import RoomChatScreen from '../screens/RoomChatScreen';
 import RoomVisitorsScreen from '../screens/RoomVisitorsScreen';
 import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { Icon } from '@rneui/themed';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './RootNavigator';
 import { Room, Visit } from '../types';
@@ -80,7 +80,7 @@ const RoomNavigator = () => {
                         return (
                             <Icon
                                 name="chat"
-                                type="entypo"
+                                size={25}
                                 color={focused ? 'tomato' : 'gray'}
                             />
                         );
@@ -88,8 +88,8 @@ const RoomNavigator = () => {
                     else if (route.name === 'Visitors') {
                         return (
                             <Icon
-                                name="users"
-                                type="entypo"
+                                name="group"
+                                size={25}
                                 color={focused ? 'tomato' : 'gray'}
                             />
                         );
@@ -98,7 +98,7 @@ const RoomNavigator = () => {
                         return (
                             <Icon
                                 name="info"
-                                type="entypo"
+                                size={25}
                                 color={focused ? 'tomato' : 'gray'}
                             />
                         );
