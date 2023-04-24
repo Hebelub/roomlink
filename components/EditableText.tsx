@@ -38,7 +38,7 @@ const EditableText = ({ initialText, textStyle, containerStyle, onAccept, onDecl
     return (
         <View style={containerStyle}>
             {isEditing ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={[{ flexDirection: 'row', alignItems: 'center' }, containerStyle]}>
                     <TextInput style={textStyle} value={text} onChangeText={handleChangeText} />
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity style={styles.button} onPress={handleAccept}>
