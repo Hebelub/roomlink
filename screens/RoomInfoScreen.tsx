@@ -10,6 +10,7 @@ import RoomQrCode from '../components/RoomQrCode';
 import useUser from '../hooks/useUser';
 import * as Clipboard from 'expo-clipboard';
 import EditableText from '../components/EditableText';
+import { ToastAndroid } from 'react-native';
 
 const RoomInfoScreen = () => {
 
@@ -47,7 +48,10 @@ const RoomInfoScreen = () => {
 
                 {/* <Text>The room was created at {roomProps.createdAt.toDateString()}</Text> */}
 
-                <TouchableOpacity onPress={() => (Clipboard.setStringAsync(roomProps.code))} style={styles.qrContainer}>
+                <TouchableOpacity onPress={() => {
+                    Clipboard.setStringAsync(roomProps.code);
+                    ToastAndroid.show('Room code copied!', ToastAndroid.SHORT);
+                }} style={styles.qrContainer}>
                     <Text style={styles.codeText}>{roomProps.code}</Text>
                     <RoomQrCode code={roomProps.code} />
                 </TouchableOpacity>
