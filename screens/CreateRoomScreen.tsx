@@ -34,9 +34,13 @@ const CreateRoomScreen = () => {
     const createRoom = async () => {
 
         if (roomName === ''){
-            alert('Enter room name.'); 
+            alert('Enter room name!'); 
             return;
         }
+        if (roomDescription.length > 30){ 
+            alert('Room description should be less than 30 characters!') 
+               return;
+            }
 
         try {
             const room = {
