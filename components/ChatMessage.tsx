@@ -37,8 +37,14 @@ const ChatMessage = ({ text, createdBy, createdAt }: ChatMessageProps) => {
 					</TouchableOpacity>
 
 					<View style={styles.messageContainer}>
+						<View style={{
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}>
+							<Text style={styles.displayName}>{user?.displayName}</Text>
+							<Text style={styles.dateText}>{getElapsedTimeSince(createdAt)}</Text>
+						</View>
 						<Text style={styles.messageText}>{text}</Text>
-						<Text style={styles.dateText}>{getElapsedTimeSince(createdAt)}</Text>
 					</View>
 				</View>
 			</ScrollView>
@@ -78,7 +84,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	messageText: {
-		fontWeight: "bold",
 		fontSize: 16,
 		color: "#1A202C",
 	},
@@ -86,6 +91,12 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: "#4A5568",
 		marginTop: 4,
+	},
+	displayName: {
+		fontWeight: "bold",
+		fontSize: 13,
+		color: '#4A5568',
+		marginBottom: 5,
 	},
 });
 
