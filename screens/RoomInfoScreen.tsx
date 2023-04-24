@@ -91,7 +91,7 @@ const RoomInfoScreen = () => {
                 </TouchableOpacity>
 
                 <View style={styles.CreatedContainer}>
-                    <Text style={styles.createdBy}>Created By </Text>
+                    <Text style={styles.createdBy}>Created By</Text>
                     <Text style={styles.displayName}>{createdRoomUser?.displayName}</Text>
                 </View>
             </View>
@@ -165,13 +165,11 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginTop: 40,
     },
-
     createdBy: {
         // styles for the "Created By" text
-        fontSize: 28,
+        fontSize: 15,
         fontWeight: '200',
         color: '#333',
-        marginBottom: 10,
 
     },
     displayName: {
