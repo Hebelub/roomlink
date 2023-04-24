@@ -23,9 +23,9 @@ export type VisitorsScreenNavigationProp = CompositeNavigationProp<
 
 type VisitorsScreenRouteProp = RouteProp<RootStackParamList, "Room">;
 
-
 const getVisitorCardPropsFromRoom = async (roomId: string): Promise<VisitorCardProps[]> => {
     const q = query(collection(db, "visits"), where("visitedRoom", "==", roomId));
+
     const querySnapshot = await getDocs(q);
 
     const promises = querySnapshot.docs.map(async (doc) => {
@@ -39,7 +39,9 @@ const getVisitorCardPropsFromRoom = async (roomId: string): Promise<VisitorCardP
         };
     });
 
-    return await Promise.all(promises);
+    const visitorCardProps = await Promise.all(promises);
+
+    return visitorCardProps.sort((a, b) => b.lastVisit.getTime() - a.lastVisit.getTime());
 };
 
 
