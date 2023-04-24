@@ -5,7 +5,6 @@ import { RoomNavigatorRouteProp, RoomNavigatorScreenNavigationProp } from '../na
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/RootNavigator';
 import { auth, db } from '../firebase';
-import EditRoomButton from '../components/EditRoomButton';
 import RoomQrCode from '../components/RoomQrCode';
 import useUser from '../hooks/useUser';
 import * as Clipboard from 'expo-clipboard';
@@ -57,14 +56,6 @@ const RoomInfoScreen = () => {
     useEffect(() => {
         updateRoom();
     }, [roomName, roomDescription])
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                isOwner && <EditRoomButton roomProps={roomProps} />
-            ),
-        });
-    }, [navigation]);
 
     return (
         <ScrollView style={{ backgroundColor: 'lightgreen' }}>

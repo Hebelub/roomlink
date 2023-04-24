@@ -17,7 +17,6 @@ import {
 import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import ChatMessage from "../components/ChatMessage";
-import EditRoomButton from "../components/EditRoomButton";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
 	RoomNavigatorRouteProp,
@@ -61,13 +60,6 @@ const RoomChatScreen = () => {
 
 		return unsubscribe;
 	}, []);
-
-	const isOwner = roomProps.createdById === auth.currentUser?.uid;
-	useLayoutEffect(() => {
-		navigation.setOptions({
-			headerRight: () => isOwner && <EditRoomButton roomProps={roomProps} />,
-		});
-	}, [navigation]);
 
 	const sendMessage = () => {
 		if (input.trim() === '') {

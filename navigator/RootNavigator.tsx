@@ -12,7 +12,6 @@ import LoginScreen from '../screens/LoginScreen';
 import { Room } from '../types';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import EditRoomScreen from '../screens/EditRoomScreen';
 
 
 export type RootStackParamList = {
@@ -20,7 +19,6 @@ export type RootStackParamList = {
     MyModal: { userId: string };
     Register: undefined;
     CreateRoom: undefined;
-    EditRoom: { roomProps: Room };
     Profile: undefined;
     ScanQrCode: undefined;
     Home: undefined;
@@ -43,7 +41,6 @@ const RootNavigator = () => {
                 <RootStack.Screen name="CreateRoom" component={CreateRoomScreen} />
                 <RootStack.Screen name="Profile" component={ProfileScreen} />
                 <RootStack.Screen name="ScanQrCode" component={ScanQrCodeScreen} />
-                <RootStack.Screen name="EditRoom" component={EditRoomScreen} />
             </RootStack.Group>
 
             <RootStack.Group>

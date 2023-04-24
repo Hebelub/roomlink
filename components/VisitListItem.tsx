@@ -4,7 +4,6 @@ import { CompositeNavigationProp, RouteProp, useNavigation } from '@react-naviga
 import { RootStackNavigationProp, RootStackParamList } from '../navigator/RootNavigator';
 import { Room, Visit } from '../types';
 import { auth, db } from '../firebase';
-import EditRoomButton from './EditRoomButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { DocumentData, collection, deleteDoc, doc, getDocs, limit, query, where } from 'firebase/firestore';
 import useUser from '../hooks/useUser';
@@ -108,9 +107,6 @@ const VisitListItem = ({ roomProps, lastVisit }: VisitListItemProps) => {
                         size={24}
                         name="gear"
                         color="green"
-                        onPress={() => {
-                            navigation.navigate('EditRoom', { roomProps });
-                        }}
                     />
                 </View>
             )}

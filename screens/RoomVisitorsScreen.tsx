@@ -11,10 +11,6 @@ import { Input } from '@rneui/themed';
 import { collection, getDoc, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { Room, Visit } from '../types';
-import { VisitListItemProps } from '../components/VisitListItem';
-import { User } from 'firebase/auth';
-import EditRoomButton from '../components/EditRoomButton';
-
 
 export type VisitorsScreenNavigationProp = CompositeNavigationProp<
     BottomTabNavigationProp<RoomStackParamList, 'Visitors'>,
@@ -61,15 +57,6 @@ const RoomVisitorsScreen = () => {
                 setVisitors(r);
             });
     }, []);
-
-    const isOwner = roomProps.createdById === auth.currentUser?.uid;
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (isOwner &&
-                isOwner && <EditRoomButton roomProps={roomProps} />
-            ),
-        });
-    }, [navigation]);
 
     return (
         <ScrollView style={{ backgroundColor: "lightgreen" }}>
