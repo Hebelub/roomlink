@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
         },
         shadowRadius: 4,
         elevation: 5,
+        marginLeft: 50,
     },
     roomCodeText: {
         fontSize: 34,
