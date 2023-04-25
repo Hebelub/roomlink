@@ -62,10 +62,6 @@ const RoomChatScreen = () => {
 		return unsubscribe;
 	}, []);
 
-	useEffect(() => {
-		flatListRef.current?.scrollToEnd({ animated: true });
-	}, [messages]);
-
 	const sendMessage = () => {
 		if (input.trim() === '') {
 			//alert('write a message!'); 
@@ -74,7 +70,7 @@ const RoomChatScreen = () => {
 		Keyboard.dismiss();
 
 		const message: Message = {
-			createdBy: auth.currentUser ?.uid ?? "unknown",
+			createdBy: auth.currentUser?.uid ?? "unknown",
 			createdAt: new Date(),
 			text: input,
 		};
@@ -98,6 +94,7 @@ const RoomChatScreen = () => {
 
 						<FlatList ref={flatListRef}
 							data={messages}
+							onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
 							renderItem={({ item }) => (
 								<ChatMessage
 									createdBy={item.createdBy}
