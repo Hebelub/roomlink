@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../navigator/RootNavigator';
@@ -42,7 +42,6 @@ const CreateRoomScreen = () => {
             return;
         }
 
-
         try {
             const room = {
                 name: roomName,
@@ -65,27 +64,22 @@ const CreateRoomScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-            {/* RoomCode */}
-            <Text style={styles.header}>Code</Text>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+            <Text style={styles.codeContainer}>
+                {/* RoomCode */}
+                <View style={styles.roomCodeContainer}>
+                    <RoomQrCode code={roomCode} size={220} />
+                    <Text style={styles.roomCodeText}>{roomCode}</Text>
+                </View>
+            </Text>
 
-            }}>
-                <RoomQrCode code={roomCode} size={100} />
-                <Text style={styles.codeText}>{roomCode}</Text>
-            </View>
+            {/**   <Text style={styles.header}>Create New Room</Text>   */}
 
-            <View style={styles.spacing} />
-
-            <Text style={styles.header}>Create New Room</Text>
 
             <TextInput
                 placeholder="Enter Room Name"
                 value={roomName}
                 onChangeText={text => { setRoomName(text) }}
-                style={styles.input}
+                style={[styles.input, styles.inputroomName]}
             />
 
             <TextInput
@@ -94,63 +88,102 @@ const CreateRoomScreen = () => {
                 onChangeText={text => { setRoomDescription(text) }}
                 style={styles.input}
             />
-
-            <TextInput
+            {/**           <TextInput
                 placeholder="Enter Image Url (optional)"
                 value={roomImageUrl}
                 onChangeText={text => { setRoomImageUrl(text) }}
                 style={styles.input}
             />
-
-            {/* <View style={styles.spacing} /> */}
+ */}
 
             <TouchableOpacity
                 onPress={() => { createRoom() }}
                 style={styles.button}
             >
-                <Text>Create Room</Text>
+                <Text style={styles.buttonText}>Create Room</Text>
             </TouchableOpacity>
+
         </SafeAreaView>
+
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+
+
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'lightgreen',
+        // marginTop: 0,
+    }, codeContainer: {
+        //flex: 1,
+        marginTop: -240,
+        width: 300,
+        height: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgreen',
+        //  marginTop: 0,
+    },
+
+    roomCodeContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOpacity: 0.7,
+        shadowOffset: {
+            width: 1,
+            height: 2,
+        },
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    roomCodeText: {
+        fontSize: 34,
+        fontWeight: '400',
+        //marginLeft: 20,
+        marginTop: 10,
+        paddingBottom: 20,
+    },
+
+    header: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginTop: 50,
+        marginBottom: 20,
+    },
+    inputroomName: {
+        marginTop: 20,
+
     },
     input: {
+        width: '80%',
         height: 50,
-        width: 300,
-        margin: 10,
-        borderWidth: 1,
         padding: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#ccc',
+        backgroundColor: '#fff',
     },
     button: {
-        backgroundColor: 'lightblue',
-        padding: 15,
-        marginTop: 10,
-        width: 300,
-        alignItems: 'center',
-        borderRadius: 5,
-    },
-    buttonOutline: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
-    },
-    codeText: {
-        fontSize: 60,
-        fontWeight: 'bold',
-        marginLeft: 20,
-    },
-    header: {
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    spacing: {
+        backgroundColor: '#008CBA',
+        width: '80%',
         height: 50,
-    }
-})
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+});
 
-export default CreateRoomScreen
+export default CreateRoomScreen;
