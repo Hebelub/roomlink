@@ -63,6 +63,11 @@ const RoomChatScreen = () => {
 	}, []);
 
 	const sendMessage = () => {
+		if (!auth.currentUser) {
+			navigation.navigate("Login");
+			return;
+		}
+
 		if (input.trim() === '') {
 			//alert('write a message!'); 
 			return;
